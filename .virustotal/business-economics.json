@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T14:55:34.475Z",
+  "scanned_at": "2026-05-11T15:13:35.422Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/business-economics",
-    "sha256": "d72fda6e1c15fddc442ce0bb02a654dfce69c00db175f8910c1282ae53fa7c53",
-    "size_bytes": 32088
+    "sha256": "8fa3ba2ef46983162bc55ce74751d38ad8f63a01f10705726cd8de60eaf9fd47",
+    "size_bytes": 32087
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
+    "undetected": 62,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906453,
-  "gui_url": "https://www.virustotal.com/gui/file/d72fda6e1c15fddc442ce0bb02a654dfce69c00db175f8910c1282ae53fa7c53",
+  "last_analysis_date": 1778512334,
+  "gui_url": "https://www.virustotal.com/gui/file/8fa3ba2ef46983162bc55ce74751d38ad8f63a01f10705726cd8de60eaf9fd47",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -75,7 +75,7 @@
       "result": null
     },
     {
-      "engine": "CrowdStrike",
+      "engine": "K7AntiVirus",
       "category": "undetected",
       "result": null
     },
@@ -85,7 +85,7 @@
       "result": null
     },
     {
-      "engine": "K7AntiVirus",
+      "engine": "CrowdStrike",
       "category": "undetected",
       "result": null
     },
@@ -145,7 +145,12 @@
       "result": null
     },
     {
-      "engine": "SUPERAntiSpyware",
+      "engine": "ViRobot",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
@@ -165,7 +170,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -235,7 +240,7 @@
       "result": null
     },
     {
-      "engine": "ViRobot",
+      "engine": "SUPERAntiSpyware",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +285,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },

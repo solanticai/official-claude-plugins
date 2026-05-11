@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T14:59:18.128Z",
+  "scanned_at": "2026-05-11T15:17:19.095Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/plan-completion-audit",
-    "sha256": "efca9b9b3d06e32d6479bc9d8a3269733572476c60e3a24f20a46b83a0ec99f6",
-    "size_bytes": 26973
+    "sha256": "064a9b08afa4840015d276a993a0ea0df770d95a429f83721f9907a114a7ab06",
+    "size_bytes": 26981
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 60,
+    "undetected": 61,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906656,
-  "gui_url": "https://www.virustotal.com/gui/file/efca9b9b3d06e32d6479bc9d8a3269733572476c60e3a24f20a46b83a0ec99f6",
+  "last_analysis_date": 1778512537,
+  "gui_url": "https://www.virustotal.com/gui/file/064a9b08afa4840015d276a993a0ea0df770d95a429f83721f9907a114a7ab06",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -90,11 +90,6 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "VirIT",
       "category": "undetected",
       "result": null
@@ -145,6 +140,11 @@
       "result": null
     },
     {
+      "engine": "Rising",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Sophos",
       "category": "undetected",
       "result": null
@@ -190,6 +190,11 @@
       "result": null
     },
     {
+      "engine": "GData",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
@@ -225,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -240,7 +245,7 @@
       "result": null
     },
     {
-      "engine": "GData",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -275,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },

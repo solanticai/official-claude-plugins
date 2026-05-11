@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T15:05:04.346Z",
+  "scanned_at": "2026-05-11T15:25:30.395Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/software-development",
-    "sha256": "57bd72746889ed8efa5ed2ed8002047908779adc4d3b9d3d5342b29ebad9e1df",
-    "size_bytes": 206072
+    "sha256": "90d725a4d954523acaf72bdd4d5c71418938ba74365c54ed1f3dd12ed4f6677f",
+    "size_bytes": 206078
   },
   "detections": {
     "malicious": 0,
@@ -13,11 +13,11 @@
     "harmless": 0,
     "undetected": 61,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906982,
-  "gui_url": "https://www.virustotal.com/gui/file/57bd72746889ed8efa5ed2ed8002047908779adc4d3b9d3d5342b29ebad9e1df",
+  "last_analysis_date": 1778512988,
+  "gui_url": "https://www.virustotal.com/gui/file/90d725a4d954523acaf72bdd4d5c71418938ba74365c54ed1f3dd12ed4f6677f",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -30,27 +30,17 @@
       "result": null
     },
     {
-      "engine": "MicroWorld-eScan",
+      "engine": "Cynet",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "ClamAV",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
     {
       "engine": "CAT-QuickHeal",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Skyhigh",
       "category": "undetected",
       "result": null
     },
@@ -90,7 +80,7 @@
       "result": null
     },
     {
-      "engine": "huorong",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -120,7 +110,7 @@
       "result": null
     },
     {
-      "engine": "Cynet",
+      "engine": "ClamAV",
       "category": "undetected",
       "result": null
     },
@@ -145,7 +135,17 @@
       "result": null
     },
     {
-      "engine": "Emsisoft",
+      "engine": "MicroWorld-eScan",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Rising",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Sophos",
       "category": "undetected",
       "result": null
     },
@@ -175,12 +175,17 @@
       "result": null
     },
     {
-      "engine": "CMC",
+      "engine": "SentinelOne",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Sophos",
+      "engine": "CTX",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Emsisoft",
       "category": "undetected",
       "result": null
     },
@@ -190,17 +195,12 @@
       "result": null
     },
     {
-      "engine": "GData",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +245,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -295,7 +295,7 @@
       "result": null
     },
     {
-      "engine": "SentinelOne",
+      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -325,6 +325,11 @@
       "result": null
     },
     {
+      "engine": "Skyhigh",
+      "category": "failure",
+      "result": null
+    },
+    {
       "engine": "Avast-Mobile",
       "category": "type-unsupported",
       "result": null
@@ -350,12 +355,12 @@
       "result": null
     },
     {
-      "engine": "Webroot",
+      "engine": "APEX",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "APEX",
+      "engine": "Trapmine",
       "category": "type-unsupported",
       "result": null
     },
@@ -370,7 +375,7 @@
       "result": null
     },
     {
-      "engine": "Trapmine",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },

@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T14:51:50.649Z",
+  "scanned_at": "2026-05-11T15:10:11.823Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/data-analysis",
-    "sha256": "d937fe9206a239e5c8b2d9ec27eca8e31f14cb6d80f7d5341d4278733d6e4bc0",
-    "size_bytes": 112250
+    "sha256": "79a1609030b48ebd0f779bb5720bf65d65bbcd32e5c8a6601a4a0a655280a566",
+    "size_bytes": 112256
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
+    "undetected": 62,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906229,
-  "gui_url": "https://www.virustotal.com/gui/file/d937fe9206a239e5c8b2d9ec27eca8e31f14cb6d80f7d5341d4278733d6e4bc0",
+  "last_analysis_date": 1778512130,
+  "gui_url": "https://www.virustotal.com/gui/file/79a1609030b48ebd0f779bb5720bf65d65bbcd32e5c8a6601a4a0a655280a566",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -90,7 +90,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -140,7 +140,12 @@
       "result": null
     },
     {
-      "engine": "SUPERAntiSpyware",
+      "engine": "ViRobot",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -160,7 +165,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -185,7 +190,7 @@
       "result": null
     },
     {
-      "engine": "SentinelOne",
+      "engine": "Ikarus",
       "category": "undetected",
       "result": null
     },
@@ -215,6 +220,11 @@
       "result": null
     },
     {
+      "engine": "Microsoft",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Gridinsoft",
       "category": "undetected",
       "result": null
@@ -225,12 +235,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "ViRobot",
+      "engine": "SUPERAntiSpyware",
       "category": "undetected",
       "result": null
     },
@@ -270,11 +280,6 @@
       "result": null
     },
     {
-      "engine": "Ikarus",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Zoner",
       "category": "undetected",
       "result": null
@@ -295,7 +300,7 @@
       "result": null
     },
     {
-      "engine": "huorong",
+      "engine": "SentinelOne",
       "category": "undetected",
       "result": null
     },
@@ -340,12 +345,12 @@
       "result": null
     },
     {
-      "engine": "Elastic",
+      "engine": "DeepInstinct",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "DeepInstinct",
+      "engine": "Elastic",
       "category": "type-unsupported",
       "result": null
     },

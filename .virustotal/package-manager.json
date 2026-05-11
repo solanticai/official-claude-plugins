@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T14:57:16.055Z",
+  "scanned_at": "2026-05-11T15:15:16.915Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/package-manager",
-    "sha256": "c181b14f3c0037382e2bd1bf6f5e40034df28498c264a6b3c475343e47bd34c0",
-    "size_bytes": 54431
+    "sha256": "76de9d0221f92d8b165f4a151d518e749def2ff8870c42e08b1c0b0dfe7415ac",
+    "size_bytes": 54441
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 60,
+    "undetected": 61,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906555,
-  "gui_url": "https://www.virustotal.com/gui/file/c181b14f3c0037382e2bd1bf6f5e40034df28498c264a6b3c475343e47bd34c0",
+  "last_analysis_date": 1778512436,
+  "gui_url": "https://www.virustotal.com/gui/file/76de9d0221f92d8b165f4a151d518e749def2ff8870c42e08b1c0b0dfe7415ac",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -75,7 +75,7 @@
       "result": null
     },
     {
-      "engine": "CrowdStrike",
+      "engine": "K7AntiVirus",
       "category": "undetected",
       "result": null
     },
@@ -85,12 +85,7 @@
       "result": null
     },
     {
-      "engine": "K7AntiVirus",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Arcabit",
+      "engine": "CrowdStrike",
       "category": "undetected",
       "result": null
     },
@@ -145,7 +140,12 @@
       "result": null
     },
     {
-      "engine": "Sophos",
+      "engine": "Tencent",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Emsisoft",
       "category": "undetected",
       "result": null
     },
@@ -180,7 +180,7 @@
       "result": null
     },
     {
-      "engine": "Emsisoft",
+      "engine": "Sophos",
       "category": "undetected",
       "result": null
     },
@@ -215,6 +215,11 @@
       "result": null
     },
     {
+      "engine": "Microsoft",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Gridinsoft",
       "category": "undetected",
       "result": null
@@ -225,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -345,11 +350,6 @@
       "result": null
     },
     {
-      "engine": "Webroot",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "APEX",
       "category": "type-unsupported",
       "result": null
@@ -360,12 +360,17 @@
       "result": null
     },
     {
+      "engine": "Trapmine",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Trapmine",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },

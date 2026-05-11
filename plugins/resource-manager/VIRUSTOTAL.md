@@ -1,10 +1,10 @@
 # VirusTotal — resource-manager
 
-**Last scan:** 2026-04-27 · **Verdict:** clean
+**Last scan:** 2026-05-11 · **Verdict:** clean
 **Detections:** 0 malicious · 0 suspicious · 0 harmless · 62 undetected (of 75 engines)
 **Reputation:** 0
-**Tarball SHA-256:** `2e7ef6a3c893bef6bbb4c19109fdbfa19e0aa7798474a3e2baaf07d7fc8bd4b3`
-**Full report:** https://www.virustotal.com/gui/file/2e7ef6a3c893bef6bbb4c19109fdbfa19e0aa7798474a3e2baaf07d7fc8bd4b3
+**Tarball SHA-256:** `ebe012bd6621f20c1fc8067a53e8733bb869b222986bcd442bd5bc2c0b0b3794`
+**Full report:** https://www.virustotal.com/gui/file/ebe012bd6621f20c1fc8067a53e8733bb869b222986bcd442bd5bc2c0b0b3794
 
 ## Engine results
 

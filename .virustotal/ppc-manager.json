@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T15:07:06.333Z",
+  "scanned_at": "2026-05-11T15:28:13.167Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/ppc-manager",
-    "sha256": "d8fa32bf2ccc2090f230e4ae41caa6ec868942e3036cdefbbc62db3bcf416800",
-    "size_bytes": 276909
+    "sha256": "506ca69228ce3d663b2c4d2489edbe7a8bc1cbdbf056ebdc147f3f0ac4497644",
+    "size_bytes": 276896
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
-    "timeout": 0,
-    "total_engines": 74
+    "undetected": 59,
+    "timeout": 3,
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777907125,
-  "gui_url": "https://www.virustotal.com/gui/file/d8fa32bf2ccc2090f230e4ae41caa6ec868942e3036cdefbbc62db3bcf416800",
+  "last_analysis_date": 1778513151,
+  "gui_url": "https://www.virustotal.com/gui/file/506ca69228ce3d663b2c4d2489edbe7a8bc1cbdbf056ebdc147f3f0ac4497644",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -35,12 +35,7 @@
       "result": null
     },
     {
-      "engine": "ClamAV",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "CMC",
+      "engine": "CTX",
       "category": "undetected",
       "result": null
     },
@@ -66,11 +61,6 @@
     },
     {
       "engine": "VIPRE",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Sangfor",
       "category": "undetected",
       "result": null
     },
@@ -145,7 +135,7 @@
       "result": null
     },
     {
-      "engine": "Sophos",
+      "engine": "Emsisoft",
       "category": "undetected",
       "result": null
     },
@@ -175,12 +165,12 @@
       "result": null
     },
     {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Emsisoft",
+      "engine": "Sophos",
       "category": "undetected",
       "result": null
     },
@@ -200,7 +190,7 @@
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -250,7 +240,7 @@
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +270,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -325,6 +315,26 @@
       "result": null
     },
     {
+      "engine": "Sangfor",
+      "category": "timeout",
+      "result": null
+    },
+    {
+      "engine": "Rising",
+      "category": "timeout",
+      "result": null
+    },
+    {
+      "engine": "ClamAV",
+      "category": "timeout",
+      "result": null
+    },
+    {
+      "engine": "DeepInstinct",
+      "category": "failure",
+      "result": null
+    },
+    {
       "engine": "Avast-Mobile",
       "category": "type-unsupported",
       "result": null
@@ -340,12 +350,17 @@
       "result": null
     },
     {
-      "engine": "DeepInstinct",
+      "engine": "tehtris",
       "category": "type-unsupported",
       "result": null
     },
     {
       "engine": "Elastic",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },
@@ -360,27 +375,17 @@
       "result": null
     },
     {
-      "engine": "Trapmine",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Webroot",
+      "engine": "Trapmine",
       "category": "type-unsupported",
       "result": null
     },
     {
       "engine": "Cylance",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
-      "engine": "tehtris",
       "category": "type-unsupported",
       "result": null
     },
