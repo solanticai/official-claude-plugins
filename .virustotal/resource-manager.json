@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-11T15:34:19.030Z",
+  "scanned_at": "2026-05-18T15:36:19.190Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/resource-manager",
-    "sha256": "ebe012bd6621f20c1fc8067a53e8733bb869b222986bcd442bd5bc2c0b0b3794",
-    "size_bytes": 25925
+    "sha256": "a965dab1638e71e27a6efd36909207087564349514f152bbb7ef75b40a5ab830",
+    "size_bytes": 25271
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1778513557,
-  "gui_url": "https://www.virustotal.com/gui/file/ebe012bd6621f20c1fc8067a53e8733bb869b222986bcd442bd5bc2c0b0b3794",
+  "last_analysis_date": 1779118498,
+  "gui_url": "https://www.virustotal.com/gui/file/a965dab1638e71e27a6efd36909207087564349514f152bbb7ef75b40a5ab830",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -30,12 +30,17 @@
       "result": null
     },
     {
+      "engine": "MicroWorld-eScan",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "ClamAV",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "CMC",
+      "engine": "CTX",
       "category": "undetected",
       "result": null
     },
@@ -60,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -70,7 +75,7 @@
       "result": null
     },
     {
-      "engine": "K7AntiVirus",
+      "engine": "CrowdStrike",
       "category": "undetected",
       "result": null
     },
@@ -80,17 +85,12 @@
       "result": null
     },
     {
-      "engine": "CrowdStrike",
+      "engine": "K7AntiVirus",
       "category": "undetected",
       "result": null
     },
     {
       "engine": "Arcabit",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -140,17 +140,12 @@
       "result": null
     },
     {
-      "engine": "SUPERAntiSpyware",
+      "engine": "ViRobot",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "MicroWorld-eScan",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -170,7 +165,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -185,7 +180,7 @@
       "result": null
     },
     {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
@@ -240,7 +235,7 @@
       "result": null
     },
     {
-      "engine": "ViRobot",
+      "engine": "SUPERAntiSpyware",
       "category": "undetected",
       "result": null
     },
@@ -280,12 +275,17 @@
       "result": null
     },
     {
+      "engine": "Ikarus",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Zoner",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
@@ -300,7 +300,7 @@
       "result": null
     },
     {
-      "engine": "Ikarus",
+      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -355,11 +355,6 @@
       "result": null
     },
     {
-      "engine": "Webroot",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "APEX",
       "category": "type-unsupported",
       "result": null
@@ -370,12 +365,17 @@
       "result": null
     },
     {
+      "engine": "Trapmine",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Trapmine",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },

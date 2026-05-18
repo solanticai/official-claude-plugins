@@ -1,10 +1,10 @@
 # VirusTotal — business-economics
 
-**Last scan:** 2026-05-11 · **Verdict:** clean
+**Last scan:** 2026-05-18 · **Verdict:** clean
 **Detections:** 0 malicious · 0 suspicious · 0 harmless · 62 undetected (of 75 engines)
 **Reputation:** 0
-**Tarball SHA-256:** `8fa3ba2ef46983162bc55ce74751d38ad8f63a01f10705726cd8de60eaf9fd47`
-**Full report:** https://www.virustotal.com/gui/file/8fa3ba2ef46983162bc55ce74751d38ad8f63a01f10705726cd8de60eaf9fd47
+**Tarball SHA-256:** `44dd67e8efb5b6dd7b1a48ce6013389a742a8c0474e6c958f38c75b5af05dbfe`
+**Full report:** https://www.virustotal.com/gui/file/44dd67e8efb5b6dd7b1a48ce6013389a742a8c0474e6c958f38c75b5af05dbfe
 
 ## Engine results
 

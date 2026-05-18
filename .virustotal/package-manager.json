@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-11T15:15:16.915Z",
+  "scanned_at": "2026-05-18T15:17:39.647Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/package-manager",
-    "sha256": "76de9d0221f92d8b165f4a151d518e749def2ff8870c42e08b1c0b0dfe7415ac",
-    "size_bytes": 54441
+    "sha256": "00cf896f7e3db9635922080326ebdbbbc6bca19de6c7209b54637eae116c4aa6",
+    "size_bytes": 54758
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1778512436,
-  "gui_url": "https://www.virustotal.com/gui/file/76de9d0221f92d8b165f4a151d518e749def2ff8870c42e08b1c0b0dfe7415ac",
+  "last_analysis_date": 1779117337,
+  "gui_url": "https://www.virustotal.com/gui/file/00cf896f7e3db9635922080326ebdbbbc6bca19de6c7209b54637eae116c4aa6",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -140,12 +140,12 @@
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Emsisoft",
+      "engine": "Sophos",
       "category": "undetected",
       "result": null
     },
@@ -160,7 +160,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -180,7 +180,7 @@
       "result": null
     },
     {
-      "engine": "Sophos",
+      "engine": "Emsisoft",
       "category": "undetected",
       "result": null
     },
@@ -190,12 +190,17 @@
       "result": null
     },
     {
+      "engine": "GData",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -211,11 +216,6 @@
     },
     {
       "engine": "Kingsoft",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +245,12 @@
       "result": null
     },
     {
-      "engine": "GData",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },

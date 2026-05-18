@@ -1,29 +1,24 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T15:02:41.513Z",
+  "scanned_at": "2026-05-18T15:24:27.177Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/brand-manager",
-    "sha256": "a21a8e52ba90f2ebf7b1d4037e7d68dc8879d984d9c764b27b0a7048ea441d9a",
-    "size_bytes": 186561
+    "sha256": "9d8c7da1f8e149ebb6edf41a82a0755bfabf41a9dda1c0dd2078103eff9580d3",
+    "size_bytes": 187449
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
     "undetected": 61,
-    "timeout": 0,
-    "total_engines": 74
+    "timeout": 1,
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906860,
-  "gui_url": "https://www.virustotal.com/gui/file/a21a8e52ba90f2ebf7b1d4037e7d68dc8879d984d9c764b27b0a7048ea441d9a",
+  "last_analysis_date": 1779117745,
+  "gui_url": "https://www.virustotal.com/gui/file/9d8c7da1f8e149ebb6edf41a82a0755bfabf41a9dda1c0dd2078103eff9580d3",
   "engine_results": [
-    {
-      "engine": "Bkav",
-      "category": "undetected",
-      "result": null
-    },
     {
       "engine": "Lionic",
       "category": "undetected",
@@ -65,7 +60,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -91,6 +86,11 @@
     },
     {
       "engine": "Arcabit",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -145,6 +145,11 @@
       "result": null
     },
     {
+      "engine": "Tencent",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Sophos",
       "category": "undetected",
       "result": null
@@ -160,7 +165,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -171,11 +176,6 @@
     },
     {
       "engine": "McAfeeD",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "SentinelOne",
       "category": "undetected",
       "result": null
     },
@@ -295,7 +295,7 @@
       "result": null
     },
     {
-      "engine": "huorong",
+      "engine": "SentinelOne",
       "category": "undetected",
       "result": null
     },
@@ -325,6 +325,11 @@
       "result": null
     },
     {
+      "engine": "Bkav",
+      "category": "timeout",
+      "result": null
+    },
+    {
       "engine": "Avast-Mobile",
       "category": "type-unsupported",
       "result": null
@@ -340,12 +345,12 @@
       "result": null
     },
     {
-      "engine": "DeepInstinct",
+      "engine": "Elastic",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Elastic",
+      "engine": "DeepInstinct",
       "category": "type-unsupported",
       "result": null
     },

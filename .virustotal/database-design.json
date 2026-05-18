@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-11T15:30:15.274Z",
+  "scanned_at": "2026-05-18T15:31:55.369Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/database-design",
-    "sha256": "c391dad4e1a1f2552003e831767c6fface804e811a38c330bf1b84b86bf3deba",
-    "size_bytes": 60405
+    "sha256": "d29ec2a43ffe65aaecc22f46ae289ef623a8198f6c6804d541c1d7fc9e3ac7d8",
+    "size_bytes": 61357
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
-    "timeout": 0,
+    "undetected": 59,
+    "timeout": 2,
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1778513313,
-  "gui_url": "https://www.virustotal.com/gui/file/c391dad4e1a1f2552003e831767c6fface804e811a38c330bf1b84b86bf3deba",
+  "last_analysis_date": 1779118173,
+  "gui_url": "https://www.virustotal.com/gui/file/d29ec2a43ffe65aaecc22f46ae289ef623a8198f6c6804d541c1d7fc9e3ac7d8",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -30,12 +30,12 @@
       "result": null
     },
     {
-      "engine": "Cynet",
+      "engine": "MicroWorld-eScan",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "CMC",
+      "engine": "CTX",
       "category": "undetected",
       "result": null
     },
@@ -85,11 +85,6 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "VirIT",
       "category": "undetected",
       "result": null
@@ -115,7 +110,7 @@
       "result": null
     },
     {
-      "engine": "ClamAV",
+      "engine": "Cynet",
       "category": "undetected",
       "result": null
     },
@@ -140,17 +135,12 @@
       "result": null
     },
     {
-      "engine": "MicroWorld-eScan",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Rising",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Sophos",
+      "engine": "Emsisoft",
       "category": "undetected",
       "result": null
     },
@@ -180,12 +170,12 @@
       "result": null
     },
     {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Emsisoft",
+      "engine": "Sophos",
       "category": "undetected",
       "result": null
     },
@@ -195,12 +185,17 @@
       "result": null
     },
     {
+      "engine": "GData",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +225,7 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +240,12 @@
       "result": null
     },
     {
-      "engine": "GData",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -290,11 +285,6 @@
       "result": null
     },
     {
-      "engine": "TrellixENS",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Ikarus",
       "category": "undetected",
       "result": null
@@ -322,6 +312,16 @@
     {
       "engine": "alibabacloud",
       "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "ClamAV",
+      "category": "timeout",
+      "result": null
+    },
+    {
+      "engine": "TrellixENS",
+      "category": "timeout",
       "result": null
     },
     {
