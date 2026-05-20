@@ -175,6 +175,33 @@ Complete KPI framework document saved as `kpi-framework.md`.
 
 ---
 
+## Reference Material
+
+Dense framework material lives in `reference.md`:
+- **Sean Ellis North-Star Framework** — selection criteria and anti-patterns
+- **AARRR Pirate Metrics** — acquisition/activation/retention/referral/revenue scaffold
+- **Doerr OKR Model** — committed vs aspirational objectives, KR drafting rules
+- **DuPont Financial Decomposition** — finance-function KPI tree
+- **Industry KPI Benchmarks (AU SMB)** — SaaS, eCommerce, marketplace, services
+- **Functional KPI Libraries** — per-team metric catalogues
+- **Mermaid Mindmap Template** — visual scaffold for Phase 6
+
+Read `reference.md` before Phase 2 (North-Star selection), Phase 4 (functional KPIs), and Phase 5 (target setting). A worked SaaS example is at `examples/example-output.md`.
+
+---
+
+## Tool Usage
+
+| Tool | Purpose |
+|------|---------|
+| `Read` | Ingest any user-supplied OKR docs, baseline metrics, or KPI lists; read `reference.md` |
+| `Write` | Emit the final `kpi-framework.md` document to cwd |
+| `Edit` | Patch KPI cards after baseline / target negotiation |
+
+No shell, network, or agent tools are required — the skill works purely from text inputs and emits a markdown artefact.
+
+---
+
 ## Output Format
 
 Use the template at `templates/output-template.md`. The document includes:

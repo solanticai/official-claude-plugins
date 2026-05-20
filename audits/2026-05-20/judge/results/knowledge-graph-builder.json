@@ -2,17 +2,17 @@
   "skill": "knowledge-graph-builder",
   "activation_results": [
     {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is identical to the canonical description, clearly within scope."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill to run."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to knowledge graph construction."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for graph specification."}
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input restates the canonical use case."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to knowledge graphs."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills, not a request to build a knowledge graph."}
   ],
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'specialisations' in the Consultant node properties row."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact contains numbered sections 1-6: Node Types, Edge Types, Graph Statistics, Sample Subgraph, JSON-LD Representation, PostgreSQL JSONB Implementation."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Artefact uses 'specialisations' (Consultant properties); no US spellings detected in narrative text."},
+      {"text": "Report includes the canonical sections: \"Knowledge Graph Specification — [Busines\"", "met": false, "evidence": "Top heading is '# Knowledge Graph: Apex Strategy Partners' rather than the required 'Knowledge Graph Specification — [Business...]' canonical form."}
     ],
-    "notes": "Artefact demonstrates the expected knowledge graph specification with node/edge type tables, statistics, a sample subgraph, JSON-LD context, and a Supabase/PostgreSQL JSONB schema with example query — covering all three target implementations named in the description. Australian spelling ('specialisations') appears in the schema. The second judge criterion was truncated in the prompt but the artefact clearly includes canonical sections, so it is treated as met."
+    "notes": "The artefact passes the spellings criterion (uses 'specialisations' and otherwise neutral terms throughout). It fails the canonical-section criterion because the document title is 'Knowledge Graph: Apex Strategy Partners' instead of the expected 'Knowledge Graph Specification — [Business...]' header. Substantively the artefact does deliver the intended content — node types, edge types, graph statistics, a sample subgraph, JSON-LD representation, and a PostgreSQL JSONB implementation covering all three target stacks — but the literal canonical-section string is absent, so the overall verdict is partial."
   }
 }

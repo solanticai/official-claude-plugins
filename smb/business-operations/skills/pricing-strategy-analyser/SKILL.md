@@ -2,7 +2,7 @@
 name: pricing-strategy-analyser
 description: Recommend a pricing strategy — model, price points, packaging, and elasticity guard-rails — grounded in Van Westendorp, value-based pricing, and anchoring/decoy frameworks
 argument-hint: [product-or-pricing-context]
-allowed-tools: Read Write Edit Bash
+allowed-tools: Read Write Edit
 effort: high
 ---
 
@@ -172,6 +172,31 @@ Define a structured experiment to validate the recommended pricing before full r
 
 #### Output
 Pricing test plan with hypotheses, metrics, and grandfathering strategy.
+
+---
+
+## Reference Material
+
+Dense framework material lives in `reference.md`:
+- **Van Westendorp Price Sensitivity Meter** — four-question protocol, curve interpretation, OPP / IPP / PMC / PME definitions
+- **7-Model Selection Criteria** — cost-plus / value-based / competitor-indexed / dynamic / freemium / tiered / usage-based with applicability checklists
+- **Behavioural Pricing Patterns** — anchoring, decoy, Monroe pyramid usage rules
+- **Sensitivity Scenario Templates** — base, downside, ceiling scenarios with churn elasticity
+- **AU Pricing Context** — GST treatment, BNPL uptake, ASIC fee-disclosure flags
+
+Read `reference.md` before Phase 2 (model selection) and Phase 4 (sensitivity check). A worked SaaS example (ClearLedger) sits at `examples/example-output.md` — refer to it before drafting the tier table.
+
+---
+
+## Tool Usage
+
+| Tool | Purpose |
+|------|---------|
+| `Read` | Ingest user-supplied cost data, competitor pricing, prior PSM survey results; read `reference.md` |
+| `Write` | Emit the final `pricing-strategy.md` to cwd |
+| `Edit` | Patch the draft after sensitivity-scenario revision or competitive response review |
+
+No shell, network, or agent tools are required.
 
 ---
 

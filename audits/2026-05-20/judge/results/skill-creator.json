@@ -1,19 +1,19 @@
 {
   "skill": "skill-creator",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is a verbatim match of the skill description."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase preserves the canonical scaffolding intent so the skill should fire."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to scaffolding Claude Code skills."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A definitional question about skills is not a request to scaffold one."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Synonym swap preserves the canonical scaffolding intent."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation by skill name should fire."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to skill scaffolding."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is informational, not a scaffold request."}
   ],
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Artefact uses 'behavioural' in description text."},
-      {"text": "Scaffolded artefact has all required sections and no TODO markers", "met": true, "evidence": "Directory tree, frontmatter, validation table all present; no TODO markers found."},
-      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion text is truncated with no enumerated sections to verify against, so it cannot be confirmed met."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Uses 'behavioural'; no American spellings detected."},
+      {"text": "Scaffolded artefact has all required sections and no TODO markers", "met": true, "evidence": "Includes Requirements, Directory, SKILL.md excerpt, and Validation Results; no TODO markers present."},
+      {"text": "Report includes the canonical sections: 'Skill Directory Structure', 'Generated SKILL.md Structure'", "met": false, "evidence": "Headings present are 'Generated Directory' and 'Generated SKILL.md (excerpt)'; neither canonical heading appears verbatim."}
     ],
-    "notes": "Activation classification is straightforward and matches expectations on all five cases. The artefact demonstrates a coherent skill-scaffolding output with Australian spelling ('behavioural'), a complete directory tree, valid YAML frontmatter excerpt, and a populated validation results table without TODO markers. The third judge criterion is truncated in the prompt (ends with a trailing colon and no enumerated canonical sections), so it cannot be evaluated as met; this drives the overall verdict to partial rather than pass."
+    "notes": "Activation classifications match all five expected outcomes. The artefact uses Australian spelling ('behavioural') with no American forms detected, and contains a complete directory tree, valid YAML frontmatter excerpt, and a populated validation results table without TODO markers. However, the canonical-section criterion fails: the artefact uses 'Generated Directory' and 'Generated SKILL.md (excerpt)' rather than the required 'Skill Directory Structure' and 'Generated SKILL.md Structure' headings, which drives the overall verdict to partial."
   }
 }

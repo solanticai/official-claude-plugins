@@ -1,20 +1,20 @@
 {
   "skill": "cicd-pipeline-audit",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is the canonical description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a direct synonym for Audit and the rest matches the description."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its kebab-case name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to CI/CD pipeline auditing."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta question about skills, not a request to audit pipelines."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is a verbatim match for the skill's canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Audit for Review preserves intent and platform list."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to CI/CD pipeline auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is meta and out of scope."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'artefact', 'artefacts' and 'authorised'-style spellings; no American forms detected."},
-      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Risk Register and per-workflow tables show file:line (e.g., release.yml:17, deploy-prod.yml:33) with CRITICAL/HIGH/MEDIUM severity columns."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Contains Executive Summary, Category Scores, Per-Workflow Findings, Cross-Workflow Patterns, Risk Register, Runtime Baseline, Action Batches, Suppressed Findings."},
-      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Names concrete target 'acme-api' and real workflow paths like .github/workflows/release.yml and deploy-prod.yml; no placeholders."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Uses 'categorised', 'artefact'; none of the banned American spellings appear."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Risk Register and per-workflow tables list e.g. release.yml:17, deploy-prod.yml:33 with CRITICAL/HIGH/MEDIUM severity columns."},
+      {"text": "Report includes the canonical sections: 'Executive Summary', 'Category Scores'", "met": true, "evidence": "Both '## Executive Summary' and '## Category Scores' headings appear in the artefact."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Names target 'acme-api' and concrete workflow files such as .github/workflows/release.yml and deploy-prod.yml."}
     ],
-    "notes": "All four judge criteria are satisfied by the example artefact. The criterion listing canonical sections is truncated in the prompt ('Report includes the canonical sections:' with no explicit list), so it was evaluated against the conventional audit-report sections, all of which are present. Verdict set to 'partial' only because the third criterion is under-specified in the prompt; on the evidence available the artefact fully meets it."
+    "notes": "Artefact satisfies all four criteria — narrative is Australian/neutral, findings carry file:line evidence with explicit severity, both canonical headings (Executive Summary, Category Scores) are present, and concrete target plus workflow paths are referenced rather than placeholders."
   }
 }

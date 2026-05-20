@@ -8,11 +8,11 @@
     {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking about skills generally is out of scope for keyword research."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'cosy', 'australian made', AUD currency, and DD/MM/YYYY date format; no US spellings detected."},
-      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion is truncated with no enumerated sections to verify against; cannot confirm completeness."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses 'fibre', 'cosy', 'defensive', and neutral terms throughout; no American spellings detected."},
+      {"text": "Report includes the canonical sections: \"Clusters (proposed ad groups)\", \"Negative keyword candidates\"", "met": true, "evidence": "Both H2 headings present — 'Clusters (proposed ad groups)' at line 66 and 'Negative keyword candidates' at line 127."}
     ],
-    "notes": "Activation cases all align with expectations. The artefact reads as Australian-localised (AUD pricing, 'cosy', 'australian made', DD/MM date) and contains coherent sections (header, Clusters, Negative keyword candidates, CSV exports, Next steps). The second judge criterion is malformed in the prompt (the list of required sections is missing after the colon), so it cannot be definitively evaluated; marking as not met yields a partial verdict."
+    "notes": "All activation cases align with expectations. The artefact passes both judge criteria: Australian English is consistent (fibre, cosy, AUD currency, DD/MM/YYYY date) with no American spellings, and both canonical section headings appear verbatim. The report also includes coherent supporting structure (header summary, cluster tables, negatives with rationale, CSV exports, next steps)."
   }
 }

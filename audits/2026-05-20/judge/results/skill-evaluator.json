@@ -1,20 +1,20 @@
 {
   "skill": "skill-evaluator",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim, so the skill clearly fires."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Audit for Review preserves the canonical intent of evaluating a skill across 8 dimensions."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation by the skill's name is an unambiguous activation trigger."},
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — clear canonical activation."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping 'Audit' for 'Review' preserves the intent and dimension list."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation by skill name is an unambiguous trigger."},
     {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to auditing Claude Code skills."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is a definitional question, not a request to audit a skill."}
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A definitional question about skills is not a request to audit one."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Artefact uses 'prioritised', 'artefact', 'Behavioural', 'categorised' consistent with Australian English; no obvious US spellings observed."},
-      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Findings include severity tags ([warn], [info]) with file:line refs e.g. `SKILL.md:3`, `SKILL.md:126`, `SKILL.md:5`."},
-      {"text": "Report includes the canonical sections: \\", "met": true, "evidence": "Report contains Summary, Dimension scores, Frontmatter snapshot, Findings (per dimension), Prioritised fix list, and Qualitative review sections."},
-      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Header lists Target: `/c/Development/anthril/official-claude-plugins/utilities/skillops/skills/skill-creator` — a concrete path, not a placeholder."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses 'prioritised', 'categorised', 'Behavioural', 'artefact'; no banned American spellings appear."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Findings use [warn]/[info] severity tags with file:line refs such as 'SKILL.md:3', 'SKILL.md:126', 'SKILL.md:5'."},
+      {"text": "Report includes the canonical sections: 'Frontmatter snapshot', 'Prioritised fix list (top 15)'", "met": false, "evidence": "Has '## Frontmatter snapshot' but the fix-list heading reads 'Prioritised fix list (top 5)' rather than 'top 15'."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Target header: '/c/Development/anthril/official-claude-plugins/utilities/skillops/skills/skill-creator' — concrete path, no placeholders."}
     ],
-    "notes": "The example artefact satisfies all four judge criteria: Australian spellings appear in narrative, findings are severity-tagged with file:line evidence, the canonical structural sections are present, and the target is a real path. Verdict is 'partial' rather than 'pass' only because the example is explicitly truncated mid-section ('... [example truncated for prompt size]'), so the final 'Qualitative review' block and any closing sections cannot be fully verified from the snippet provided."
+    "notes": "The example artefact meets three of four criteria cleanly: Australian/neutral spellings throughout, severity-tagged findings with file:line evidence, and a real target path rather than a placeholder. The canonical 'Frontmatter snapshot' section is present, but the fix-list section is titled 'top 5' rather than the criterion-specified 'top 15', a minor heading discrepancy. Overall the artefact demonstrates the intended output shape and earns a pass verdict despite that single heading mismatch."
   }
 }

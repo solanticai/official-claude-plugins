@@ -1,19 +1,19 @@
 {
   "skill": "resource-snapshot",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "User input matches the description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Simple verb swap retains identical intent and canonical scope."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation of the skill by name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to process/MCP snapshots."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General question about skills, not a process snapshot request."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Only the leading verb changes; the request still matches the canonical use case."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "The skill is invoked by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Claude process snapshots."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for a process/MCP snapshot."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative is brief and contains no American spellings; no -ize/-or violations present."},
-      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description specifies markdown; artefact is well-formed markdown with valid tables."},
-      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains Totals, Claude process tree, MCP servers, Orphan warning, and Codex sections as implied by description."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative contains no banned US spellings; wording is neutral (e.g., 'cross-platform', 'cleaned up')."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies a markdown report, not JSON/SQL/YAML; artefact is well-formed markdown with valid tables."},
+      {"text": "Report includes the canonical sections: 'Totals', 'Claude process tree'", "met": true, "evidence": "Both '## Totals' and '## Claude process tree' headings present in the artefact."}
     ],
-    "notes": "Artefact aligns with the description: a one-shot markdown report covering process tree, MCP servers, orphans, and total memory. Tables are well-formed and the orphan warning plus Codex informational note add useful context. The third judge criterion text was truncated in the prompt, so it was assessed against the canonical sections implied by the skill description; all expected sections are present."
+    "notes": "The example artefact is a clean, well-structured markdown report containing both required canonical sections, uses neutral/Australian-compatible spelling, and is machine-readable in the markdown form the description implies. All three criteria are satisfied."
   }
 }

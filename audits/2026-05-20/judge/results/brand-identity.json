@@ -1,19 +1,19 @@
 {
   "skill": "brand-identity",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical phrasing in the description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Generate for Produce preserves the canonical intent of producing a brand identity."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its exact name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding has no relation to brand identity, mission, vision, or values."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is a meta question, not a request to generate a brand identity."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Exact match to the description's canonical phrasing."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap preserves clear intent to generate core brand identity."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill brand-identity."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to brand identity generation."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta question about skills is out of scope for brand-identity."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Artefact uses 'behaviour', 'anonymised', 'centre', and 'AU-first' — Australian spellings throughout."},
-      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies a markdown brand-identity document; artefact is well-formed markdown with headings, tables, and blockquotes."},
-      {"text": "Report includes the canonical sections", "met": true, "evidence": "Artefact contains Brand Snapshot, Mission, Vision, Core Values, Voice Attributes, Tone Sliders, and Voice in Context sections matching mission/vision/values/voice/tone/personality."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Artefact uses 'Behavioural', 'centre', 'anonymised' — Australian forms; no banned US spellings observed."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies a markdown brand identity document, not JSON/SQL/YAML; markdown is well-formed with valid headings, tables, and blockquotes."},
+      {"text": "Report includes the canonical sections: \"1. Brand Snapshot\", \"2. Mission\"", "met": true, "evidence": "Headings '## 1. Brand Snapshot' and '## 2. Mission' both present in the artefact."}
     ],
-    "notes": "The example artefact aligns with the skill's described purpose: a foundational brand identity document covering mission, vision, values, voice, and tone. Australian English is used consistently (behaviour, anonymised, centre, AU-first). The third criterion text is truncated in the prompt ('canonical sections: \\') but the artefact clearly covers the canonical brand-identity sections expected. Verdict marked partial only because the third criterion is incompletely specified in the source prompt; on its observable content the artefact meets the implied bar."
+    "notes": "Activation correctly fires on the canonical phrase, paraphrase, and explicit name mention while rejecting the unrelated SSH query and the meta near-miss. The artefact demonstrates the full brand identity document grounded in archetypes — mission, vision, values, voice, tone sliders, and voice-in-context — uses Australian English throughout (behavioural, centre, anonymised), and includes both canonical numbered headings required by criterion three."
   }
 }

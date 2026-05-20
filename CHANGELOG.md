@@ -5,6 +5,32 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2026-05-20
+
+### Changed
+- **BREAKING — plugin rename: `skillops` → `skill-ops`** (v1.3.0 → v2.0.0). Brings the plugin into kebab-case alignment with every other plugin in the marketplace. Directory moved from `utilities/skillops/` to `utilities/skill-ops/`. Marketplace install command becomes `/plugin install skill-ops@anthril-claude-plugins`. All four contained skills (`skill-creator`, `skill-evaluator`, `skill-eval-harness`, `skill-eval-bootstrap`) keep their names and slash commands; only the plugin envelope was renamed.
+- **BREAKING — plugin rename: `plan-completion-audit` → `utilities`** (v1.0.3 → v2.0.0). Refactored from a single-skill plugin into a generic utilities plugin that can host future cross-cutting helper skills. Directory moved from `utilities/plan-completion-audit/` to `utilities/utilities/`. The `plan-completion-audit` skill itself is unchanged (still at `skills/plan-completion-audit/`, still invoked as `/plan-completion-audit`). Marketplace install command becomes `/plugin install utilities@anthril-claude-plugins`.
+- `.virustotal/skillops.json` → `.virustotal/skill-ops.json`; `.virustotal/plan-completion-audit.json` → `.virustotal/utilities.json`.
+- Updated all in-repo references (README, SECURITY summary table, welcome hook narrative, example artefacts in `skill-ops/skills/*/examples/`, resolver script message strings).
+
+### Migration
+
+Users with the old plugin names installed need to re-install under the new names:
+
+```bash
+/plugin uninstall skillops@anthril-claude-plugins
+/plugin uninstall plan-completion-audit@anthril-claude-plugins
+/plugin marketplace update anthril-claude-plugins
+/plugin install skill-ops@anthril-claude-plugins
+/plugin install utilities@anthril-claude-plugins
+```
+
+## [2.5.0] - 2026-05-20
+
+### Added
+- **`seo-toolkit`** (new plugin, new `seo` category) — 17 skills for end-to-end SEO: keyword-research, keyword-list-developer, keyword-clustering-and-mapping (wraps the external `keyword-clustering` package), serp-analysis, competitor-seo-audit, on-page-audit, technical-seo-audit, core-web-vitals-report, backlink-audit, content-gap-analysis, content-brief-generator, internal-linking-planner, schema-markup-generator, gsc-performance-report, local-seo-audit, redirect-map-builder, broken-link-scanner. Includes 3 sub-agents (seo-auditor, serp-analyst, content-strategist), 3 slash commands (seo-connect/seo-status/seo-disconnect), encrypted Fernet vault for SerpAPI/DataForSEO/Ahrefs/Moz/PSI/GSC/GA4 credentials, SessionStart + Stop hooks, and supporting Python scripts.
+- **`business-operations`** (new plugin, `smb` category) — 5 skills: revenue-channel-mapper, kpi-framework-generator, stakeholder-brief-builder, operational-bottleneck-detector, pricing-strategy-analyser. Pure reasoning skills, no external APIs.
+
 ## [2.4.0] - 2026-05-20
 
 ### Added

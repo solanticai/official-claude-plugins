@@ -1,5 +1,17 @@
 # KPI Framework Generator — Reference Material
 
+## Table of Contents
+
+- [Sean Ellis North-Star Framework](#sean-ellis-north-star-framework)
+- [AARRR Pirate Metrics (Dave McClure)](#aarrr-pirate-metrics-dave-mcclure)
+- [Doerr OKR Model](#doerr-okr-model)
+- [DuPont Financial Decomposition](#dupont-financial-decomposition)
+- [Industry KPI Benchmarks (Australian SMB context, 2024–2026)](#industry-kpi-benchmarks-australian-smb-context-20242026)
+- [Functional KPI Libraries](#functional-kpi-libraries)
+- [Mermaid Mindmap Template](#mermaid-mindmap-template)
+
+---
+
 ## Sean Ellis North-Star Framework
 
 The North-Star Metric (NSM) is the single metric that best captures the core value your product delivers to customers. It sits above all other metrics in the hierarchy.

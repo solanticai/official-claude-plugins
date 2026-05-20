@@ -2,7 +2,7 @@
 name: revenue-channel-mapper
 description: Map every revenue channel onto a unified canvas — contribution %, CAC, LTV, friction score — then prioritise with RICE and produce a 90-day experiment list
 argument-hint: [business-description-or-data-path]
-allowed-tools: Read Write Edit Bash
+allowed-tools: Read Write Edit Bash(cat:*) Bash(wc:*)
 effort: medium
 ---
 
@@ -174,6 +174,34 @@ Translate RICE priorities into a concrete, time-boxed experiment plan.
 
 ---
 
+## Reference Material
+
+Dense framework material is extracted to `reference.md`:
+- **Bullseye Framework (19 channels)** — full list with definitions and B2B/B2C suitability
+- **RICE scoring rubric** — Reach/Impact/Confidence/Effort scales with calibration anchors
+- **Channel benchmark table** — CAC/LTV ranges by channel for Australian SMBs
+- **LTV:CAC interpretation** — payback windows and red-flag thresholds
+
+Read `reference.md` before Phase 2 (channel inventory) and Phase 5 (RICE scoring).
+
+A worked example covering an Australian SaaS revenue map sits at `examples/example-output.md` — refer to it before drafting the executive summary.
+
+---
+
+## Tool Usage
+
+| Tool | Purpose |
+|------|---------|
+| `Read` | Ingest user-supplied CSV / spreadsheet exports of channel data and read `reference.md` |
+| `Write` | Emit the final `revenue-channel-map.md` to cwd |
+| `Edit` | Patch the draft after RICE re-scoring or user feedback |
+| `Bash(cat:*)` | Inspect large CSVs that exceed `Read`'s comfortable size before parsing |
+| `Bash(wc:*)` | Count rows in an input CSV to size the analysis up front |
+
+No unscoped shell access is required — the skill works from text inputs and produces a markdown artefact.
+
+---
+
 ## Output Format
 
 Assemble all outputs into a single markdown document using the template at `templates/output-template.md`:
@@ -207,7 +235,7 @@ Save the document as `revenue-channel-map.md` in the current directory unless th
 1. **Pre-revenue business** — Skip quantification for channels; use the Bullseye Framework to select the 3 highest-priority channels to test first. Output a prioritised test plan instead of a channel canvas.
 2. **Single-channel business** — Map the one channel in full detail, then use RICE to score the top 5 candidates. The output becomes a diversification plan.
 3. **No data available** — Produce a fully estimated canvas with every cell flagged `[est]`. Add a data-collection action plan as an appendix.
-4. **Data file provided** — Read it with the Read or Bash tool before Phase 1 questions. Extract what you can; ask only for missing fields.
+4. **Data file provided** — Read it with the `Read` tool first; use `Bash(cat:*)` only to peek at very large CSVs before parsing. Extract what you can; ask only for missing fields.
 5. **Conflicting data** — If the user's verbal description conflicts with numbers in a file, surface the conflict and ask which is authoritative.
 6. **B2B with long sales cycles** — Replace "monthly volume" with "pipeline entries per month" and note that LTV should use contract value, not monthly revenue.
 7. **Marketplace or platform business** — Split supply-side and demand-side channels separately; each has its own CAC and LTV dynamics.

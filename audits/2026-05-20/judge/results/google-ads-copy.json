@@ -8,12 +8,12 @@
     {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking about skills in general is meta and not a request to generate ad copy."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'cosy', 'Aussie', 'Australian winters', 'natural fibre', and AU spellings; no US spellings present."},
-      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies structured ad copy with character/pin rules; artefact provides tabular markdown with explicit char counts and pin slots, which is the canonical format for Google Ads asset specs."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Includes Headlines (15), Descriptions (4), Path fields, Sitelinks (6), Callouts (5), QA summary, and Next steps — the canonical Google Ads RSA + PMax asset sections."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Uses 'cosy', 'fibre', 'Aussie', 'Australian'; no US spellings detected anywhere in the artefact."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies structured ad copy with character/pin rules; artefact uses well-formed markdown tables with explicit char counts and pin slots — the canonical machine-parseable format for Google Ads asset specs."},
+      {"text": "Report includes the canonical sections: \"Headlines (15)\", \"Descriptions (4)\"", "met": true, "evidence": "Both headings present verbatim at lines 67 (## Headlines (15)) and 95 (## Descriptions (4)) with complete tables underneath."}
     ],
-    "notes": "The artefact is a well-structured Google Ads copy brief in Australian English with all canonical sections: 15 headlines with pin assignments and rationale, 4 descriptions, two path fields with character counts, 6 sitelinks, and 5 callouts, each with character-count validation. Character/pin rules from the description are honoured (headlines under 30, descriptions under 90, callouts under 25, paths under 15). Criterion 3 is truncated in the prompt but the artefact covers the expected canonical Google Ads sections, so the criterion is treated as met. Marked partial only because criterion 3's text was incomplete in the prompt; on substantive grounds the artefact passes all three checks."
+    "notes": "Artefact is a well-structured Google Ads copy brief in Australian English with all canonical sections: 15 headlines with pin assignments and rationale, 4 descriptions, two path fields with character counts, 6 sitelinks, and 5 callouts, each with character-count validation. Character/pin rules implied by the description are honoured throughout (headlines under 30, descriptions under 90, callouts under 25, paths under 15). All three judge criteria are met."
   }
 }

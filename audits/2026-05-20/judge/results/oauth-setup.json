@@ -2,17 +2,17 @@
   "skill": "oauth-setup",
   "activation_results": [
     {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is identical to the canonical use case and clearly within scope."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to OAuth platform connections."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for this OAuth setup skill."}
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Identical canonical phrasing about connecting Google and Meta via OAuth."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the oauth-setup skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to OAuth for Google/Meta ad platforms."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for OAuth platform connection."}
   ],
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Artefact contains no Australian-English markers; words like colour/optimise/behaviour/organise do not appear, though no obvious US spellings are present either."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact includes Connection summary, Google Cloud Console, Meta App, Token storage, and Next steps sections."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Artefact contains none of the listed US spellings; wording is neutral throughout."},
+      {"text": "Report includes the canonical sections: 'Google accounts', 'Google Ads accounts'", "met": false, "evidence": "Artefact has a 'Google Cloud Console — what was created' section and a Google Ads row in the connection table, but no headings titled 'Google accounts' or 'Google Ads accounts'."}
     ],
-    "notes": "The artefact cleanly covers the expected canonical sections (connection summary table, Google Cloud Console setup, Meta App setup, token storage, next steps) with vault keys, scopes, and expiry. The Australian-English criterion cannot be positively confirmed from the sample since no clear AU-spelled tokens appear, so it is marked unmet on the strict reading of the rubric."
+    "notes": "Activation classification is clean across all five cases. The artefact passes the spelling check (no listed US spellings appear) but only partially satisfies the structural criterion — Google and Google Ads details are present in the connection table and in the Google Cloud Console section, yet the exact canonical headings 'Google accounts' and 'Google Ads accounts' are not used, so that criterion is unmet and the overall verdict is partial."
   }
 }

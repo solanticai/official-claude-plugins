@@ -8,13 +8,13 @@
     {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about what skills are has no overlap with supply chain audit scope."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral/AU-compatible spellings; no US-only spellings detected (e.g., no 'color', 'optimize', 'behavior', 'organize')."},
-      {"text": "Findings cite file:line evidence and are categorised by severity", "met": false, "evidence": "Findings reference files (e.g., `charts/api/values.yaml`, `modules/vpc`, `.github/CODEOWNERS`) and are categorised by severity (CRITICAL/HIGH/MEDIUM), but no explicit line numbers are cited."},
-      {"text": "Report includes the canonical sections: \\", "met": true, "evidence": "Report contains Executive Summary, Category Scores, Per-Ecosystem Findings, Repo-wide Findings, SLSA Self-Assessment, Vulnerability Scan Summary, Risk Register, Action Batches, Suppressed."},
-      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Title names target `acme-api`; concrete paths used throughout (`package-lock.json`, `charts/api/values.yaml`, `modules/vpc`, `modules/rds`, `.github/CODEOWNERS`)."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative is free of the listed US spellings; uses neutral/AU-compatible forms throughout."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Findings reference files (charts/api/values.yaml, modules/vpc, .github/CODEOWNERS, package-lock.json) with explicit CRITICAL/HIGH/MEDIUM severity labels in the Risk Register and per-ecosystem lists."},
+      {"text": "Report includes the canonical sections: 'Executive Summary', 'Category Scores'", "met": true, "evidence": "Both '## Executive Summary' and '## Category Scores' headings are present."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Title names target 'acme-api'; concrete paths used throughout (package-lock.json, charts/api/values.yaml, modules/vpc, modules/rds, .github/CODEOWNERS) with no placeholders."}
     ],
-    "notes": "The artefact is a well-structured supply chain audit for `acme-api` covering the canonical sections, severity-graded findings, SLSA gap analysis, and a risk register with remediation. Australian English is consistent and no placeholder paths appear. The one shortfall against the stated criteria is the absence of explicit line-number citations alongside file references; findings name files and packages but stop at file-level granularity rather than file:line. Criterion 3's canonical-sections list is truncated in the prompt, so it was assessed against the visible expectation that standard audit sections appear, which they do."
+    "notes": "Artefact is a well-structured supply chain audit for acme-api covering the canonical sections, severity-graded findings against concrete files, SLSA gap analysis, vulnerability summary, risk register with remediation, and action batches. Spelling is consistent with Australian/neutral English, severity categorisation is explicit, both required canonical sections appear, and the target is named with real paths rather than placeholders. All four criteria are satisfied."
   }
 }

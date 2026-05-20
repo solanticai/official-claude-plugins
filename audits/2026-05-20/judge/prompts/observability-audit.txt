@@ -48,8 +48,8 @@ Read the example artefact below — it is the kind of output this skill should p
 produces the artefact described in examples/
 
 ### Judge criteria
-1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
-2. Report includes the canonical sections: \
+1. No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass
+2. Report includes the canonical sections: "Executive Summary", "Pillar Scores"
 3. Artefact references the input path or target by name (no placeholder paths)
 
 ### Artefact (example output)

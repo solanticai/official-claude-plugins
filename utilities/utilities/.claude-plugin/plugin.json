@@ -1,0 +1,9 @@
+{
+  "name": "utilities",
+  "version": "2.0.0",
+  "description": "General-purpose utility skills that don't fit a single domain — currently bundles plan-completion-audit (full-stack audit of project plans versus actual implementation with Supabase schema verification). Add new utility skills under skills/ as needed.",
+  "author": {
+    "name": "Anthril",
+    "email": "john@anthril.com"
+  }
+}

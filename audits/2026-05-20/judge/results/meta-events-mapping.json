@@ -8,12 +8,12 @@
     {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General question about what skills are has no overlap with event dictionary production."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD currency, Australian context (Koala & Co., GST); no American spellings detected in narrative."},
-      {"text": "Output is structured and parseable per the declared schema", "met": true, "evidence": "Markdown sections with canonical events table, per-event param schemas, inconsistencies table, and next steps — all parseable."},
-      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion text is truncated with no enumerated sections, so cannot verify completeness against an undefined list."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Scanned artefact — none of color/optimize/behavior/organize/center/defense/analyze appear; AUD currency and GST used."},
+      {"text": "Output is structured and parseable per the declared schema", "met": true, "evidence": "Markdown with H1/H2/H3 hierarchy, canonical events table, per-event param schemas, inconsistencies table, and next steps — fully parseable."},
+      {"text": "Report includes the canonical sections: \"Canonical events\", \"Param schemas per event\"", "met": true, "evidence": "Both H2 headings present in the artefact (## Canonical events and ## Param schemas per event)."}
     ],
-    "notes": "The artefact is well-structured, evidence-backed, and uses Australian conventions (AUD, GST, AU business name) consistent with the project's Australian English requirement. The schema is clear with a canonical mapping table, per-event GA4/Pixel/CAPI/DL param schemas, an inconsistencies register with severity, and concrete next steps. The third criterion is truncated in the prompt (no canonical section list is supplied after the colon), so it cannot be fully judged — marked not met on that technicality, yielding an overall partial verdict despite strong substantive quality."
+    "notes": "The artefact satisfies all three criteria. Narrative uses Australian/neutral spellings with AU context (AUD, GST, Koala & Co.). Structure is parseable markdown with a canonical events mapping table covering GA4/Meta Pixel/CAPI/dataLayer, per-event param schemas with types and derivations, an inconsistencies register with severity ratings, and actionable next steps. Both required canonical section headings are present verbatim."
   }
 }

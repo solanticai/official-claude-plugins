@@ -1,18 +1,18 @@
 {
   "skill": "google-ads-account-setup",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case in the description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is identical to the canonical phrasing and clearly within scope."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its exact name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Google Ads account setup."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A generic question about skills does not match Google Ads setup or auditing."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical phrasing and clearly invokes the skill."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill to run."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Google Ads setup or audit."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills, not a Google Ads task."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses Australian spellings (e.g., 'Personalized' appears in a Google UI label which is a proper noun reference; body text such as 'Timebox', 'Revisit' and 'shared' is consistent; no American spellings of colour/optimise/behaviour/organise appear)."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact includes header metadata, Audit findings, Conversion actions, Linked accounts, Fix plan, and Next steps sections in clearly delineated markdown."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "'Personalized advertising' appears only as a verbatim Google Ads UI label, not narrative; no banned American spellings in body text."},
+      {"text": "Report includes the canonical sections: \"Audit findings\", \"Conversion actions\"", "met": true, "evidence": "Both '## Audit findings' (line 66) and '## Conversion actions' (line 82) headings are present in the artefact."}
     ],
-    "notes": "Activation classification is unambiguous — all five cases align with expectations. The artefact demonstrates Australian-English narrative and the expected canonical structure (header block, audit findings table, conversion actions table, linked accounts table, fix plan with automatable/manual/wait-for-data splits, and next-steps queue). The judge criterion 2 in the prompt is truncated after 'canonical sections:', so the criterion was evaluated against the standard sections evident in the example artefact; verdict is partial because the second criterion's full list was not supplied in the prompt and could not be exhaustively verified."
+    "notes": "Activation classification is fully correct across all five cases. The artefact contains both required canonical sections and avoids American spellings in its narrative — 'Personalized advertising' appears only as a verbatim Google Ads UI label, which is acceptable. Overall pass."
   }
 }

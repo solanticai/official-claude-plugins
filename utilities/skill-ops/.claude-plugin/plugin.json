@@ -1,0 +1,9 @@
+{
+  "name": "skill-ops",
+  "version": "2.0.0",
+  "description": "Operate on Claude Code skills — scaffold new skills (skill-creator), audit existing skills against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap).",
+  "author": {
+    "name": "Anthril",
+    "email": "john@anthril.com"
+  }
+}

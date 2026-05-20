@@ -1,19 +1,19 @@
 {
   "skill": "utm-builder",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase preserves the canonical intent of generating UTM-tagged URLs."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Skill is invoked by its explicit name."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to UTM tagging or campaign URLs."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills does not request UTM URL generation."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap from Generate to Produce preserves the core intent of producing UTM-tagged URLs."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation of the skill by name should trigger activation."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to UTM tagging or campaign URL construction."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about what skills are has no overlap with UTM URL generation."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral terms and 'koalahomewares.com.au'; no Americanised spellings present."},
-      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "URLs are well-formed query strings and a CSV export is referenced for machine consumption."},
-      {"text": "Report includes the canonical sections", "met": true, "evidence": "Artefact contains URLs table, CSV export, Validation, and Next steps sections."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses neutral terms; no instances of color/optimize/behavior/organize/center/defense/analyze detected."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "URLs are well-formed query strings and a CSV filename is referenced for bulk export, matching the description's bulk CSV implication."},
+      {"text": "Report includes the canonical sections: \"URLs\", \"CSV export\"", "met": true, "evidence": "Artefact contains '## URLs' (line 65) and '## CSV export' (line 80) headings."}
     ],
-    "notes": "The artefact cleanly delivers the UTM URL table with per-URL source/medium/content, references a CSV export for bulk distribution, validates against existing GA4 sources and flags new pairs (satisfying the anti-fragmentation promise in the description), and provides actionable next steps. Criterion 3 was truncated in the prompt (no explicit section list given) so it was interpreted against the description's implied canonical sections (URLs, CSV, validation, next steps) — all present. Verdict marked 'partial' only because the third criterion's section list was incomplete in the prompt and could not be verified verbatim; functionally the artefact appears to meet expectations."
+    "notes": "The artefact cleanly satisfies all three criteria: it uses Australian/neutral spelling throughout, presents machine-readable UTM-tagged URLs in a structured table plus a referenced CSV export filename, and includes both required canonical section headings. Additional Validation and Next steps sections strengthen the output without breaking criteria. Activation classification is unambiguous across all five cases."
   }
 }

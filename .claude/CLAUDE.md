@@ -8,7 +8,7 @@
 
 ## Skill Structure
 
-Every skill lives under `<category>/<plugin-name>/skills/<skill-name>/` (where `<category>` is one of `lifestyle`, `smb`, `marketing`, `engineering`, `data-science`, `economics`, `utilities`) and must contain:
+Every skill lives under `<category>/<plugin-name>/skills/<skill-name>/` (where `<category>` is one of `lifestyle`, `smb`, `marketing`, `engineering`, `data-science`, `economics`, `utilities`, `seo`) and must contain:
 
 ```
 <skill-name>/
@@ -138,7 +138,7 @@ When adding a new plugin, add an entry to `.claude-plugin/marketplace.json`:
 }
 ```
 
-Categories: `lifestyle`, `smb`, `marketing`, `engineering`, `data-science`, `economics`, `utilities`
+Categories: `lifestyle`, `smb`, `marketing`, `engineering`, `data-science`, `economics`, `utilities`, `seo`
 
 ## Hooks
 

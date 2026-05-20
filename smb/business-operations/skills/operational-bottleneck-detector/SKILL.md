@@ -2,7 +2,7 @@
 name: operational-bottleneck-detector
 description: Identify operational bottlenecks across people, process, systems, and supply; quantify throughput loss; and produce a prioritised remediation queue with effort/impact scores
 argument-hint: [process-or-data-source]
-allowed-tools: Read Write Edit Bash Agent
+allowed-tools: Read Write Edit Bash(python3:*) Agent
 effort: high
 context: fork
 agent: Explore
@@ -66,6 +66,7 @@ Establish the process domain, data availability, and time horizon for the analys
    python3 scripts/parse_throughput_csv.py <path_to_csv>
    ```
    Parse the JSON output to extract cycle time per stage, WIP, and throughput.
+   > **Dependency:** `python3` (≥ 3.8) must be available in the environment. The script uses only standard library modules (`csv`, `json`, `datetime`) — no `pip install` required.
 4. Identify which teams or roles are involved in the process.
 
 #### Output
@@ -134,7 +135,7 @@ Apply Goldratt's 5 Focusing Steps to identify the single primary constraint.
    - Highest re-work rate or error rate
    - Most frequent handoff failure
    This stage is the candidate primary constraint.
-2. **Exploit**: Before recommending investment, determine how much more throughput could be extracted from the constraint with existing resources (shift patterns, batch size reduction, WIP limits).
+2. **Exploit**: Before recommending investment, determine how much additional throughput is extractable from the constraint using existing resources (shift patterns, batch-size reduction, WIP limits).
 3. **Subordinate**: Identify upstream stages that are currently overfeeding the constraint, creating unnecessary queue. These should be slowed or rate-limited.
 4. **Elevate**: If exploitation is insufficient, identify what investment (headcount, tooling, process redesign) would elevate the constraint's capacity.
 5. **Repeat**: After fixing the primary constraint, identify the next constraint. Flag this for the remediation queue.
@@ -189,6 +190,32 @@ Produce a prioritised remediation queue with effort and impact scores.
 
 #### Output
 Bottleneck register, remediation queue, and Mermaid VSM.
+
+---
+
+## Tool Usage
+
+| Tool | Purpose |
+|------|---------|
+| `Read` | Ingest user-supplied throughput CSVs, process docs; read `reference.md` |
+| `Write` | Emit the final `bottleneck-analysis.md` to cwd |
+| `Edit` | Patch the draft after constraint validation or user feedback |
+| `Bash(python3:*)` | Run `scripts/parse_throughput_csv.py` on user-supplied CSV data (Phase 1 Step 3); no general shell access |
+| `Agent` | Fork into an `Explore` subagent (Phase 1) when a data folder needs upfront ingestion before the main analysis |
+
+No unscoped shell access is required.
+
+---
+
+## Reference Material
+
+Analytical frameworks and scoring rubrics are in `reference.md`:
+- **Theory of Constraints — 5 Focusing Steps** — detailed Goldratt step definitions and exploitation tactics
+- **Value Stream Mapping notation** — stage symbols, WIP indicators, bottleneck markers
+- **Little's Law worked example** — validation table and discrepancy interpretation guide
+- **Bottleneck root-cause classification** — People / Process / Systems / Supply scoring criteria
+
+Read `reference.md` before Phase 4 (Constraint Identification) and Phase 5 (Root-Cause Analysis).
 
 ---
 

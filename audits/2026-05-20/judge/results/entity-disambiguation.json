@@ -2,17 +2,17 @@
   "skill": "entity-disambiguation",
   "activation_results": [
     {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is identical to the canonical phrasing and clearly within scope."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, so it should fire."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to entity disambiguation."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A general question about what skills are is out of scope for this skill."}
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Same canonical phrasing aligns directly with the skill's stated purpose."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to entity resolution across data sources."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills has no connection to entity disambiguation."}
   ],
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'normalised' and 'Pty Ltd', Australian phone format +61, and ABN — consistent with Australian English."},
-      {"text": "Report includes the canonical sections", "met": false, "evidence": "Criterion text is truncated in the prompt (ends after 'canonical sections:'), so the specific required sections are not enumerated; cannot verify completeness against an undefined list."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Narrative uses 'Normalised' and 'normalisation'; none of the listed American spellings appear."},
+      {"text": "Report includes the canonical sections: \"Entity Disambiguation Report — [Project/\"", "met": false, "evidence": "Title is '# Entity Disambiguation: Customer Merge' — does not follow the required 'Entity Disambiguation Report — [Project/...' heading pattern."}
     ],
-    "notes": "The artefact is a thorough entity-disambiguation report including match scoring rules, results summary, canonical record samples, sameAs mapping (SQL), confidence distribution, merge precedence rules, and orphan analysis. Australian English conventions appear consistently (normalised, Pty Ltd, ABN, +61 phone). The second criterion could not be fully evaluated because its enumeration of canonical sections is truncated in the prompt, so the overall verdict is partial."
+    "notes": "Artefact passes the Australian-English check (uses 'normalised'/'normalisation', Pty Ltd, +61, ABN; no banned American spellings). It fails the canonical-sections criterion because the top-level heading is 'Entity Disambiguation: Customer Merge' rather than the prescribed 'Entity Disambiguation Report — [Project/...]' form. Overall verdict is partial."
   }
 }

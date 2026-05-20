@@ -48,9 +48,9 @@ Read the example artefact below — it is the kind of output this skill should p
 produces the artefact described in examples/
 
 ### Judge criteria
-1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+1. No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass
 2. Artefact is a working specification, not a hypothetical or placeholder
-3. Report includes the canonical sections: \
+3. Report includes the canonical sections: "Anomaly Detection System — [Business Nam"
 
 ### Artefact (example output)
 ```

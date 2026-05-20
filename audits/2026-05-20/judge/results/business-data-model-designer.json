@@ -10,10 +10,10 @@
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Australian SMBs' and 'Australia/Sydney' timezone default; no American spellings observed in narrative."},
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "None of the flagged US spellings appear in the visible artefact; narrative uses 'Australian SMBs' and 'Australia/Sydney'."},
       {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": false, "evidence": "Artefact shows ERD, SQL migrations, and RLS policies but no explicit rationale or trade-off discussion in the visible portion (example is truncated)."},
-      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains header metadata, ERD section, and Migration sections with RLS policies — standard canonical structure for a data-model report."}
+      {"text": "Report includes the canonical sections: \"Data Model — [Application Name]\"", "met": true, "evidence": "Line 56 heading '# Data Model: SaaS Project Management Application' follows the canonical 'Data Model — [Application Name]' pattern (colon variant)."}
     ],
-    "notes": "The artefact demonstrates a competent data-model deliverable with ERD, SQL migrations, RLS policies, and Australian-English conventions (Sydney timezone, SMB framing). However, the visible portion lacks explicit design rationale and trade-off commentary — design choices like the workspace_members composite PK, ON DELETE RESTRICT on owner_id, and CHECK constraints are presented without explanation. Note the example is truncated, so rationale may appear later; verdict is partial on that basis."
+    "notes": "The artefact demonstrates a competent data-model deliverable with ERD, SQL migrations, RLS policies, and Australian-context defaults (Sydney timezone, SMB framing) and no offending US spellings in the visible text. The canonical heading is present. However, the visible portion lacks explicit design rationale and trade-off commentary — choices like the workspace_members composite PK, ON DELETE RESTRICT on owner_id, and the role taxonomy are presented without explanation. The example is truncated, so rationale may appear later; verdict is partial on that basis."
   }
 }

@@ -1,19 +1,19 @@
 {
   "skill": "unit-economics-calculator",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Exact match of the skill's canonical use case 'Calculate unit economics'."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase swapping Calculate for Estimate still clearly targets unit economics calculation."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill 'unit-economics-calculator'."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to unit economics."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills, not a request to calculate unit economics."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Direct match to the skill's canonical purpose of calculating unit economics."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Estimating unit economics is semantically equivalent to calculating them."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to unit economics."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta-question about skills, not a unit economics request."}
   ],
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD currency, Brisbane/QLD locale, 'labour' (not 'labor') multiple times in CAC/contribution sections."},
-      {"text": "Calculation steps are shown; inputs and assumptions are explicit", "met": true, "evidence": "LTV table shows inputs/source ($3,200 x 0.68 = $2,176; x32 months = $69,632; DCF-adjusted $38,400); CAC breakdown shows spend/clients/CAC per channel and fully-loaded build-up."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Has Core Metrics Summary, CAC Breakdown, LTV Calculation, Contribution Margin Waterfall, Scenario Analysis, Cohort Performance, Strategic Narrative and Action Items."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Uses 'labour' and 'modelling' multiple times; no American spellings observed in the visible artefact."},
+      {"text": "Calculation steps are shown; inputs and assumptions are explicit", "met": true, "evidence": "LTV table shows '$3,200 x 0.68 = $2,176' and '$2,176 x 32 = $69,632' with DCF-adjusted $38,400; CAC breakdown lists spend/clients/CAC per channel and a fully-loaded build-up."},
+      {"text": "Report includes the canonical sections: \"Unit Economics Model — [Business Name]\"", "met": false, "evidence": "Title reads '# Unit Economics: Spark Digital -- Australian Digital Marketing Agency', not the canonical 'Unit Economics Model — [Business Name]' heading format."}
     ],
-    "notes": "Artefact closely matches what the skill description promises: CAC, LTV, payback period, contribution margin and scenario analysis for a service business, with Australian-English narrative and explicit inputs. The third criterion text is truncated in the prompt (no specific section list provided), so it is judged met against the standard canonical unit-economics sections which are all present. Verdict marked partial only because the third criterion is incompletely specified in the prompt; on the substance presented, all criteria are satisfied."
+    "notes": "Artefact is thorough with clear calculations, explicit inputs/assumptions, and Australian-friendly spellings throughout. Two of three criteria are met substantively. The third criterion fails on literal heading format — the canonical title 'Unit Economics Model — [Business Name]' is replaced with a different formulation ('Unit Economics: Spark Digital -- ...'), so the verdict is partial rather than pass."
   }
 }

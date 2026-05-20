@@ -10,10 +10,10 @@
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AEST timezone, AUD currency, .com.au domain, and Australian business framing; no American spellings observed in narrative."},
-      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Four concrete rules with executable SQL against named Supabase tables, thresholds, severities, notification channels, and a triage playbook."},
-      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion text is truncated in the prompt with no enumerated sections, so canonical-sections cannot be verified; artefact includes rules and a playbook but no explicit baseline/governance/false-positive sections."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Scanned the full narrative — no banned US spellings; uses AEST, AUD, .com.au, neutral terms throughout."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Four concrete rules with executable SQL against named Supabase tables, dynamic and absolute thresholds, severities, notification channels, and a triage playbook."},
+      {"text": "Report includes the canonical sections: \"Anomaly Detection System — [Business Nam\"", "met": false, "evidence": "Artefact title is '# Anomaly Detection Rules: E-Commerce Revenue Monitoring' — uses 'Rules:' rather than the canonical 'Anomaly Detection System — [Business Name]' phrasing."}
     ],
-    "notes": "The example artefact is a substantive, working anomaly-detection specification with concrete SQL, dynamic and absolute thresholds, severity tiers, notification routing, and an investigation playbook — clearly not a placeholder. Australian conventions (AEST, AUD, .com.au) are consistently applied. The third criterion is truncated in the prompt (the canonical section list is missing), so it cannot be fully evaluated; marking it unmet for safety yields a partial verdict overall."
+    "notes": "The example artefact is a substantive, working anomaly-detection specification with concrete SQL, dynamic and absolute thresholds, severity tiers, notification routing, and an investigation playbook — clearly not a placeholder. Australian and neutral spellings are consistent throughout. However, the title does not match the required canonical heading 'Anomaly Detection System — [Business Name]' (the artefact says 'Anomaly Detection Rules: …'), so the canonical-sections criterion fails and the overall verdict is partial."
   }
 }

@@ -25,9 +25,9 @@ Maintained by [@Anthril](https://github.com/anthril).
 /plugin install data-analysis@anthril-claude-plugins
 /plugin install knowledge-engineering@anthril-claude-plugins
 /plugin install business-economics@anthril-claude-plugins
-/plugin install skillops@anthril-claude-plugins
+/plugin install skill-ops@anthril-claude-plugins
 /plugin install resource-manager@anthril-claude-plugins
-/plugin install plan-completion-audit@anthril-claude-plugins
+/plugin install utilities@anthril-claude-plugins
 /plugin install seo-toolkit@anthril-claude-plugins
 ```
 
@@ -209,14 +209,14 @@ Every DevOps skill supports three operating modes: static (default), `--live` (u
 
 ### Utilities
 
-#### SkillOps (`utilities/skillops` — 4 skills)
+#### Skill Ops (`utilities/skill-ops` — 4 skills)
 
 | Skill | Description |
 |-------|-------------|
-| [`skill-creator`](utilities/skillops/skills/skill-creator/) | Create new Claude Code skills with proper frontmatter, directory structure, templates, examples, and supporting files |
-| [`skill-evaluator`](utilities/skillops/skills/skill-evaluator/) | Audit an existing skill across **ten** quality dimensions — discovery, scope, conciseness, IA, content, tooling, testing, standards, activation/behaviour, anti-patterns — with a scored markdown report and JSON sidecar |
-| [`skill-eval-harness`](utilities/skillops/skills/skill-eval-harness/) | Run an `evals/suite.yaml` against a skill — activation tests, functional tests, edge cases, and a regression diff vs the previous run |
-| [`skill-eval-bootstrap`](utilities/skillops/skills/skill-eval-bootstrap/) | Scaffold a starter `evals/suite.yaml` from a skill's description, examples, and emitted error codes |
+| [`skill-creator`](utilities/skill-ops/skills/skill-creator/) | Create new Claude Code skills with proper frontmatter, directory structure, templates, examples, and supporting files |
+| [`skill-evaluator`](utilities/skill-ops/skills/skill-evaluator/) | Audit an existing skill across **ten** quality dimensions — discovery, scope, conciseness, IA, content, tooling, testing, standards, activation/behaviour, anti-patterns — with a scored markdown report and JSON sidecar |
+| [`skill-eval-harness`](utilities/skill-ops/skills/skill-eval-harness/) | Run an `evals/suite.yaml` against a skill — activation tests, functional tests, edge cases, and a regression diff vs the previous run |
+| [`skill-eval-bootstrap`](utilities/skill-ops/skills/skill-eval-bootstrap/) | Scaffold a starter `evals/suite.yaml` from a skill's description, examples, and emitted error codes |
 
 #### Resource Manager (`utilities/resource-manager` — 4 skills)
 
@@ -227,11 +227,13 @@ Every DevOps skill supports three operating modes: static (default), `--live` (u
 | [`resource-snapshot`](utilities/resource-manager/skills/resource-snapshot/) | One-shot markdown report of the Claude process tree, MCP servers, orphans, and total memory |
 | [`mcp-server-audit`](utilities/resource-manager/skills/mcp-server-audit/) | Audit MCP server registrations across user, project, and plugin configs — report always-on servers, duplicates, and drift |
 
-#### Plan Completion Audit (`utilities/plan-completion-audit` — 1 skill)
+#### Utilities (`utilities/utilities` — 1 skill, accepting contributions)
+
+General-purpose utility skills that don't fit a single domain. Plugin name renamed from `plan-completion-audit` so future utilities can be added alongside it.
 
 | Skill | Description |
 |-------|-------------|
-| [`plan-completion-audit`](utilities/plan-completion-audit/skills/plan-completion-audit/) | Full-stack audit of a project plan versus actual implementation — verifies plan vs code, types, bugs, security, Supabase schema, RLS, and frontend-backend alignment |
+| [`plan-completion-audit`](utilities/utilities/skills/plan-completion-audit/) | Full-stack audit of a project plan versus actual implementation — verifies plan vs code, types, bugs, security, Supabase schema, RLS, and frontend-backend alignment |
 
 ### SEO
 
@@ -285,7 +287,7 @@ Select skills also include:
 
 Every skill is audited against a 10-dimension rubric and exercised by a fleet-wide LLM-as-judge harness:
 
-- **Audit** — `/skill-evaluator <path>` produces a scored markdown report + JSON sidecar across 10 dimensions (45 deterministic checks plus a qualitative review). See [`utilities/skillops/skills/skill-evaluator/`](utilities/skillops/skills/skill-evaluator/).
+- **Audit** — `/skill-evaluator <path>` produces a scored markdown report + JSON sidecar across 10 dimensions (45 deterministic checks plus a qualitative review). See [`utilities/skill-ops/skills/skill-evaluator/`](utilities/skill-ops/skills/skill-evaluator/).
 - **Eval suites** — every skill has an `evals/suite.yaml` containing activation, functional, edge-case, and regression tests. Generated and tuned by `/skill-eval-bootstrap` and `tune-criteria.mjs`.
 - **Harness** — `/skill-eval-harness <skill> [--mode=fast]` runs the suite, dispatches the LLM-as-judge in a fresh subagent context, and emits a markdown run report plus an iteration-log row.
 - **Latest fleet run** — see [`audits/2026-05-20/judge/fleet-judge.md`](audits/2026-05-20/judge/fleet-judge.md) for the most recent fleet-wide judge verdicts.
@@ -318,9 +320,9 @@ official-claude-plugins/
 ├── economics/
 │   └── business-economics/        # 2 skills
 ├── utilities/
-│   ├── skillops/                  # 4 skills (skill-creator/evaluator/eval-harness/eval-bootstrap)
+│   ├── skill-ops/                 # 4 skills (skill-creator/evaluator/eval-harness/eval-bootstrap)
 │   ├── resource-manager/          # 4 skills + localhost dashboard
-│   └── plan-completion-audit/     # 1 skill
+│   └── utilities/                 # 1 skill (plan-completion-audit); generic catch-all plugin
 ├── seo/
 │   └── seo-toolkit/               # 17 skills
 ├── audits/                        # Time-stamped audit + judge reports

@@ -1,19 +1,19 @@
 {
   "skill": "meta-ads-copy",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap from Generate to Produce preserves intent and target artefact."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name unambiguously triggers activation."},
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Exact match to the skill's canonical use case in the description."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap from Generate to Produce preserves clear intent to create Meta Ads copy."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct mention of the skill name 'meta-ads-copy' unambiguously invokes it."},
     {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Meta Ads copy generation."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills generally is out of scope for ad copy generation."}
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills generally is out of scope for Meta Ads copy generation."}
   ],
   "judge_result": {
-    "verdict": "partial",
+    "verdict": "pass",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Australian', 'Aussie-Made', 'AU English' explicitly noted in QA; no American spellings detected."},
-      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies copy variants, not structured data; artefact provides structured markdown with a tabular A/B matrix which is the appropriate machine-parseable form."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact includes Primary text, Headlines, Descriptions, A/B test matrix, QA summary, and Next steps sections."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "Artefact uses 'polarising' (line 98) and neutral/AU spellings throughout; no banned US forms detected."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies markdown ad copy, not structured data; artefact is well-formed markdown with a parseable A/B matrix table."},
+      {"text": "Report includes the canonical sections: 'Primary text (6 variations)', 'Headlines (5, ≤27 chars)'", "met": true, "evidence": "Both headings appear verbatim at lines 66 and 106 of the artefact."}
     ],
-    "notes": "Artefact demonstrates the expected output shape: multiple primary-text angles (problem, benefit, story, social proof, urgency, contrarian), headline and description variants within character limits, an A/B matrix, and a QA summary. Australian English and brand-voice constraints are honoured. Criterion 3 was truncated in the prompt (no explicit section list given), so it was interpreted as the canonical sections implied by the description (primary text, headlines, CTA/descriptions) — all present. Overall verdict marked 'partial' only because criterion 3 was incompletely specified; on the visible criteria the artefact passes."
+    "notes": "The artefact satisfies all three judge criteria. Australian English is used consistently (e.g., 'polarising'), with no banned US spellings detected. The skill produces markdown ad copy rather than structured data, so the machine-readability criterion is satisfied by the well-formed markdown structure including a parseable A/B test matrix. Both canonical section headings appear exactly as required, with the six primary-text variations and five headlines within the ≤27-character limit."
   }
 }

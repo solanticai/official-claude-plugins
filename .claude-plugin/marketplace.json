@@ -40,20 +40,20 @@
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/package-manager"
     },
     {
-      "name": "plan-completion-audit",
-      "version": "1.0.3",
-      "description": "Full-stack audit of project plans versus actual implementation with Supabase schema verification",
-      "source": "./utilities/plan-completion-audit",
+      "name": "utilities",
+      "version": "2.0.0",
+      "description": "General-purpose utility skills — currently bundles plan-completion-audit (full-stack audit of project plans versus actual implementation with Supabase schema verification). Renamed from `plan-completion-audit` so future generic utility skills can ship in the same plugin.",
+      "source": "./utilities/utilities",
       "category": "utilities",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/plan-completion-audit"
+      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/utilities"
     },
     {
-      "name": "skillops",
-      "version": "1.3.0",
-      "description": "Operate on Claude Code skills — scaffold (skill-creator), audit against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap).",
-      "source": "./utilities/skillops",
+      "name": "skill-ops",
+      "version": "2.0.0",
+      "description": "Operate on Claude Code skills — scaffold (skill-creator), audit against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap). Renamed from `skillops` to match the kebab-case convention used by every other plugin.",
+      "source": "./utilities/skill-ops",
       "category": "utilities",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/skillops"
+      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/skill-ops"
     },
     {
       "name": "brand-manager",
@@ -102,6 +102,22 @@
       "source": "./utilities/resource-manager",
       "category": "utilities",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/resource-manager"
+    },
+    {
+      "name": "seo-toolkit",
+      "version": "1.0.0",
+      "description": "17 skills for end-to-end SEO — research, clustering/mapping, audits, content, reporting",
+      "source": "./seo/seo-toolkit",
+      "category": "seo",
+      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/seo/seo-toolkit"
+    },
+    {
+      "name": "business-operations",
+      "version": "1.0.0",
+      "description": "5 skills for SMB operations — channels, KPIs, briefs, bottlenecks, pricing",
+      "source": "./smb/business-operations",
+      "category": "smb",
+      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/smb/business-operations"
     }
   ]
 }

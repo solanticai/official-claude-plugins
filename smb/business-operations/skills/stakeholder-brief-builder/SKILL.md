@@ -108,7 +108,7 @@ Draft the brief using SCQA structure — the spine that ensures the narrative lo
    - Decision or ask (1 sentence or bulleted list): what you need from the reader
    - Risks and mitigations (2–4 bullet points): flagged honestly
    - Next steps (numbered list, 2–4 items with dates)
-3. Check that the brief could be read in under 3 minutes.
+3. Verify the brief reads in under 3 minutes — if it does not, cut the weakest paragraph.
 
 #### Output
 Full SCQA brief draft.
@@ -155,6 +155,34 @@ Assemble and deliver the final 1-page brief ready for distribution or sign-off.
 
 #### Output
 Final 1-page brief saved as markdown.
+
+---
+
+## Reference Material
+
+Dense framework material is in `reference.md`:
+- **Audience Mode Matrix** — Executive / Technical / Operational / Customer modes with framing rules
+- **Tone Matrix** — Formal / Direct / Warm / Regulatory voice rules
+- **SCQA Pattern Library** — situation/complication/question/answer structure variants
+- **Plain-English Conversion Table** — corporate jargon → reader-friendly equivalents
+
+Read `reference.md` before Phase 2 (audience analysis) and Phase 4 (tone calibration).
+
+Two worked examples live under `examples/`:
+- `example-output.md` — board-confidential brief (executive mode, formal tone)
+- `example-output-staff.md` — all-staff brief on the same underlying topic (operational mode, direct tone) — use this to compare tone-shifting against a fixed factual core
+
+---
+
+## Tool Usage
+
+| Tool | Purpose |
+|------|---------|
+| `Read` | Ingest user-supplied source material (financial reports, OKRs, prior briefs) and read `reference.md` |
+| `Write` | Emit the final `stakeholder-brief-<topic>-<audience>-<date>.md` to cwd |
+| `Edit` | Patch the draft after audience review or tone-calibration feedback |
+
+No shell, network, or agent tools are required.
 
 ---
 

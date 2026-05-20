@@ -1,20 +1,20 @@
 {
   "skill": "sre-reliability-audit",
   "activation_results": [
-    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical description verbatim."},
-    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase swapping Assess for Evaluate preserves the SRE maturity intent."},
-    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill."},
-    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to SRE maturity assessment."},
-    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills is out of scope for an SRE audit."}
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Synonym swap (Evaluate vs Assess) preserves the core SRE-maturity intent."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to SRE maturity assessment."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta-question about skills, not an SRE audit request."}
   ],
   "judge_result": {
     "verdict": "partial",
     "criterion_results": [
-      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "No American spellings detected; narrative uses neutral/AusE forms (e.g., 'cadence', 'consolidate', 'committed')."},
-      {"text": "Assessment is bounded — explicit scope, explicit out-of-scope", "met": false, "evidence": "Report names a target (acme-api) and mode (live) but does not declare an explicit out-of-scope section."},
-      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Contains TL;DR, Dimension Heatmap, Per-Dimension Assessment (D1–D5), Incident Trend, Uplift Path, Suppressed."},
-      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Title 'SRE Reliability Audit — acme-api' and references to runbooks/, docs/postmortems/, slo.yaml."}
+      {"text": "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass", "met": true, "evidence": "None of the flagged American spellings appear in the narrative."},
+      {"text": "Assessment is bounded — explicit scope, explicit out-of-scope", "met": false, "evidence": "Title names target 'acme-api' and mode 'live' but there is no explicit scope/out-of-scope section; 'Suppressed: None' is not a scope declaration."},
+      {"text": "Report includes the canonical sections: 'TL;DR', 'Dimension Heatmap'", "met": true, "evidence": "'## TL;DR' and '## Dimension Heatmap' headings both present near the top of the artefact."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Title references 'acme-api'; body references concrete paths runbooks/, docs/postmortems/, slo.yaml."}
     ],
-    "notes": "The artefact is well-structured and concrete, naming the target (acme-api) and real paths rather than placeholders, with the five-dimension heatmap and uplift path the description promises. The criterion list in the prompt was truncated after 'canonical sections:' so it was evaluated against the standard sections visible in the artefact, all of which are present. The main shortfall is the absence of an explicit out-of-scope statement bounding the assessment; scope is implied through mode and target only. Australian English usage is consistent with no American-only spellings present."
+    "notes": "Artefact satisfies the canonical sectioning, target naming, and spelling conventions, but lacks an explicit scope/out-of-scope statement bounding the assessment. Mode and target are stated in the header, however nothing enumerates what services or dimensions were deliberately excluded. Recommend adding a 'Scope' block listing in-scope services and explicit exclusions to fully meet the bounded-assessment criterion."
   }
 }
