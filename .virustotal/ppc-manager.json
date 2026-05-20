@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T15:07:06.333Z",
+  "scanned_at": "2026-05-18T15:29:13.121Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/ppc-manager",
-    "sha256": "d8fa32bf2ccc2090f230e4ae41caa6ec868942e3036cdefbbc62db3bcf416800",
-    "size_bytes": 276909
+    "sha256": "3d25f37e56c707f4b9a3dad8b929f3d0c06323e34b3ce7422a71b3f3fb41c3af",
+    "size_bytes": 275050
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
+    "undetected": 62,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777907125,
-  "gui_url": "https://www.virustotal.com/gui/file/d8fa32bf2ccc2090f230e4ae41caa6ec868942e3036cdefbbc62db3bcf416800",
+  "last_analysis_date": 1779118051,
+  "gui_url": "https://www.virustotal.com/gui/file/3d25f37e56c707f4b9a3dad8b929f3d0c06323e34b3ce7422a71b3f3fb41c3af",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -40,7 +40,7 @@
       "result": null
     },
     {
-      "engine": "CMC",
+      "engine": "CTX",
       "category": "undetected",
       "result": null
     },
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -86,6 +86,11 @@
     },
     {
       "engine": "CrowdStrike",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -145,6 +150,11 @@
       "result": null
     },
     {
+      "engine": "Tencent",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Sophos",
       "category": "undetected",
       "result": null
@@ -160,7 +170,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -175,7 +185,7 @@
       "result": null
     },
     {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
@@ -190,17 +200,12 @@
       "result": null
     },
     {
-      "engine": "GData",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +235,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +250,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -340,12 +345,12 @@
       "result": null
     },
     {
-      "engine": "DeepInstinct",
+      "engine": "Elastic",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Elastic",
+      "engine": "DeepInstinct",
       "category": "type-unsupported",
       "result": null
     },

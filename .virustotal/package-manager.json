@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T14:57:16.055Z",
+  "scanned_at": "2026-05-18T15:17:39.647Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/package-manager",
-    "sha256": "c181b14f3c0037382e2bd1bf6f5e40034df28498c264a6b3c475343e47bd34c0",
-    "size_bytes": 54431
+    "sha256": "00cf896f7e3db9635922080326ebdbbbc6bca19de6c7209b54637eae116c4aa6",
+    "size_bytes": 54758
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 60,
+    "undetected": 61,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906555,
-  "gui_url": "https://www.virustotal.com/gui/file/c181b14f3c0037382e2bd1bf6f5e40034df28498c264a6b3c475343e47bd34c0",
+  "last_analysis_date": 1779117337,
+  "gui_url": "https://www.virustotal.com/gui/file/00cf896f7e3db9635922080326ebdbbbc6bca19de6c7209b54637eae116c4aa6",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -75,7 +75,7 @@
       "result": null
     },
     {
-      "engine": "CrowdStrike",
+      "engine": "K7AntiVirus",
       "category": "undetected",
       "result": null
     },
@@ -85,12 +85,7 @@
       "result": null
     },
     {
-      "engine": "K7AntiVirus",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Arcabit",
+      "engine": "CrowdStrike",
       "category": "undetected",
       "result": null
     },
@@ -145,6 +140,11 @@
       "result": null
     },
     {
+      "engine": "Rising",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Sophos",
       "category": "undetected",
       "result": null
@@ -160,7 +160,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -190,12 +190,17 @@
       "result": null
     },
     {
+      "engine": "GData",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -225,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -240,12 +245,12 @@
       "result": null
     },
     {
-      "engine": "GData",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -275,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -345,11 +350,6 @@
       "result": null
     },
     {
-      "engine": "Webroot",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "APEX",
       "category": "type-unsupported",
       "result": null
@@ -360,12 +360,17 @@
       "result": null
     },
     {
+      "engine": "Trapmine",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Trapmine",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },

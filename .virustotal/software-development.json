@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T15:05:04.346Z",
+  "scanned_at": "2026-05-18T15:27:10.266Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/software-development",
-    "sha256": "57bd72746889ed8efa5ed2ed8002047908779adc4d3b9d3d5342b29ebad9e1df",
-    "size_bytes": 206072
+    "sha256": "5e9344c1e9d3d354f1fac835de39f878409bc2c194d92fcfc6e57dbfbb9a4061",
+    "size_bytes": 208230
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
+    "undetected": 62,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777906982,
-  "gui_url": "https://www.virustotal.com/gui/file/57bd72746889ed8efa5ed2ed8002047908779adc4d3b9d3d5342b29ebad9e1df",
+  "last_analysis_date": 1779117888,
+  "gui_url": "https://www.virustotal.com/gui/file/5e9344c1e9d3d354f1fac835de39f878409bc2c194d92fcfc6e57dbfbb9a4061",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -40,7 +40,7 @@
       "result": null
     },
     {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
@@ -145,7 +145,12 @@
       "result": null
     },
     {
-      "engine": "Emsisoft",
+      "engine": "Tencent",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Sophos",
       "category": "undetected",
       "result": null
     },
@@ -175,12 +180,12 @@
       "result": null
     },
     {
-      "engine": "CMC",
+      "engine": "CTX",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Sophos",
+      "engine": "Emsisoft",
       "category": "undetected",
       "result": null
     },
@@ -340,12 +345,12 @@
       "result": null
     },
     {
-      "engine": "Elastic",
+      "engine": "DeepInstinct",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "DeepInstinct",
+      "engine": "Elastic",
       "category": "type-unsupported",
       "result": null
     },

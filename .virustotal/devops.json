@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-04T15:12:10.613Z",
+  "scanned_at": "2026-05-11T15:32:17.190Z",
   "scan_source": "upload",
   "tarball": {
     "path": "plugins/devops",
-    "sha256": "6196677cd5d655352c6f0acbf816db50c3f54f495a711730b68fbd985f8fddc8",
-    "size_bytes": 91338
+    "sha256": "4abd8f36f329d2c0e0714805892b2477605a2b20439eeee51688a1dd4d8eab83",
+    "size_bytes": 91334
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 60,
+    "undetected": 61,
     "timeout": 0,
-    "total_engines": 74
+    "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1777907389,
-  "gui_url": "https://www.virustotal.com/gui/file/6196677cd5d655352c6f0acbf816db50c3f54f495a711730b68fbd985f8fddc8",
+  "last_analysis_date": 1778513436,
+  "gui_url": "https://www.virustotal.com/gui/file/4abd8f36f329d2c0e0714805892b2477605a2b20439eeee51688a1dd4d8eab83",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -40,7 +40,7 @@
       "result": null
     },
     {
-      "engine": "CTX",
+      "engine": "CMC",
       "category": "undetected",
       "result": null
     },
@@ -86,6 +86,11 @@
     },
     {
       "engine": "CrowdStrike",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -140,6 +145,11 @@
       "result": null
     },
     {
+      "engine": "Rising",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Sophos",
       "category": "undetected",
       "result": null
@@ -170,7 +180,7 @@
       "result": null
     },
     {
-      "engine": "CMC",
+      "engine": "CTX",
       "category": "undetected",
       "result": null
     },
@@ -190,7 +200,7 @@
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -210,11 +220,6 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Gridinsoft",
       "category": "undetected",
       "result": null
@@ -225,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,7 +250,7 @@
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -275,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },

@@ -33,7 +33,7 @@ If you discover a security issue in any plugin or in the marketplace tooling, pl
 For dependency vulnerabilities surfaced by VirusTotal scans (non-zero detections in the table below), review the linked VT report first — false positives are common for gzipped shell-heavy archives. Confirmed true positives are treated as P0 and the affected plugin is delisted from `marketplace.json` pending remediation.
 
 <!-- vt-summary:start -->
-## Latest scan — 2026-05-04
+## Latest scan — 2026-05-18
 
 | Plugin | Detections | Last scan | Report |
 |---|---:|---|---|
