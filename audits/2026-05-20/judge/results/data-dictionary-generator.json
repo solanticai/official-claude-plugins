@@ -1,0 +1,18 @@
+{
+  "skill": "data-dictionary-generator",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input mirrors the description's intent of generating data dictionaries from schemas/CSV/APIs."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, so it should fire."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to data dictionaries or schemas."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about skills is out of scope for data dictionary generation."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'organisation', 'organisations' consistently throughout tables and prose."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains Schema Overview, Table Dictionary, Relationship Map, and Entity Relationship Diagram (Mermaid ERD) sections."}
+    ],
+    "notes": "The example artefact demonstrates a comprehensive data dictionary with schema overview metrics, detailed per-table documentation including columns/constraints/indexes/PII flags, a relationship map with cardinalities, and a Mermaid ERD. Australian English spelling ('organisation') is used consistently. Both judge criteria are satisfied."
+  }
+}

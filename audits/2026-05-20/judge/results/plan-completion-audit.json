@@ -1,0 +1,20 @@
+{
+  "skill": "plan-completion-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a clear synonym of audit in this context."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User names the skill directly."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH config is unrelated to plan auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills, not a request to audit a plan."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Phase 4 heading 'Code Structure & Optimisation' uses Australian spelling."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Phase 3 table lists severity (WARNING) with file:line such as src/app/(dashboard)/charts/page.tsx:112."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact contains Summary plus Phases 1-11 covering plan, types, bugs, structure, failsafes, security, hardening, cleanup, build, Supabase, alignment."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Plan Source cited as .claude/plans/sprint-12-dashboard.md and project named acme-dashboard."}
+    ],
+    "notes": "All five activation cases match expectations and all four judge criteria are satisfied by the example artefact, which uses Australian spelling (Optimisation), cites concrete file:line evidence with severity labels, includes the full canonical phase set, and references a real plan path rather than placeholders."
+  }
+}

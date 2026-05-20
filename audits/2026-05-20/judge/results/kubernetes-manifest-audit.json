@@ -1,0 +1,19 @@
+{
+  "skill": "kubernetes-manifest-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap from Audit to Review still clearly invokes the same scope and targets."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill kubernetes-manifest-audit."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to Kubernetes manifest auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills generally — no Kubernetes audit intent."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Narrative is short and uses no diagnostic spellings (no colour/optimise/behaviour/organise tokens present); cannot verify Australian English from the artefact."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Risk Register and Top risks cite paths like charts/api/templates/deployment.yaml:42 and group findings tag CRITICAL/HIGH/MEDIUM."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Artefact includes Executive Summary, Workload Graph, Category Scores, Per-Group Findings, kube-bench results, Runtime Resilience Test, Risk Register, Action Batches, Suppressed."}
+    ],
+    "notes": "The artefact demonstrates strong structural coverage with all expected canonical sections present, severity-tagged findings, and precise file:line evidence in the Risk Register. However, the narrative contains no Australian-English diagnostic tokens (no colour/optimise/behaviour/organise spellings appear), so the AusE criterion cannot be affirmatively verified from the artefact alone — hence a partial verdict."
+  }
+}

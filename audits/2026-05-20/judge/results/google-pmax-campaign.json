@@ -1,0 +1,19 @@
+{
+  "skill": "google-pmax-campaign",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Create is a natural paraphrase of Build for the same PMax campaign task."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, so it should fire."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Google Ads campaigns."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is meta and out of scope for a PMax builder."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD, Australian winter, Aussie Made, dd/mm/yyyy dates, .com.au URLs — consistent Australian register."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Concrete customer id, budget, bidding, asset-group themes, headlines, descriptions, feed filters, exclusions and readiness checklist with dates."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Header, Asset groups, URL expansion exclusions, Merchant Center feed filter, Readiness checklist, Next steps — all present."}
+    ],
+    "notes": "Artefact is a production-ready PMax campaign spec with concrete budget, bidding, asset groups (themes, audience signals, headlines, descriptions, image/video briefs), URL exclusions, Merchant Center feed filter, readiness checklist and next steps. Australian English and AU conventions used throughout. All three criteria pass."
+  }
+}

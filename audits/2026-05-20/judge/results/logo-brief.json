@@ -1,0 +1,19 @@
+{
+  "skill": "logo-brief",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap preserves the canonical intent of creating a logo design brief."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to logo design briefs."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills is not a request to produce a logo brief."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colours', 'stylisation', 'sceptical', 'signalling', 'AUD' — Australian spellings and conventions throughout."},
+      {"text": "Artefact is a complete, runnable specification — not a placeholder", "met": true, "evidence": "Concrete brand (Verdant), budget, timeline, audience, mark-type rationale, two fully-developed concept directions with AI prompt seeds."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Background, Goals, Audience, Brand identity reference, Mark Type, and Concept Directions sections as numbered headings."}
+    ],
+    "notes": "The example artefact is a substantive, ready-to-send logo brief for a fictional Melbourne eco-cleaning brand. It demonstrates Australian English usage, provides concrete budget/timeline/audience details, justifies mark-type choice, and develops multiple concept directions complete with style references, rationale, risk analysis, and AI prompt seeds. Although the artefact is truncated mid-Concept 2, the visible structure satisfies the canonical-section criterion and the brief reads as a real specification rather than a placeholder."
+  }
+}

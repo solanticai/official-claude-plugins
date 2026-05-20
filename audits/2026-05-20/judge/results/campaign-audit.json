@@ -1,0 +1,19 @@
+{
+  "skill": "campaign-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a direct synonym of Audit in this PPC context."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to PPC auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not a PPC audit request."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'optimisation', 'prioritised', 'undercount' consistent with AU spelling; no US variants observed."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": false, "evidence": "Findings are categorised by severity (Blockers/Tuning/Experiments and health-score severities), but cite account/campaign/keyword data points rather than file:line references — appropriate for a PPC audit but does not literally satisfy 'file:line'."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Includes Executive summary, Blockers, Tuning, Experiments, Cross-platform reconciliation, Health scores, Remediation playbook, Next steps — comprehensive canonical structure; criterion text was truncated so interpreted as 'standard audit sections present'."}
+    ],
+    "notes": "The artefact is a high-quality PPC audit using Australian English, severity-tiered findings, and a complete set of canonical sections. The file:line criterion is a poor fit for a PPC domain (no source files exist to cite); the artefact substitutes equivalent evidence — campaign names, keyword counts, GA4 vs platform variances — which is the correct domain-appropriate analogue. Marked partial to reflect literal non-satisfaction of file:line while acknowledging strong overall quality."
+  }
+}

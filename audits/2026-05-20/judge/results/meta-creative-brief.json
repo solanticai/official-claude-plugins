@@ -1,0 +1,19 @@
+{
+  "skill": "meta-creative-brief",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical phrasing exactly."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Produce for Generate preserves intent to create a Meta Ads creative brief."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, which should trigger activation."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Meta Ads creative work."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General query about skills does not request a Meta Ads creative brief."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Aussie-made', 'Handmade in Australia', AU English phrasing; no US spellings detected."},
+      {"text": "Output is structured and parseable per the declared schema", "met": true, "evidence": "Clear markdown headings, tables, bullet lists for formats, captions, production spec, timeline."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Formats (Reel/Feed/Carousel), Scene-by-scene, Captions, Production spec, Brand/voice, Timeline, Next steps."}
+    ],
+    "notes": "The artefact delivers a complete Meta Ads creative brief covering concept, hook, scene-by-scene breakdown, copy variants with character counts, and production-ready asset specifications across Reels, Feed, and Carousel formats. Narrative uses Australian English consistently and structure is cleanly parseable markdown. All three judge criteria are satisfied."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "skill": "cli-ux-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap (Review for Audit) preserves the core intent of auditing a CLI's UX."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name should trigger activation."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to auditing CLI UX."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General question about skills is out of scope for a CLI UX audit."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colour' consistently (e.g. 'Semantic colour usage', 'NO_COLOR honoured', 'CVD-safe palette') and 'honoured' with Australian spelling."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": false, "evidence": "Findings reference commands and behaviours (e.g. `widgetctl delete <id>`, `NO_COLOR=1 widgetctl list`) and use PASS/FAIL/PARTIAL status, but no file:line citations appear; severity is implied via per-phase scoring rather than explicit severity tags on findings."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Includes Summary, CLI Identity, and Phase Results (Phases 1–9) covering Discovery, Help, Command Structure, Errors, Output, Interactivity, Discoverability, Accessibility, and Terminal Compatibility."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Names the concrete target 'widgetctl' throughout, with binary path `/usr/local/bin/widgetctl` and repo `github.com/example/widgetctl` — no `<placeholder>` tokens."}
+    ],
+    "notes": "Artefact is a well-structured CLI UX audit using Australian English and a concrete target (widgetctl) rather than placeholders, and it spans the expected canonical phases. The main gap is evidence granularity: findings cite commands and observed behaviour but lack file:line references, and severity is conveyed via PASS/FAIL/PARTIAL plus phase scores rather than an explicit severity taxonomy on each finding. Overall verdict is partial because three of four criteria are clearly met but the evidence/severity criterion is not."
+  }
+}

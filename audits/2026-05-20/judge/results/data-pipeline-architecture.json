@@ -1,0 +1,19 @@
+{
+  "skill": "data-pipeline-architecture",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is a verbatim match of the skill description."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Architect is a clear synonym for Design within the same ETL/ELT pipeline context."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its exact name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to data pipeline architecture."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills generally, not about designing a pipeline."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD currency and AEST timezone; no obvious US spellings observed in narrative (e.g., no 'color', 'optimize', 'behavior')."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": false, "evidence": "Artefact extensively documents the design (architecture diagram, schemas, transform function, scheduling) but the visible portion does not surface trade-offs or rationale for design choices; example is truncated so a Trade-offs section may exist beyond cut-off."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Contains canonical sections: Architecture Overview, Data Flow (Ingestion/Transformation/Serving phases), Scheduling, plus schema and SQL specs."}
+    ],
+    "notes": "The artefact is a strong, concrete pipeline design covering ingestion, transformation, serving, scheduling, and schemas with AUD/AEST localisation consistent with Australian English conventions. However the visible portion lacks an explicit rationale or trade-offs discussion (e.g., why pg_cron over external orchestrator, why Supabase over BigQuery, idempotency choices) — these may be in the truncated tail but cannot be verified from the provided excerpt, so the rationale criterion is marked unmet. Canonical section criterion text was empty after the colon, interpreted permissively against typical pipeline sections present in the artefact."
+  }
+}

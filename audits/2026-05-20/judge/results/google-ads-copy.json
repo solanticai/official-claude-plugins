@@ -1,0 +1,19 @@
+{
+  "skill": "google-ads-copy",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Produce is a direct synonym for Generate and the rest of the phrase matches the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by its exact kebab-case name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Google Ads copy generation."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking about skills in general is meta and not a request to generate ad copy."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'cosy', 'Aussie', 'Australian winters', 'natural fibre', and AU spellings; no US spellings present."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies structured ad copy with character/pin rules; artefact provides tabular markdown with explicit char counts and pin slots, which is the canonical format for Google Ads asset specs."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Includes Headlines (15), Descriptions (4), Path fields, Sitelinks (6), Callouts (5), QA summary, and Next steps — the canonical Google Ads RSA + PMax asset sections."}
+    ],
+    "notes": "The artefact is a well-structured Google Ads copy brief in Australian English with all canonical sections: 15 headlines with pin assignments and rationale, 4 descriptions, two path fields with character counts, 6 sitelinks, and 5 callouts, each with character-count validation. Character/pin rules from the description are honoured (headlines under 30, descriptions under 90, callouts under 25, paths under 15). Criterion 3 is truncated in the prompt but the artefact covers the expected canonical Google Ads sections, so the criterion is treated as met. Marked partial only because criterion 3's text was incomplete in the prompt; on substantive grounds the artefact passes all three checks."
+  }
+}

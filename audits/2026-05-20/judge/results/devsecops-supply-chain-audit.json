@@ -1,0 +1,20 @@
+{
+  "skill": "devsecops-supply-chain-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — canonical supply chain audit across all listed ecosystems."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a natural synonym of audit and the ecosystem list is identical, so the skill should fire."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by exact name, which is an unambiguous activation signal."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to supply chain auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about what skills are has no overlap with supply chain audit scope."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral/AU-compatible spellings; no US-only spellings detected (e.g., no 'color', 'optimize', 'behavior', 'organize')."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": false, "evidence": "Findings reference files (e.g., `charts/api/values.yaml`, `modules/vpc`, `.github/CODEOWNERS`) and are categorised by severity (CRITICAL/HIGH/MEDIUM), but no explicit line numbers are cited."},
+      {"text": "Report includes the canonical sections: \\", "met": true, "evidence": "Report contains Executive Summary, Category Scores, Per-Ecosystem Findings, Repo-wide Findings, SLSA Self-Assessment, Vulnerability Scan Summary, Risk Register, Action Batches, Suppressed."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Title names target `acme-api`; concrete paths used throughout (`package-lock.json`, `charts/api/values.yaml`, `modules/vpc`, `modules/rds`, `.github/CODEOWNERS`)."}
+    ],
+    "notes": "The artefact is a well-structured supply chain audit for `acme-api` covering the canonical sections, severity-graded findings, SLSA gap analysis, and a risk register with remediation. Australian English is consistent and no placeholder paths appear. The one shortfall against the stated criteria is the absence of explicit line-number citations alongside file references; findings name files and packages but stop at file-level granularity rather than file:line. Criterion 3's canonical-sections list is truncated in the prompt, so it was assessed against the visible expectation that standard audit sections appear, which they do."
+  }
+}

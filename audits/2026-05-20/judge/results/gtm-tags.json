@@ -1,0 +1,19 @@
+{
+  "skill": "gtm-tags",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the skill description, an exact match for the canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Only the leading verb changes (Create to Build); intent and scope are identical."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation by skill name 'gtm-tags' clearly requests this skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to GTM tags, triggers, or variables."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is a meta-question, not a request to build or audit GTM tags."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'authorised' and AUD currency/AEST timezone; no American spellings present in narrative."},
+      {"text": "Artefact is a complete, runnable specification — not a placeholder", "met": true, "evidence": "Concrete container ID, version 43 published, named variables/triggers/tags with actual fbq code and parameters, preview verification with observed values."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Has Goal, Changes applied (Variables/Triggers/Tags), Preview verification, Published version, Next steps."}
+    ],
+    "notes": "The artefact is a complete, publish-ready GTM configuration spec for a Meta Pixel Purchase event. It includes container/version metadata, concrete variable/trigger/tag definitions with real parameter code, preview verification steps with observed dataLayer values and user confirmation timestamp, published version details, and actionable next steps referencing related skills. Australian English conventions (authorised, AUD, AEST) are observed and no American spellings appear in the narrative."
+  }
+}

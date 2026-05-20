@@ -1,0 +1,19 @@
+{
+  "skill": "target-audience",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the skill description's canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Identical scope with only the leading verb swapped from Build to Create."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to personas, ICPs, or audience segmentation."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills, not a request for audience analysis."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD pricing, BAS, ABN, Australian geography (NSW, VIC, QLD, Western Sydney), and 'standardise' spelling."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Concrete named company Ledgerly with specific numbers (CAC $480, LTV $12,400, 31-month retention, segment sizes) and a named persona (Carla Nguyen)."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains Audience Snapshot, Segments (4), ICP, and Personas sections matching the expected structure."}
+    ],
+    "notes": "The artefact is a concrete, working target-audience specification for Ledgerly with four segments, a designated ICP (Hand-Off Founder) with identifying signals and unit economics, and a fleshed-out persona. Australian English and AU-specific context (BAS, ABN, AUD, state references) are consistently applied. All three judge criteria are met."
+  }
+}

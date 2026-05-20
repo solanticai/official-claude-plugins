@@ -1,0 +1,19 @@
+{
+  "skill": "display-ad-specs",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Generate is a direct synonym of Produce and the rest of the request maps exactly to the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Skill is invoked explicitly by its kebab-case name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to display ad creative specs."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is not about producing display ad specs."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colour profile', 'honoured', 'centred', 'neutralised' style spellings (e.g. 'sRGB colour profile', 'palette honoured', 'centred or slightly off-centre')."},
+      {"text": "Output is structured and parseable per the declared schema", "met": true, "evidence": "Markdown with clear sections, tables for image specs, bulleted lists, and a checklist — parseable."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains image spec matrix, logo specs, video spec, copy assets, designer brief, production checklist, and next steps."}
+    ],
+    "notes": "Artefact satisfies all three judge criteria: Australian spellings appear in the narrative (colour, centred, honoured), the document is well-structured markdown with tables and lists making it parseable, and it covers the canonical sections expected for a display ad spec brief — image spec matrix, logo specs, video spec, copy assets with character counts, a detailed designer brief, production checklist, and next steps."
+  }
+}

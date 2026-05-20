@@ -1,0 +1,19 @@
+{
+  "skill": "observability-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical phrasing about scoring observability across the four pillars."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Identical canonical phrasing aligns directly with the skill's stated purpose."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to observability pillars or telemetry auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about skills does not request an observability audit."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses Australian-compatible spellings (e.g. 'normalised', 'decommissioned'); no US-only spellings like 'color' or 'optimize' detected."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Executive Summary, Pillar Scores, Service x Pillar Heatmap, Per-Pillar Findings, Synthetic Alert Trace, Action List, and Suppressed sections."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Names target 'acme-api' in title and concrete paths like 'src/webhook/handler.ts' and 'k8s/api/servicemonitor.yaml:12'."}
+    ],
+    "notes": "The example artefact satisfies all three judge criteria: Australian English conventions are honoured (normalised), the canonical structural sections are present and well-formed, and the report references the concrete target 'acme-api' along with specific file paths rather than placeholders."
+  }
+}

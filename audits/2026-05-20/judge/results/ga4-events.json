@@ -1,0 +1,19 @@
+{
+  "skill": "ga4-events",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case in the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase preserves the core intent of designing the GA4 event catalogue."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to GA4 or analytics event design."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is meta-conversation, not a GA4 event design request."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AU spellings/terms (e.g., 'catalogue', 'AEST', 'AUD', 'Afterpay', dd/mm/yyyy dates) with no US spellings detected."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": true, "evidence": "Rationale columns on conversions and custom dimensions; explicit pushback on add_to_cart/begin_checkout with reasoning; Open issues section surfaces trade-offs."},
+      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion text is truncated with no canonical section list provided, so completeness against it cannot be verified; the artefact does include inventory, conversions, custom dimensions/metrics, DebugView verification, open issues, and next steps."}
+    ],
+    "notes": "The artefact clearly satisfies the first two criteria — Australian English is consistent and design choices are paired with rationale and explicit trade-offs (e.g., declining to mark add_to_cart/begin_checkout as conversions). The third criterion is unverifiable because the canonical section list is missing from the prompt; the artefact nonetheless presents a coherent canonical structure (Event inventory, Conversions, Custom dimensions, Custom metrics, DebugView verification, Open issues, Next steps), so a reasonable reading would lean toward pass, but strict evaluation must mark it not-met. Overall verdict: partial."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "gtm-datalayer",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Design for Architect preserves the intent of designing a dataLayer schema."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill gtm-datalayer."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to GTM dataLayer schemas."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is meta and out of scope for dataLayer schema design."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses AUD, GST, and Australian retailer context; no American spellings present in the visible text."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": true, "evidence": "Summary explains GA4 spec adherence for downstream compatibility and event_id derivation for Meta CAPI dedup, surfacing design rationale."},
+      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion text is truncated with no canonical section list provided, so it cannot be verified; artefact does include Summary, Event catalogue, Schema per event, Helper function, GTM variables, Rollout checklist."}
+    ],
+    "notes": "The artefact is a thorough dataLayer design for an Australian Shopify retailer, with event catalogue, per-event schemas with Liquid/JS push snippets, a helper function, a GTM variables table, and a rollout checklist. It demonstrates both design choices and rationale (GA4 spec compatibility, deterministic event_id for CAPI dedup, AUD numeric money fields). Australian English context is present (AUD, GST, Australian homewares retailer). The third criterion is truncated in the prompt with no enumerated canonical sections, so it is marked not met for lack of a verifiable list; overall verdict is partial."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "youtube-campaign",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Exact match to the skill's canonical description verb and object."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Build for Create preserves the canonical intent of building a YouTube Ads campaign."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation of the skill by its kebab-case name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to YouTube Ads campaigns."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta query about skills generally is out of scope for a YouTube Ads campaign builder."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD currency, Australian-made, Australian homes, AU-only targeting; no US spellings like 'color' or 'optimize' detected."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Concrete campaign names, AUD bids (tCPM 8, CPV 0.08, tCPA 45), real landing URLs (koalahomewares.com.au), scene-by-scene scripts with timestamps, and dated production steps."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Includes Campaigns, Video asset briefs, Companion banner, Readiness checklist, and Next steps sections."}
+    ],
+    "notes": "The artefact is a production-ready YouTube Ads campaign specification for Koala wool throws covering three funnel stages (awareness/consideration/action) with format, bidding, audience, asset, landing page, and budget per campaign. Video briefs include duration, aspect ratios, dimensions, hooks, scene-by-scene breakdowns, and CTAs. Australian English and AUD currency are used consistently. A readiness checklist and concrete next steps tie it to adjacent skills (keyword-research, meta-audience-builder, google-ads-account-setup, campaign-audit). Third criterion text is truncated in the prompt but all canonical sections present in the example are accounted for."
+  }
+}

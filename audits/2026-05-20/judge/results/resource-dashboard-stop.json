@@ -1,0 +1,17 @@
+{
+  "skill": "resource-dashboard-stop",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "User input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is the canonical phrasing and clearly matches the skill's purpose."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to stopping a dashboard server."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, no relation to stopping the dashboard."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral/Australian-compatible spellings (e.g., 'Idempotent', 'behaviour'-compatible vocabulary); no American-only spellings like 'color', 'optimize', 'behavior', or 'organize' appear."}
+    ],
+    "notes": "The artefact contains no spellings that violate Australian English conventions. No instances of 'color', 'optimize', 'behavior', or 'organize' are present. The narrative is concise and technical, and the spellings used are consistent with Australian English."
+  }
+}

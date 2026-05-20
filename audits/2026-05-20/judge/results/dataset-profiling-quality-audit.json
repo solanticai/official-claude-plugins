@@ -1,0 +1,19 @@
+{
+  "skill": "dataset-profiling-quality-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case described."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to dataset profiling or data quality."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for data profiling."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Normalise', 'Standardise', 'Prioritised', 'Brisbane-based', and Australian state references."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Structural Profile, Quality Scorecard, Issue Details, Prioritised Cleaning Recommendations, Post-Cleaning Validation Checks."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "References concrete dataset `customers_export_2026-03.csv` and output `duplicates_review.csv`."}
+    ],
+    "notes": "The artefact demonstrates a complete data profiling and quality audit with all canonical sections present, uses Australian English consistently (Normalise, Standardise, Prioritised), references a concrete dataset filename rather than placeholders, and provides actionable, prioritised cleaning recommendations with executable Python snippets. All three judge criteria are satisfied."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "business-data-model-designer",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Architect is a clear synonym for Design and the rest of the request is identical."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by its exact name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration has no relation to Supabase data modelling."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills is unrelated to designing data models."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Australian SMBs' and 'Australia/Sydney' timezone default; no American spellings observed in narrative."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": false, "evidence": "Artefact shows ERD, SQL migrations, and RLS policies but no explicit rationale or trade-off discussion in the visible portion (example is truncated)."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains header metadata, ERD section, and Migration sections with RLS policies — standard canonical structure for a data-model report."}
+    ],
+    "notes": "The artefact demonstrates a competent data-model deliverable with ERD, SQL migrations, RLS policies, and Australian-English conventions (Sydney timezone, SMB framing). However, the visible portion lacks explicit design rationale and trade-off commentary — design choices like the workspace_members composite PK, ON DELETE RESTRICT on owner_id, and CHECK constraints are presented without explanation. Note the example is truncated, so rationale may appear later; verdict is partial on that basis."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "meta-capi-setup",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is identical to the canonical use case and clearly matches."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill meta-capi-setup."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Meta Conversions API setup."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for CAPI configuration."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "No US spellings observed; narrative uses neutral/AU-compatible forms (e.g., 'koalahomewares.com.au', no 'color'/'optimize' detected)."},
+      {"text": "Configuration is complete; no required keys left blank", "met": true, "evidence": "Pixel ID, access token, test event code, backend path, deploy target, env vars all populated."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Dedup strategy, Events forwarded server-side, Implementation, Test Events validation, Production checklist, and Next steps."}
+    ],
+    "notes": "Artefact is a thorough Meta CAPI setup report with deduplication strategy, server-side event table with EMQ targets, a Cloudflare Worker implementation with env vars, Test Events validation results, a production checklist (one item intentionally unchecked with explanation), and concrete next steps. Australian English conventions are maintained and all required configuration keys are populated."
+  }
+}

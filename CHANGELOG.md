@@ -5,6 +5,23 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-05-20
+
+### Added
+- **First fleet-wide LLM-as-judge run** — every skill in the marketplace evaluated end-to-end against its `evals/suite.yaml`. One Agent per skill (general-purpose, fresh context) performed activation classification (5 cases) plus a functional judge against the skill's example artefact. Aggregate report at `audits/2026-05-20/judge/fleet-judge.md` and JSON sidecar `fleet-judge.json`. Per-skill raw verdicts at `audits/2026-05-20/judge/results/<skill>.json`.
+- `skill-eval-bootstrap/scripts/tune-criteria.mjs` — programmatic criteria tuner; derives skill-specific judge criteria from each SKILL.md's description, Output Format block, and templates/. Run across all 67 suites — 65 changed, 2 had no functional case.
+- `skill-eval-harness/templates/activation-prompt-template.md` — canonical activation classifier prompt. Used by Phase 2 in `--mode=full` (default); `check-activation.sh` keyword-overlap proxy stays as `--mode=fast` fallback.
+- `skill-eval-harness/scripts/build-judge-prompt.mjs` — renders a per-skill judge prompt bundling activation + functional judge into one Agent task.
+- `skill-eval-harness/scripts/aggregate-fleet.mjs` — collates per-skill judge JSONs into the fleet report.
+
+### Changed
+- Harness SKILL.md Phase 2 activation step now invokes Agent against the new prompt template by default; `check-activation.sh` documented as the fast-mode fallback.
+
+### Fleet judge results
+
+- **Activation:** 335/335 pass across all skills (100%). The Agent-based classifier confirms the bootstrapped activation cases work as intended.
+- **Functional judge:** 27 pass · 36 partial · 2 fail · 2 skipped (no example artefact). The 2 fails are both judge-criterion artefacts of strictness (no AusE marker words present in technical narrative); the 2 skipped are the two skills added in this branch (`skill-eval-harness`, `skill-eval-bootstrap`), neither of which has an `examples/` directory yet.
+
 ## [2.3.0] - 2026-05-20
 
 ### Added

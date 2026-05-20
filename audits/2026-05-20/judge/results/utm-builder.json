@@ -1,0 +1,19 @@
+{
+  "skill": "utm-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase preserves the canonical intent of generating UTM-tagged URLs."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Skill is invoked by its explicit name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to UTM tagging or campaign URLs."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills does not request UTM URL generation."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral terms and 'koalahomewares.com.au'; no Americanised spellings present."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "URLs are well-formed query strings and a CSV export is referenced for machine consumption."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Artefact contains URLs table, CSV export, Validation, and Next steps sections."}
+    ],
+    "notes": "The artefact cleanly delivers the UTM URL table with per-URL source/medium/content, references a CSV export for bulk distribution, validates against existing GA4 sources and flags new pairs (satisfying the anti-fragmentation promise in the description), and provides actionable next steps. Criterion 3 was truncated in the prompt (no explicit section list given) so it was interpreted against the description's implied canonical sections (URLs, CSV, validation, next steps) — all present. Verdict marked 'partial' only because the third criterion's section list was incomplete in the prompt and could not be verified verbatim; functionally the artefact appears to meet expectations."
+  }
+}

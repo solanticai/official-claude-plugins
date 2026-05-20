@@ -1,0 +1,19 @@
+{
+  "skill": "entity-relationship-mapper",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input nearly matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Diagram is a clear synonym for Map in this domain context."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to entity-relationship modelling."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills, not a request to map entities."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Organisation' consistently throughout entity tables and definitions."},
+      {"text": "Mapping is exhaustive — every input has an output and vice versa", "met": true, "evidence": "Entity Inventory counts align with @id Architecture rows, Relationship Matrix, and JSON-LD @graph entries."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Entity Inventory, Entity Definitions/@id Architecture, ER Diagram, Relationship Matrix, sameAs Mappings, and JSON-LD @graph snippet."}
+    ],
+    "notes": "Artefact demonstrates the canonical structure expected for an entity-relationship mapping output, with Schema.org types, deterministic @id patterns, sameAs links, and a JSON-LD @graph. Australian English spelling ('Organisation') is preserved. The example is truncated but the visible sections are coherent and exhaustive against the stated entity counts."
+  }
+}

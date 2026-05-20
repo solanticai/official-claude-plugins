@@ -1,0 +1,19 @@
+{
+  "skill": "meta-pixel-setup",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Build is a natural synonym for Create with the same Meta Pixel object."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill meta-pixel-setup."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Meta Pixel or GTM."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not about creating or auditing a Meta Pixel."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "No American spellings present; narrative is neutral and consistent with Australian English conventions."},
+      {"text": "Artefact is a complete, runnable specification — not a placeholder", "met": true, "evidence": "Concrete Pixel ID, GTM container, event table with triggers/params/eventID, AEM ranking, verification checklist, and next steps are all specified."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Header (Pixel ID, Container, Date), Events installed, AEM priority ranking, Verification, Next steps — all present."}
+    ],
+    "notes": "The example artefact is a fully populated Meta Pixel setup report for Koala & Co. Online with seven event tags mapped to GTM triggers and dataLayer-based eventIDs, an AEM priority ranking, a verification checklist confirming pixel firing and Test Events visibility, and a sequenced list of next steps including CAPI setup and event-mapping skills. It reads as a complete, deployable specification rather than a placeholder, the canonical sections are all present, and language conventions are consistent with Australian English."
+  }
+}

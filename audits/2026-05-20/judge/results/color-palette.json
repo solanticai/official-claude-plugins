@@ -1,0 +1,19 @@
+{
+  "skill": "color-palette",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim — canonical trigger."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase only swaps the leading verb; intent and scope are identical to the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill (color-palette)."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to brand colour palettes."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills in general; no colour-palette intent."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colour', 'Colours' in section headings and body throughout; no American spellings observed."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "HEX/RGB/HSL/OKLCH values rendered as parseable code spans (e.g. `oklch(0.27 0.07 250)`, `rgb(10, 37, 64)`); palette and contrast tables are structured markdown."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Palette Snapshot, Primary Colours, Secondary Colours, Semantic Colours, Neutral Ramp, and Contrast Validation — the expected canonical sections for a brand colour palette."}
+    ],
+    "notes": "Artefact satisfies the three criteria: Australian English is consistent ('colour', 'Colours'), colour values are presented in machine-readable code spans with structured tables, and the document contains the canonical sections expected of a brand palette deliverable (snapshot, primary, secondary, semantic, neutral ramp, contrast validation with WCAG AA/AAA outcomes)."
+  }
+}

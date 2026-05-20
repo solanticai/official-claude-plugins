@@ -1,0 +1,17 @@
+{
+  "skill": "resource-dashboard",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case wording."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Claude resource dashboards."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not a dashboard launch request."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Artefact narrative contains no distinctive Australian spellings; uses 'gracefully' and 'classified' but no colour/optimise/behaviour/organise tokens to confirm AusEng. No US spellings present either, so neutral."}
+    ],
+    "notes": "The artefact is technically clear and uses no spellings that violate Australian English, but it also contains none of the AusEng marker words listed in the criterion, so the criterion cannot be affirmatively verified. Marking partial as the text is compatible with AusEng but provides no positive evidence."
+  }
+}

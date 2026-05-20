@@ -1,0 +1,19 @@
+{
+  "skill": "design-tokens",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Only the leading verb is swapped; intent is identical."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to design tokens."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not about generating design tokens."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colour' consistently (e.g. 'colour, type, space, and radius', 'Colour' in token table)."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Contains a well-formed W3C JSON token block and a CSS variables export block."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Has Token System Overview, Naming Convention, Token Set (W3C JSON), and CSS Variables Export sections."}
+    ],
+    "notes": "The artefact demonstrates the expected design token system output: structured markdown with Australian English ('colour'), a machine-readable W3C JSON token definition covering colour, typography, spacing, radius, shadow, and motion (duration), plus a CSS Variables export. Canonical sections (overview, naming convention, token set, export formats) are present. The example is truncated but the visible content satisfies all three criteria."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "skill": "knowledge-graph-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input is identical to the canonical description, clearly within scope."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill to run."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to knowledge graph construction."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for graph specification."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'specialisations' in the Consultant node properties row."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact contains numbered sections 1-6: Node Types, Edge Types, Graph Statistics, Sample Subgraph, JSON-LD Representation, PostgreSQL JSONB Implementation."}
+    ],
+    "notes": "Artefact demonstrates the expected knowledge graph specification with node/edge type tables, statistics, a sample subgraph, JSON-LD context, and a Supabase/PostgreSQL JSONB schema with example query — covering all three target implementations named in the description. Australian spelling ('specialisations') appears in the schema. The second judge criterion was truncated in the prompt but the artefact clearly includes canonical sections, so it is treated as met."
+  }
+}

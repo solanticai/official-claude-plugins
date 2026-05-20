@@ -1,0 +1,19 @@
+{
+  "skill": "postgres-schema-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the description's canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a direct synonym for Audit; scope and trigger phrasing match the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill to run."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Postgres schema auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Question is meta about skills generally, not a Postgres schema audit request."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Artefact contains no instances of the listed Australian spellings; vocabulary used (e.g., 'totalling', 'cross-schema') is neutral, with no clear Australian markers visible in the shown excerpt."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Section 3 groups findings into CRITICAL/HIGH/MEDIUM/LOW/INFO/FLAG-ONLY with per-finding Evidence column citing schema.table.column and pg_catalog attributes (e.g., 'relrowsecurity=true, pg_policies rows=0')."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact opens with metadata table then '## 1. Executive Summary', '## 2. Schemas Overview', '## 3. Findings by Severity' with severity subsections — canonical structure present."}
+    ],
+    "notes": "The example demonstrates a well-structured Postgres schema audit with metadata header, executive summary, schemas overview, and severity-grouped findings carrying database-level evidence (catalog attributes, column types, identifier paths in place of file:line, which is appropriate for a database audit). The activation description and observable structure align with the skill's intent. The Australian English criterion is not clearly met in the visible excerpt — none of the diagnostic markers (colour/optimise/behaviour/organise) appear, and the prose is largely neutral, so the criterion is marked unmet on the available evidence. Overall verdict is partial pending narrative spelling confirmation."
+  }
+}

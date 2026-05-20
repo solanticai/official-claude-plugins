@@ -1,0 +1,17 @@
+{
+  "skill": "plan-orchestrator",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the description's canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's primary purpose directly."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to planning bullet lists of tasks."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not a request to plan tasks."}
+  ],
+  "judge_result": {
+    "verdict": "fail",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Artefact uses US spellings: 'signatures' is neutral, but 'currency text NOT NULL DEFAULT \\'USD\\'' uses USD (acceptable as a code value); narrative contains no distinctively Australian spellings, and the evidence section references 'STRIPE_WEBHOOK_SECRET'. No clear Australian English markers (colour/optimise/behaviour/organise) present in the narrative to confirm compliance."}
+    ],
+    "notes": "The artefact contains primarily technical narrative without many words that would distinguish Australian from US English. No US-specific spellings like 'color', 'optimize', 'behavior', or 'organize' appear in the narrative either, but neither do their Australian equivalents — the criterion specifically requires Australian spellings to be present, and none can be confirmed in the visible portion of the example. Marking as fail due to lack of positive evidence of Australian English usage."
+  }
+}

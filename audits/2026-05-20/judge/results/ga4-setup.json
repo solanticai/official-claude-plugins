@@ -1,0 +1,19 @@
+{
+  "skill": "ga4-setup",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input exactly matches the description's canonical use case of configuring a GA4 property end-to-end."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Same canonical phrasing aligns directly with the skill description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Skill is invoked explicitly by name (ga4-setup)."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding has no relation to GA4 property setup."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about what skills are does not match the GA4 setup scope."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD, Australia/Sydney, and no American spellings detected in narrative."},
+      {"text": "Configuration is complete; no required keys left blank", "met": true, "evidence": "Property, account, currency, time zone, industry, data streams, retention, and links all specified or assigned desired values."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains Snapshot, Audit findings (Already correct / Needs fixing / Manual steps), Changes applied via MCP, Smoke report, and Next steps."}
+    ],
+    "notes": "Artefact demonstrates a complete GA4 setup audit with snapshot, prioritised fixes, MCP-vs-manual delineation, smoke-test event counts, and clear next-step skill handoffs. Australian English conventions are followed and no required configuration keys are left blank."
+  }
+}

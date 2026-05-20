@@ -1,0 +1,19 @@
+{
+  "skill": "meta-audience-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Create is a direct synonym of Build; rest of phrase matches the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its exact name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Meta audiences."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about skills in general is out of scope for building Meta audiences."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses AU-compatible spelling (no American variants present); date format 11/04/2026 is DD/MM/YYYY and country code AU."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Concrete ad account act_1234567890, pixel id, named audiences with sizes, retentions, statuses, and a campaign-use matrix."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Retargeting audiences, Lookalike audiences, Exclusion audiences, Campaign use matrix, and Next steps sections."}
+    ],
+    "notes": "Example artefact is a concrete, ready-to-activate Meta audiences specification with retargeting, lookalike, and exclusion audience tables, a campaign use matrix mapping includes/excludes per campaign type, and actionable next steps. Date format and country targeting align with Australian conventions; no American spellings appear."
+  }
+}

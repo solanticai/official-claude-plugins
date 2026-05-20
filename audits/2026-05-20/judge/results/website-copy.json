@@ -1,0 +1,19 @@
+{
+  "skill": "website-copy",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input exactly matches the canonical description of generating multi-page website copy aligned to brand voice."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap from Generate to Produce preserves the core intent matching the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicitly names the skill, so it should activate."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to website copywriting."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking about the concept of skills generally is not a request to generate website copy."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'optimise' and 'optimised' in problem/differentiator sections; no American spellings observed."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies a markdown copy deck, not structured data; artefact is well-structured markdown with clear headings and slugs."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes Site Overview, Homepage (hero, problem, solution, features, differentiator, social proof, final CTA), About (with origin story), and the example continues into further pages."}
+    ],
+    "notes": "Artefact is a strong, voice-consistent multi-page website copy deck for Stillwater with explicit conversion goals, CTAs, sitemap, voice notes, and banned-word list. Australian English usage is consistent (optimise/optimised). The criterion about machine-readability is interpreted loosely since the skill description implies prose deliverables (copy + meta descriptions + CTAs) rather than JSON/SQL/YAML; the artefact is cleanly structured markdown. The canonical sections criterion is truncated in the prompt but the artefact clearly contains the expected homepage/about/features/pricing-style structure. Verdict is partial only because the artefact is truncated in the prompt and meta descriptions per page were not visible in the provided excerpt."
+  }
+}

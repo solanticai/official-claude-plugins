@@ -1,0 +1,19 @@
+{
+  "skill": "gtm-setup",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the skill description, the canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Swapping Create for Build keeps the intent of creating/auditing a GTM container baseline."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Direct invocation by skill name should activate it."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to GTM container setup."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta question about skills does not match GTM container work."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'rationalising' and Australian context (koalahomewares.com.au, Australian homewares retailer); no American spellings detected."},
+      {"text": "Artefact is a complete, runnable specification — not a placeholder", "met": true, "evidence": "Includes concrete container_id, version_id, named tags/triggers/variables, preview URL and step-by-step verification — no TBDs."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Contains Summary, Baseline status, Changes applied (Variables/Triggers/Tags created, renamed, deleted), Preview & verification, and Recommended next steps."}
+    ],
+    "notes": "The example artefact is a fully specified GTM baseline change log with concrete IDs, named entities, a verifiable preview URL, and clear next-step handoffs. Australian English and context are consistent throughout, and all canonical sections expected of a GTM setup report are present."
+  }
+}

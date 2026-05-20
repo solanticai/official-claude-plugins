@@ -1,0 +1,19 @@
+{
+  "skill": "market-sizing-tam-estimator",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the skill description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Calculate is a direct synonym for Estimate; all other terms match."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH config is unrelated to market sizing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills is out of scope for TAM estimation."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "AUD currency, ABS data sources, AU market references; no American spellings observed (e.g., 'penetrated', 'generalist' are neutral)."},
+      {"text": "Estimates show their working — assumptions, ranges, sensitivity", "met": true, "evidence": "Assumption Register (A1-A8), Sensitivity Analysis tables on ACV/share and adoption rate, and convergence check between top-down and bottom-up."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Sections 1-9 cover Exec Summary, TAM top-down, TAM bottom-up, SAM, SOM, Assumptions, Sensitivity, Competitive Landscape, Takeaways."}
+    ],
+    "notes": "The artefact is a comprehensive market sizing report meeting all judge criteria. It demonstrates clear working with both top-down and bottom-up TAM derivations, a quantified SAM funnel, SOM with rationale, an assumption register tagged by confidence and sensitivity, two-way sensitivity tables, and AU-calibrated data (ABS, AUD, ServiceM8/Tradify benchmarks). Narrative is consistent with Australian English conventions."
+  }
+}

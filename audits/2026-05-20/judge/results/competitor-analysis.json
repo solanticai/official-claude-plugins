@@ -1,0 +1,19 @@
+{
+  "skill": "competitor-analysis",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the skill's described use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Synonym paraphrase of canonical trigger; intent is identical."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicit invocation by skill name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to competitor brand analysis."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills, not a competitor analysis request."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'Colour', 'Analyse', 'bespoke palette', 'Skövde' geography — Australian/British spellings throughout."},
+      {"text": "Conclusions are evidence-backed with explicit data points", "met": true, "evidence": "Each competitor has Evidence section with URLs and quotes; figures like '$50M+ funding', '$300M revenue (2023)', '~80 titles', team sizes cited."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Executive Summary, Competitor Inventory table, Per-Competitor Audit with visual identity/voice/audience/strength/weakness/vulnerability/evidence subsections present."}
+    ],
+    "notes": "The artefact demonstrates a well-structured competitor analysis with clear differentiation mapping and white-space identification. Australian English is consistent ('colour', 'analyse'), each competitor entry is backed by explicit URLs, quotes, and quantitative data points (titles, revenue, team size, geography), and the canonical report architecture (executive summary, inventory, per-competitor audit) is fully present despite the truncation. All three criteria are met."
+  }
+}

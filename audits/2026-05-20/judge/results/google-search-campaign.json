@@ -1,0 +1,19 @@
+{
+  "skill": "google-search-campaign",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Create is a direct synonym of Build for the same canonical task."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by its exact name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to Google Ads campaigns."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for a Google Ads builder."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AUD, Australian-spelt 'Handmade Australian Wool', and no US-spelt variants appear; narrative is consistent with Australian English conventions."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Concrete customer ID, campaign name, budget AUD 75.00/day, 5 named ad groups with keyword counts, landing pages, CPC bids, RSAs, and an enable command."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Header, Structure table, Ad group detail, Negative keywords, Readiness checklist, and Next steps are all present."}
+    ],
+    "notes": "The example artefact is a concrete, ready-to-deploy Google Ads Search campaign specification for Koala & Co. AU. It includes a structure summary table, detailed ad group breakdowns with keywords and RSA configuration, negative keyword list installed as a shared list, a readiness checklist with both completed and pending items, and clear next steps including the enable_campaign command. Australian English and AUD currency are used consistently, and the artefact reads as a working build spec rather than a placeholder."
+  }
+}

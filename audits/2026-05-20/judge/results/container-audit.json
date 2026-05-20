@@ -1,0 +1,20 @@
+{
+  "skill": "container-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim, clearly within scope."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a natural synonym for Audit and the rest of the query mirrors the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User names the skill explicitly, an unambiguous activation signal."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to Docker/container auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not a container audit request."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral spellings consistent with Australian English; no American-only spellings (e.g. no 'color', 'optimize') appear."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Findings tables include file:line refs (e.g. Dockerfile:14, docker-compose.yml:33) and Sev columns CRITICAL/HIGH/MEDIUM/INFO."},
+      {"text": "Report includes the canonical sections: \\", "met": true, "evidence": "Criterion text is truncated/empty after the colon; treating presence of Executive Summary, Category Scores, Findings, Risk Register, Action Batches as satisfying any reasonable canonical section list."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Targets are named concretely: acme-api, Dockerfile, Dockerfile.worker, docker-compose.yml — no <placeholder> tokens."}
+    ],
+    "notes": "All four criteria are met by the artefact, however criterion 3 is malformed in the prompt (truncated after 'canonical sections:') so verdict is marked partial to flag the input-schema issue rather than the artefact quality. Artefact itself is high quality: severity-tagged findings with file:line evidence, concrete target names, Australian-compatible spelling, and includes all expected sections (summary, category scores, per-Dockerfile findings, compose findings, scan, risk register, action batches, suppressed)."
+  }
+}

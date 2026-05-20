@@ -1,0 +1,20 @@
+{
+  "skill": "npm-package-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a clear synonym for audit and the rest of the query matches the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding has no relation to npm package auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills is out of scope for npm auditing."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Uses American spellings such as 'colors' (line 104) and 'externalized' (line 171); no Australian variants appear in the narrative."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Findings include identifiers like [W-001]..[W-004] with file:line refs (package.json:1, package.json:8, tsup.config.ts:1, package.json:14)."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact contains Summary, Package Identity, and Phase Results (Phase 1-4) sections as expected for the audit report."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Concrete package name @acme/toolkit@2.3.1 and real files (tsup.config.ts, package.json) used throughout."}
+    ],
+    "notes": "The artefact demonstrates rigorous structure, severity-tagged findings with file:line evidence, canonical sections (Summary, Identity, Phase Results), and concrete target naming. However the narrative uses American spelling ('colors', 'externalized') rather than the required Australian English, so the overall verdict is partial."
+  }
+}

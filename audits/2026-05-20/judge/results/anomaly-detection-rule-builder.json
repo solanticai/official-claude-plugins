@@ -1,0 +1,19 @@
+{
+  "skill": "anomaly-detection-rule-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is verbatim the skill's canonical use case."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Paraphrase swapping Build for Create still matches the description's scope exactly."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, which is an unambiguous activation signal."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to anomaly detection or business metrics."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "A meta-question about what skills are does not invoke this specific skill."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses AEST timezone, AUD currency, .com.au domain, and Australian business framing; no American spellings observed in narrative."},
+      {"text": "Artefact is a working specification, not a hypothetical or placeholder", "met": true, "evidence": "Four concrete rules with executable SQL against named Supabase tables, thresholds, severities, notification channels, and a triage playbook."},
+      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion text is truncated in the prompt with no enumerated sections, so canonical-sections cannot be verified; artefact includes rules and a playbook but no explicit baseline/governance/false-positive sections."}
+    ],
+    "notes": "The example artefact is a substantive, working anomaly-detection specification with concrete SQL, dynamic and absolute thresholds, severity tiers, notification routing, and an investigation playbook — clearly not a placeholder. Australian conventions (AEST, AUD, .com.au) are consistently applied. The third criterion is truncated in the prompt (the canonical section list is missing), so it cannot be fully evaluated; marking it unmet for safety yields a partial verdict overall."
+  }
+}

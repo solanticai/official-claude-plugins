@@ -1,0 +1,18 @@
+{
+  "skill": "keyword-research",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Same phrasing as the canonical description, clearly in scope."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to keyword research."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking about skills generally is out of scope for keyword research."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'cosy', 'australian made', AUD currency, and DD/MM/YYYY date format; no US spellings detected."},
+      {"text": "Report includes the canonical sections:", "met": false, "evidence": "Criterion is truncated with no enumerated sections to verify against; cannot confirm completeness."}
+    ],
+    "notes": "Activation cases all align with expectations. The artefact reads as Australian-localised (AUD pricing, 'cosy', 'australian made', DD/MM date) and contains coherent sections (header, Clusters, Negative keyword candidates, CSV exports, Next steps). The second judge criterion is malformed in the prompt (the list of required sections is missing after the colon), so it cannot be definitively evaluated; marking as not met yields a partial verdict."
+  }
+}

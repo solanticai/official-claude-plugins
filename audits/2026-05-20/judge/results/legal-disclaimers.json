@@ -1,0 +1,19 @@
+{
+  "skill": "legal-disclaimers",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap preserves the canonical use case."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "Explicitly names the skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to legal disclaimers."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills, not a request for legal disclaimers."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'fulfil', 'unauthorised', 'analyse', 'solicitor', references Australian Privacy Principles and ABN."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies markdown templates, not structured data; artefact is well-formed markdown with consistent headings."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Includes NOT LEGAL ADVICE warning, Generation Context, Privacy Policy outline with numbered subsections covering collection, use, sharing, retention, security, rights, transfers, cookies, children."}
+    ],
+    "notes": "Artefact is a well-structured Australian-jurisdiction draft legal disclaimer set with clear review-required markers, Australian English usage, and canonical sections (context, privacy policy with APP-aligned subsections). The description implies markdown templates rather than machine-readable formats, so JSON/SQL/YAML validity is not applicable; markdown is well-formed."
+  }
+}

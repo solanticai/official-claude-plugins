@@ -1,0 +1,18 @@
+{
+  "skill": "release-readiness-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical phrase 'Pre-production go/no-go gate' verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case directly."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, so it should fire."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to release readiness or deploy gating."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta-question about skills is out of scope for a release gate."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "Artefact contains no Australian-English markers; only neutral terms appear (no colour/optimise/behaviour/organise tokens) so the convention cannot be verified as applied."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Artefact includes Executive Summary, Gate Results, Change Scope, Findings, Pre-deploy Checklist, Rollback, and Canary Smoke Results sections."}
+    ],
+    "notes": "The example artefact demonstrates a thorough release-readiness report with verdict, gate table, change scope, severity-ranked findings, checklists, rollback, and canary smoke results — satisfying the structural criterion. However, the narrative uses neutral English without distinctively Australian spellings, so the Australian-English criterion is not demonstrably met by this artefact. Overall the artefact is functionally strong but partially meets the stated criteria."
+  }
+}

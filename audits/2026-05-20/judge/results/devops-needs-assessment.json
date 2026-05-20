@@ -1,0 +1,19 @@
+{
+  "skill": "devops-needs-assessment",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical description and clearly fits the skill's purpose."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, so it should fire."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is a workstation config issue, not DevOps triage of an app."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta-question about skills generally is unrelated to DevOps needs assessment."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": false, "evidence": "No Australian spellings observed in the visible excerpt (no colour/optimise/behaviour/organise tokens appear); narrative is neutral but does not clearly demonstrate AU English."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Artefact contains TL;DR, What your app looks like, Nine-dimension heatmap, Dimension breakdown, Top three actions, When to revisit, and Glossary sections."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Artefact names the target 'Tasklet' throughout and references concrete paths like .github/workflows/ and README.md."}
+    ],
+    "notes": "The artefact satisfies structural and target-naming criteria with a clear nine-dimension heatmap, top-three actions linking to sibling DevOps skills, and concrete references to the Tasklet app. However, the visible narrative does not contain any of the canonical Australian-English markers (colour, optimise, behaviour, organise) — wording is neutral/American-leaning (e.g., 'customers', 'diagnose'), so AU English cannot be confirmed from the excerpt. Verdict is partial pending evidence of AU spellings."
+  }
+}

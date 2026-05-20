@@ -1,0 +1,11 @@
+{
+  "skill": "skill-eval-harness",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description's canonical use case verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Simple verb swap (Execute vs Run) preserves the canonical intent."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User directly names the skill, which is a strong activation signal."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to skill evaluation suites."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is conceptual and out of scope for an eval harness."}
+  ],
+  "judge_result": {"status": "skipped", "reason": "no-example-artefact"}
+}

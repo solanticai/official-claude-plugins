@@ -1,0 +1,20 @@
+{
+  "skill": "mcp-server-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a direct synonym of Audit in this context."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to MCP server config audits."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General question about skills, not MCP server registrations."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Narrative uses neutral spelling; no American-only variants present (e.g. 'scope-down', 'memory')."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": false, "evidence": "Recommendations cite config paths but no line numbers, and there are no explicit severity labels (high/medium/low)."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Includes Summary, Server table, Recommendations, Duplicate warnings, Next step sections."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Header references `C:/Development/some-project` as the audit target."}
+    ],
+    "notes": "The artefact is well-structured with a summary table, per-server table, actionable recommendations with JSON fix snippets, and a duplicate warnings section keyed to the project path. It falls short on the evidence criterion: config file paths are cited but no line numbers are given, and findings are not labelled by severity tier. Spelling is neutral rather than distinctly Australian, but contains no American-only forms, so it passes that criterion."
+  }
+}

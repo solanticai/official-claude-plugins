@@ -1,0 +1,11 @@
+{
+  "skill": "skill-eval-bootstrap",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Directly matches the canonical use case of scaffolding a starter evals/suite."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Generating a starter evals/suite is a clear paraphrase of the skill's described purpose."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding is unrelated to scaffolding eval suites."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "General question about what skills are is out of scope for an evals scaffolder."}
+  ],
+  "judge_result": {"status": "skipped", "reason": "no-example-artefact"}
+}

@@ -1,0 +1,19 @@
+{
+  "skill": "landing-page-copy",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case verbatim from the description."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Verb swap preserves the canonical intent of generating landing page copy for paid traffic."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User invokes the skill by its exact name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to landing page copywriting."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Asking what skills are is a meta query, not a request for landing page copy."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colour' (objection #3, scent trail), 'Mobile-optimised' in CRO checklist, Australian spellings throughout."},
+      {"text": "Output is machine-readable where the description implies (valid JSON/SQL/YAML)", "met": true, "evidence": "Description implies markdown copy deliverable, not structured data; artefact is well-formed markdown with structured sections, tables, and checklists."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Hero, Value propositions, Social proof, Objection handling, Pricing, FAQ, Final CTA, Scent trail, CRO checklist, and Next steps all present."}
+    ],
+    "notes": "The artefact is a comprehensive landing page copy deliverable aligned with the skill's stated purpose of generating paid-traffic landing page copy. It contains the hero, benefits (value propositions), and CTA called out in the description, plus supporting sections (objections, FAQ, social proof, scent trail mapping to the ad angle, CRO checklist) that demonstrate alignment with the ad angle and audience. Australian English is used consistently and the structure is scannable and implementation-ready."
+  }
+}
