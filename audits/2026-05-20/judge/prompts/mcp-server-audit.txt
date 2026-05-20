@@ -1,0 +1,159 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** mcp-server-audit
+- **description:** Audit MCP server registrations across user, project, and plugin configs — report always-on servers, duplicates, and disable recommendations
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit MCP server registrations across user, project, and plugin configs"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review MCP server registrations across user, project, and plugin configs"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run mcp-server-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# Example Audit Report — MCP Server Audit
+
+A realistic report for a developer with three MCP servers at user scope, two more at project scope (one duplicating a user-scope server), and a plugin-shipped MCP. The audit was run from `C:/Development/some-project`.
+
+---
+
+# MCP Server Audit — `C:/Development/some-project` — 2026-04-25
+
+## Summary
+
+| Metric | Value |
+|---|---:|
+| Registered servers | 6 |
+| Enabled | 5 |
+| Disabled | 1 |
+| User-scope | 3 |
+| Project-scope | 2 |
+| Plugin-scope | 1 |
+| Duplicates (across scopes) | 1 |
+| Live MCP child processes (this session) | 4 |
+| Memory held by MCP children (MB) | 312 |
+
+## Server table
+
+| Name | Scope | Status | Live | Memory (MB) | Config path |
+|---|---|---|---:|---:|---|
+| supabase | user | enabled | 1 | 86 | `~/.claude/settings.json` |
+| postgres | user | enabled | 1 | 71 | `~/.claude/settings.json` |
+| github | user | enabled | 1 | 92 | `~/.claude/settings.json` |
+| supabase | project | enabled | 1 | 63 | `.claude/settings.json` (DUPLICATE) |
+| sentry | project | enabled | 0 | 0 | `.claude/settings.json` |
+| memex | plugin | disabled | 0 | 0 | `.claude-plugin/memex/settings.json` |
+
+## Recommendations
+
+### 1. Resolve duplicate: `supabase`
+
+The same server name is registered at **user** scope (`~/.claude/settings.json`) and **project** scope (`.claude/settings.json`). Project scope wins, so the user-scope entry never serves this project — but it still spawns a child in any other project that opens. Two live instances are running right now, which is wasted memory.
+
+**Fix**: keep one. Recommended — keep project scope, disable user scope:
+
+```json
+// ~/.claude/settings.json — change disabled flag for "supabase"
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "...",
+      "args": ["..."],
+      "disabled": true   // <-- add this
+    }
+  }
+}
+```
+
+### 2. Narrow `github`: scope-down to projects that use it
+
+`github` is registered at user scope and runs in every session, but the current session has used it 0 times. If only ~30% of your projects use GitHub, move it to per-project scope.
+
+**Fix**: remove from `~/.claude/settings.json`, add to `.claude/settings.json` in each repo that needs it.
+
+### 3. `sentry` is registered but never spawned this session
+
+It's enabled at project scope but no Claude session in this project has invoked it. Either remove it (if unused) or keep it (if you sometimes need it — it's not costing memory unless invoked).
+
+## Duplicate warnings
+
+- **`supabase`** at both user and project scope — see Recommendation 1.
+
+## Next step
+
+Run with explicit approval per change:
+
+```
+> Apply Recommendation 1
+```
+
+This skill will read the target file, show the surrounding JSON, then apply the disable flag with your approval.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "mcp-server-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

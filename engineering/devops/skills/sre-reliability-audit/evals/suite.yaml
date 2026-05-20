@@ -38,8 +38,10 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of sre-reliability-audit's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Assessment is bounded — explicit scope, explicit out-of-scope"
+      - "Report includes the canonical sections: \"TL;DR\", \"Dimension Heatmap\""
+      - "Artefact references the input path or target by name (no placeholder paths)"
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

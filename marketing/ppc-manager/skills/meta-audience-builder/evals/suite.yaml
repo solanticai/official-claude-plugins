@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of meta-audience-builder's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Artefact is a working specification, not a hypothetical or placeholder"
+      - "Report includes the canonical sections: \"Retargeting audiences\", \"Lookalike audiences\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

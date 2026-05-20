@@ -1,0 +1,208 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** legal-disclaimers
+- **description:** Generate legal disclaimers, privacy notices, cookie banners, and terms-of-service templates customised for industry, jurisdiction, and use case
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Generate legal disclaimers, privacy notices, cookie banners, and terms-of-service templates customised for industry, jurisdiction, and use case"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Generate → Produce)
+- user_input: "Produce legal disclaimers, privacy notices, cookie banners, and terms-of-service templates customised for industry, jurisdiction, and use case"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run legal-disclaimers"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is machine-readable where the description implies (valid JSON/SQL/YAML)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Legal Disclaimers — Harborline
+
+## ⚠ NOT LEGAL ADVICE — REVIEW REQUIRED
+
+**The contents of this document are draft templates only.** They have been prepared as a starting point for review by a qualified solicitor in the relevant jurisdiction. They are **not** legal advice, **not** certified for compliance, and **not** ready to publish without solicitor review.
+
+Before using any of the contents below:
+
+1. **Consult a qualified Australian solicitor** familiar with consumer e-commerce law and the Privacy Act 1988.
+2. **Verify every fact** marked `[REVIEW REQUIRED]`.
+3. **Confirm the disclaimers match Harborline's actual business practices** — drafted templates assume; only the business owner knows what is actually done.
+4. **Check for jurisdiction updates** — Australian privacy law is being amended; the OAIC issues guidance updates.
+
+The producers of this skill assume no liability for use of these drafts.
+
+---
+
+## 0. Generation Context
+
+- **Business name:** Harborline
+- **Legal entity:** Harborline Outdoor Pty Ltd
+- **ABN:** 12 345 678 901
+- **Registered address:** 14 Wharf Road, Newcastle NSW 2300, Australia
+- **Primary jurisdiction:** Australia
+- **Other jurisdictions:** None — Harborline ships within Australia only
+- **Industry:** E-commerce (outdoor clothing and equipment)
+- **What's sold:** Direct-to-consumer outdoor apparel and gear (rain jackets, packs, dry bags, accessories)
+- **Customer type:** B2C
+- **Selling to minors:** No — site requires 18+ to checkout
+- **Disclaimers identified as required:** Privacy policy, ToS, Spam Act email footer, ACL-compliant returns policy
+- **Disclaimers identified as best practice:** Cookie banner, AI content disclosure (for product description copy generated with AI assistance)
+
+---
+
+## 1. Privacy Policy Outline (DRAFT — REVIEW REQUIRED)
+
+**Harborline Privacy Policy**
+
+**Last updated:** 11/04/2026
+
+### 1.1 Who we are
+
+Harborline is a trading name of Harborline Outdoor Pty Ltd (ABN 12 345 678 901), based at 14 Wharf Road, Newcastle NSW 2300. We can be contacted at hello@harborline.com.au.
+
+### 1.2 What personal information we collect
+
+We collect the following categories of personal information:
+
+- **Information you provide directly:** name, email address, phone number, billing address, shipping address, order details
+- **Information collected automatically:** IP address, browser type, device type, pages visited on harborline.com.au, time spent on the site, referring URL
+- **Information from third parties:** payment confirmation from Stripe (we do not see or store your card details); shipping confirmation from Australia Post
+
+[REVIEW REQUIRED — verify against actual data collection]
+
+### 1.3 How we collect it
+
+We collect personal information when you:
+- Place an order on harborline.com.au
+- Sign up for our newsletter
+- Contact us via the website form, email, or phone
+- Browse the site (automatically, via cookies and analytics)
+
+### 1.4 Why we collect it
+
+We collect personal information for the following purposes:
+- To process and fulfil your order
+- To send you order confirmations, shipping notifications, and delivery updates
+- To respond to your enquiries and provide customer support
+- To send marketing emails (only with your explicit consent)
+- To analyse how the website is used and improve it
+- To meet our legal and tax obligations
+
+### 1.5 Who we share it with
+
+We share personal information with:
+- **Service providers:**
+  - Shopify (hosting and e-commerce platform)
+  - Stripe (payment processing)
+  - Australia Post (shipping)
+  - Klaviyo (email marketing — only if you opt in)
+  - Plausible Analytics (privacy-friendly analytics — no personal identifiers stored)
+- **Professional advisers:** our accountant and lawyers, where necessary
+- **Legal authorities:** when required by Australian law
+
+We do not sell personal information.
+
+[REVIEW REQUIRED — confirm processor list is complete and accurate]
+
+### 1.6 How long we retain it
+
+- **Account information:** while your account is active, plus 7 years after closure (per ATO retention requirements for transaction records)
+- **Order and transaction records:** 7 years (ATO)
+- **Marketing email subscribers:** until you unsubscribe
+- **Website analytics:** Plausible does not store personal identifiers; aggregated data retained indefinitely
+
+### 1.7 How we secure it
+
+We take reasonable steps to protect personal information from misuse, interference, loss, and unauthorised access, including:
+- HTTPS encryption on all pages of harborline.com.au
+- Hosting on Shopify, which is SOC 2 Type II certified
+- Access controls limiting personal data access to staff who need it
+- Regular review of our security practices
+- Two-factor authentication on all admin accounts
+
+### 1.8 Your rights
+
+Under the Australian Privacy Principles (APPs), you have the right to:
+- **Request access** to the personal information we hold about you (APP 12)
+- **Request correction** of inaccurate information (APP 13)
+- **Make a complaint** about our handling of your information
+
+To exercise any of these rights, contact us at privacy@harborline.com.au. We will respond within 30 days.
+
+### 1.9 International data transfers
+
+Your personal information may be transferred to and processed in the United States by Shopify, Stripe, and Klaviyo. These providers operate under their own privacy frameworks (Stripe and Shopify are certified under the EU-US Data Privacy Framework). We remain accountable for personal information transferred overseas under APP 8.
+
+[REVIEW REQUIRED — confirm processor locations and frameworks]
+
+### 1.10 Cookies
+
+See our Cookie Policy at harborline.com.au/cookies for details on how we use cookies and similar technologies. We use Plausible Analytics, which does not use cookies and does not collect personal identifiers.
+
+### 1.11 Children
+
+Our service is not directed to children under 18. We do not knowingly collect personal information from children. If you believe a child has provided us personal information, please contact us at p
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "legal-disclaimers",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

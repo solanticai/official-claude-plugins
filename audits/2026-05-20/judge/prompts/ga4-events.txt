@@ -1,0 +1,186 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** ga4-events
+- **description:** Design the GA4 event catalogue — map events to conversions, define custom dimensions/metrics, and verify via DebugView.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Design the GA4 event catalogue"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Design → Architect)
+- user_input: "Architect the GA4 event catalogue"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run ga4-events"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact includes both the design and its rationale (trade-offs surfaced)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# GA4 Events — Koala & Co. Online
+
+**Property:** properties/789012345
+**Date:** 11/04/2026
+
+---
+
+## Event inventory (last 30 days)
+
+| Event name | Event count | Source | Conversion? |
+|---|---|---|---|
+| `page_view` | 142,311 | Enhanced Measurement | no |
+| `session_start` | 38,904 | GA4 auto | no |
+| `first_visit` | 22,711 | GA4 auto | no |
+| `scroll` | 31,552 | Enhanced Measurement | no |
+| `click` | 8,433 | Enhanced Measurement | no |
+| `view_item` | 6,120 | dataLayer | no |
+| `add_to_cart` | 1,089 | dataLayer | no |
+| `begin_checkout` | 487 | dataLayer | no |
+| `purchase` | 203 | dataLayer | **new** |
+| `newsletter_signup` | 188 | dataLayer | **new** |
+| `form_submit` | 128 | Enhanced Measurement | no |
+| `user_engagement` | 41,220 | GA4 auto | no |
+
+---
+
+## Conversions
+
+### Already marked
+
+(none — this is the first time `ga4-events` has been run on this property)
+
+### Newly marked
+
+| Event name | Rationale | Google Ads import? |
+|---|---|---|
+| `purchase` | Primary revenue event; imports cleanly into Google Ads as `Purchase` | yes |
+| `newsletter_signup` | Secondary owned-audience event; useful for retargeting audiences | no (use as Meta custom audience source instead) |
+
+Skipped (user wanted but we pushed back):
+- `add_to_cart` — too top-of-funnel, would pollute Google Ads Smart Bidding data.
+- `begin_checkout` — same reason; already available as a Funnel Exploration step.
+
+---
+
+## Custom dimensions
+
+### Already exist
+
+(none)
+
+### Newly created
+
+| Parameter name | Display name | Scope | Rationale |
+|---|---|---|---|
+| `item_brand` | Item brand | EVENT | Split performance by Koala & Co.-owned brands vs stocked brands |
+| `item_category` | Item category | EVENT | Slice by Throws / Cushions / Rugs / Lighting |
+| `coupon` | Coupon code | EVENT | Measure promo redemption rates |
+| `payment_type` | Payment type | EVENT | Afterpay vs Stripe vs PayPal — important for cohort analysis |
+| `shipping_tier` | Shipping tier | EVENT | Standard vs Express — affects margin |
+
+---
+
+## Custom metrics
+
+(none this run — recommended for Phase 2 after 30 days of accumulated `estimated_margin` data)
+
+---
+
+## DebugView verification
+
+For each newly-marked conversion:
+
+### `purchase`
+
+1. Open `https://koalahomewares.com.au/?debug_mode=true`.
+2. Add a throwaway item to cart, proceed through checkout with the test Stripe card `4242 4242 4242 4242`.
+3. Land on the thank-you page.
+4. GA4 → Admin → DebugView — within 10 seconds, `purchase` appears.
+5. Click it — confirm `transaction_id`, `currency=AUD`, `value=129.00`, `items[]` with `item_brand`, `item_category`, `coupon`, `payment_type=credit_card`, `shipping_tier=standard` all present.
+6. Verified: 11/04/2026 14:48 AEST.
+
+### `newsletter_signup`
+
+1. Open `https://koalahomewares.com.au/?debug_mode=true`.
+2. Scroll to the footer newsletter form, enter a test email, submit.
+3. GA4 → Admin → DebugView — within 10 seconds, `newsletter_signup` appears.
+4. Click it — confirm `list_name=main_footer` is present.
+5. Verified: 11/04/2026 14:52 AEST.
+
+---
+
+## Open issues to revisit later
+
+1. `estimated_margin` custom metric — requires the Shopify checkout to push margin data, which is not in the current dataLayer schema. Add to the next `gtm-datalayer` iteration.
+2. `user_type` USER-scope dimension — requires a logged-in state push on account creation. Not a priority until account-based campaigns launch.
+3. `item_category2` through `item_category5` — Koala & Co. doesn't use taxonomy below category-level today. Skip until they do.
+
+---
+
+## Next steps
+
+1. Wait 24 hours. Then re-run `/ppc-manager:ga4-events` in audit mode to confirm the new conversions are accumulating. Expect 6–8 new `purchase` conversions based on the 30-day baseline rate.
+2. Run `/ppc-manager:google-ads-account-setup` — import `purchase` as a Google Ads conversion action under `Category: Purchase`, `Attribution: Data-driven`.
+3. Run `/ppc-manager:meta-events-mapping` to reconcile with Meta Pixel (which is already firing `Purchase` but without the custom dimensions).
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "ga4-events",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

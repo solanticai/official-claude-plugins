@@ -1,0 +1,131 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** resource-snapshot
+- **description:** Generate a one-shot markdown report of the Claude process tree, MCP servers, orphans, and total memory — no dashboard required
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Generate a one-shot markdown report of the Claude process tree, MCP servers, orphans, and total memory"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Generate → Produce)
+- user_input: "Produce a one-shot markdown report of the Claude process tree, MCP servers, orphans, and total memory"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run resource-snapshot"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is machine-readable where the description implies (valid JSON/SQL/YAML)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Example Output — Resource Snapshot
+
+This file shows a realistic snapshot rendering. Generated with `/resource-snapshot` on a workstation running two concurrent Claude Code sessions plus three MCP servers.
+
+---
+
+# Resource Snapshot — 2026-04-25 14:32 UTC
+
+## Totals
+
+| Metric | Value |
+|---|---:|
+| Claude processes | 4 |
+| MCP servers | 3 |
+| Orphan MCP servers | 1 |
+| Codex processes | 1 |
+| Total memory (MB) | 1,842 |
+
+## Claude process tree
+
+| PID | Label | Parent PID | Memory (MB) |
+|---:|---|---:|---:|
+| 18432 | claude-code (lumioh) | 18419 | 612 |
+| 18540 | claude-code (subagent) | 18432 | 287 |
+| 19120 | claude-code (plugins-repo) | 18419 | 498 |
+| 19284 | claude-code (subagent) | 19120 | 224 |
+
+## MCP servers
+
+| PID | Parent PID | Parent label | Memory (MB) | Orphan |
+|---:|---:|---|---:|:---:|
+| 18610 | 18432 | claude-code (lumioh) | 86 | — |
+| 19245 | 19120 | claude-code (plugins-repo) | 71 | — |
+| 14012 | 1 | init | 64 | ⚠ |
+
+## Orphan warning
+
+1 orphan MCP server detected:
+
+- **PID 14012** — `node /opt/mcp-supabase/dist/index.js --stdio`
+  - Parent process is `init` (1) — the original Claude session has exited but the MCP wasn't cleaned up.
+  - Action: the Stop hook will clean this up on the next session end. To remove immediately, use the `/resource-dashboard` Kill button.
+
+## Codex (informational)
+
+- 1 process · 64 MB. Codex is launched by the `openai.chatgpt` VS Code extension at VS Code startup, not by Claude Code.
+
+---
+
+_Snapshot taken in 0.31s. Cross-platform: works on Windows, macOS, Linux with stdlib Python only._
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "resource-snapshot",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

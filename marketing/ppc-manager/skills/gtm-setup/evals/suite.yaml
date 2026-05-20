@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of gtm-setup's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Artefact is a complete, runnable specification — not a placeholder"
+      - "Report includes the canonical sections: \"Baseline status\", \"Changes applied\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

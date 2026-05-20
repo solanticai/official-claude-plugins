@@ -1,0 +1,259 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** gtm-datalayer
+- **description:** Design a dataLayer schema for a website — generate JavaScript push snippets for e-commerce, form, and custom events, then wire matching GTM data layer variables for each field.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Design a dataLayer schema for a website"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Design → Architect)
+- user_input: "Architect a dataLayer schema for a website"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run gtm-datalayer"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact includes both the design and its rationale (trade-offs surfaced)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# DataLayer Schema — Koala & Co. Online
+
+**Site type:** E-commerce (Shopify)
+**Container:** GTM-KOALA123
+**Date:** 11/04/2026
+
+---
+
+## Summary
+
+Designed the canonical e-commerce dataLayer schema for Koala & Co. Online, an Australian homewares retailer on Shopify. Schema follows the GA4 Enhanced Ecommerce spec verbatim for downstream compatibility with GA4, Meta Pixel, and Google Ads. All money fields use AUD and numeric types; `event_id` is derived from Shopify order number + checkout token for deterministic dedup with Meta CAPI. Installed 12 GTM data layer variables covering the core fields used by every tag.
+
+---
+
+## Event catalogue
+
+| Event | Trigger | Required params | Optional params | Purpose |
+|---|---|---|---|---|
+| `view_item_list` | Collection page load | `items` | `item_list_name`, `item_list_id` | Impression tracking for merchandising |
+| `view_item` | Product detail page load | `currency`, `value`, `items` | — | Product interest |
+| `add_to_cart` | Add to cart button click | `currency`, `value`, `items` | — | Top-of-funnel purchase signal |
+| `begin_checkout` | Checkout page 1 load | `currency`, `value`, `items` | `coupon` | Checkout funnel entry |
+| `add_payment_info` | Checkout payment step complete | `currency`, `value`, `items` | `payment_type` | Checkout progression |
+| `purchase` | Order thank-you page | `transaction_id`, `currency`, `value`, `items` | `tax`, `shipping`, `coupon` | Revenue conversion |
+| `newsletter_signup` | Footer form submit | `list_name` | — | Owned audience growth |
+
+---
+
+## Schema per event
+
+### `purchase`
+
+**Trigger:** Shopify order thank-you page (`first_time_accessed` Liquid condition). Pushed once per order.
+
+**Schema:**
+
+| Field | Type | Required | Example | Notes |
+|---|---|---|---|---|
+| `event` | string | yes | `purchase` | Always literal string |
+| `event_id` | string | yes | `10042-abcd1234` | Shopify order number + last 8 chars of checkout token |
+| `transaction_id` | string | yes | `10042` | Shopify order number, used as GA4 `transaction_id` |
+| `currency` | string | yes | `AUD` | ISO 4217 uppercase |
+| `value` | number | yes | `249.50` | Order total inc. tax and shipping |
+| `tax` | number | no | `22.68` | GST |
+| `shipping` | number | no | `9.95` | Shipping amount |
+| `coupon` | string | no | `WINTER10` | Discount code if applied |
+| `items` | array | yes | see below | One entry per line item |
+
+**Inline push (Shopify Liquid):**
+
+```liquid
+{% if first_time_accessed %}
+<script>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'purchase',
+    event_id: '{{ order.order_number }}-{{ checkout.token | slice: 0, 8 }}',
+    transaction_id: '{{ order.order_number }}',
+    currency: '{{ order.currency }}',
+    value: {{ order.total_price | divided_by: 100.0 }},
+    tax: {{ order.tax_price | divided_by: 100.0 }},
+    shipping: {{ order.shipping_price | divided_by: 100.0 }},
+    {% if order.discount_codes[0] %}coupon: '{{ order.discount_codes[0].code }}',{% endif %}
+    items: [
+      {% for line in order.line_items %}
+      {
+        item_id: '{{ line.sku }}',
+        item_name: {{ line.title | json }},
+        item_brand: 'Koala & Co.',
+        item_category: {{ line.product.type | json }},
+        item_variant: {{ line.variant.title | json }},
+        price: {{ line.final_price | divided_by: 100.0 }},
+        quantity: {{ line.quantity }}
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ]
+  });
+</script>
+{% endif %}
+```
+
+### `add_to_cart`
+
+**Trigger:** Add to cart button click (pre-navigation). Pushed by a custom Shopify theme script, not by Shopify's native analytics.
+
+**Schema:**
+
+| Field | Type | Required | Example | Notes |
+|---|---|---|---|---|
+| `event` | string | yes | `add_to_cart` | Literal |
+| `event_id` | string | yes | auto-UUID | `crypto.randomUUID()` |
+| `currency` | string | yes | `AUD` | |
+| `value` | number | yes | `129.00` | Price × quantity |
+| `items` | array | yes | one item | Single item from click event |
+
+**Inline push:**
+
+```js
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+  event: 'add_to_cart',
+  event_id: crypto.randomUUID(),
+  currency: 'AUD',
+  value: product.price,
+  items: [{
+    item_id: product.sku,
+    item_name: product.title,
+    item_brand: 'Koala & Co.',
+    item_category: product.type,
+    item_variant: variant.title,
+    price: product.price,
+    quantity: 1
+  }]
+});
+```
+
+---
+
+## Helper function
+
+Installed in `src/theme/analytics.js`:
+
+```js
+function trackEvent(name, params = {}) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: name,
+    event_id: params.event_id || crypto.randomUUID(),
+    ...params
+  });
+}
+
+window.koala = window.koala || {};
+window.koala.track = trackEvent;
+```
+
+Usage:
+
+```js
+koala.track('add_to_cart', {
+  currency: 'AUD',
+  value: 129.00,
+  items: [ /* ... */ ]
+});
+
+koala.track('newsletter_signup', {
+  list_name: 'main_footer'
+});
+```
+
+---
+
+## GTM data layer variables created
+
+| Variable name | Data layer key | Status |
+|---|---|---|
+| `DL - event` | `event` | created (id 42) |
+| `DL - event_id` | `event_id` | created (id 43) |
+| `DL - transaction_id` | `transaction_id` | created (id 44) |
+| `DL - currency` | `currency` | created (id 45) |
+| `DL - value` | `value` | created (id 46) |
+| `DL - tax` | `tax` | created (id 47) |
+| `DL - shipping` | `shipping` | created (id 48) |
+| `DL - coupon` | `coupon` | created (id 49) |
+| `DL - items` | `items` | created (id 50) |
+| `DL - list_name` | `list_name` | created (id 51) |
+| `DL - ecommerce.currency` | `ecommerce.currency` | already exists (id 22) |
+| `DL - ecommerce.value` | `ecommerce.value` | already exists (id 23) |
+
+---
+
+## Rollout checklist
+
+1. Paste the helper function into `src/theme/analytics.js` and import from `theme.liquid`.
+2. Replace `checkout/order.liquid` with the `purchase` snippet above.
+3. Wire the add-to-cart click handler in `product-form.js` to `koala.track('add_to_cart', ...)`.
+4. Verify each event in GTM 
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "gtm-datalayer",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

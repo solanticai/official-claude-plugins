@@ -1,0 +1,186 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** brand-identity
+- **description:** Generate core brand identity — mission, vision, values, voice, tone, and personality framework — producing a foundational brand identity document grounded in archetypes
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Generate core brand identity"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Generate → Produce)
+- user_input: "Produce core brand identity"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run brand-identity"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is machine-readable where the description implies (valid JSON/SQL/YAML)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Brand Identity — Northwind
+
+**Date:** 11/04/2026
+**Stage:** Early traction (200 paying users, 18-month-old SaaS)
+**Industry:** Productivity software / focus tools
+**Market:** Global, AU-first
+**Author:** Brand strategist (via Claude `brand-identity` skill)
+
+---
+
+## 1. Brand Snapshot
+
+Northwind is a focus-and-planning tool for solo makers — independent designers, developers, writers, and consultants who need to ship work that used to require a team. It is the antidote to the bloated, calendar-coupled, notification-fuelled tools that promise productivity but deliver only context-switching. Northwind feels like a clean desk and a sharp pencil at 6am: quiet, intentional, and ready to do exactly the work that matters today. Built by a solo founder for solo founders, it earns trust by doing dramatically less than its competitors and doing it ruthlessly well.
+
+---
+
+## 2. Mission
+
+> We sharpen daily focus for solo makers so that one person can ship work that used to need a team.
+
+**Rationale:** The founder built Northwind because she repeatedly found herself opening her project tool and immediately closing it because the cognitive overhead was higher than just starting work. The mission captures both the user (solo makers) and the specific outcome (sharpened focus, not "improved productivity"), and it positions the product as an accelerator of ambition, not a "tool" for tool's sake.
+
+**Alternatives considered:**
+- "We help independent professionals do their best work" — Rejected: too vague; could be Notion, Linear, ClickUp, or every productivity brand on Earth.
+- "We replace the calendar with a single page of intent" — Rejected: too tactical; describes a feature, not a worldview.
+
+---
+
+## 3. Vision
+
+> A world where solo makers compete with teams of 50, and win on focus.
+
+**Why this matters:** The founder believes the rise of AI tooling has unlocked genuine 1-person leverage for the first time in history, but most productivity tools were designed for the team-coordination problem and actively work against the focus problem. Northwind exists to be the first productivity tool built for the post-team era.
+
+---
+
+## 4. Core Values
+
+### Focus over features
+- **Definition:** Every feature added to Northwind takes attention away from work. We add features only when removing one would cost more focus than it would save.
+- **Behavioural test:** In every quarterly release we ship at least one removal alongside additions.
+- **Why this and not "simplicity":** "Simplicity" is what every SaaS claims. "We delete features on purpose" is something only Northwind does.
+
+### Respect the maker's time
+- **Definition:** We never interrupt the user. No notifications, no email digests, no in-product upsells, no "did you know?" tooltips.
+- **Behavioural test:** A new user can use Northwind for 30 days and never receive a non-essential message from us.
+- **Why this and not "user-centric":** This is a constraint, not a slogan. It rules out an entire category of product behaviour our competitors rely on.
+
+### Public proof, private support
+- **Definition:** We share our roadmap, revenue, and decisions openly. We never share customer details, customer struggles, or customer data publicly — even anonymised.
+- **Behavioural test:** Our changelog is public; our customer database is encrypted at rest and we publish our security disclosures.
+- **Why this and not "transparency":** Transparency without limits is a liability. This value names the limit.
+
+### Solo by design
+- **Definition:** We will never add team collaboration features. Northwind is a single-player tool by permanent design choice.
+- **Behavioural test:** Every feature request that includes the word "team" gets answered with "Northwind is solo by design — here are the integrations that solve this in your team tool."
+- **Why this and not "focused":** This commits to a specific architectural constraint that competitors won't make.
+
+---
+
+## 5. Voice Attributes
+
+### Direct — this, not blunt
+We get to the point fast, but never at the cost of warmth. We treat the reader as a peer who values their time.
+- **DO:** "Your trial ends Friday. If you want to keep your data, here's the link."
+- **DON'T:** "ACTION REQUIRED: Trial expiring. Upgrade NOW."
+
+### Quiet — this, not boring
+Confident and unhurried. We don't yell, exaggerate, or use !!! emoji bursts. We sound like the kind of person you'd actually want to share an office with.
+- **DO:** "Done. Your invoice is ready when you are."
+- **DON'T:** "🎉 Awesome! Your invoice is here! 🎉"
+
+### Technical — this, not jargon-heavy
+We use precise, accurate language. We say "Markdown export" not "easy data portability." But we don't assume the reader has a CS degree.
+- **DO:** "Northwind syncs to a single local SQLite file. You own it. We can't see it."
+- **DON'T:** "We leverage cutting-edge data architecture for optimal user empowerment."
+
+### Honest — this, not blunt
+We tell uncomfortable truths when relevant — including about our own limits. We say "we can't" more often than competitors do.
+- **DO:** "Northwind doesn't do team collaboration and never will. Use Linear for that."
+- **DON'T:** "We're working on team features. Stay tuned!"
+
+---
+
+## 6. Tone Sliders
+
+| Dimension | Anchor 1 | Default Position | Anchor 2 | Flex when |
+|---|---|---|---|---|
+| Formality | Casual | **45%** (just left of centre) | Formal | Billing & legal email → 70% formal |
+| Energy | Calm | **20%** (firmly calm) | Energetic | New-feature launches → 35% (still calm) |
+| Humour | Serious | **30%** (mostly serious) | Playful | Empty states & 404 pages → 60% playful |
+| Warmth | Reserved | **65%** (warm but not effusive) | Warm | Customer-support resolution → 75% warm |
+
+---
+
+## 7. Voice in Context
+
+### Product UI microcopy
+> "Nothing here yet. The blank page is the point."
+
+### Marketing landing page (hero)
+> # The focus tool you don't notice.
+> Northwind plans your day in one quiet page. No notifications, no team noise, no AI roommate. Just the work.
+> [Start f
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "brand-identity",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

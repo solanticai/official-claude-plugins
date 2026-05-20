@@ -1,0 +1,220 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** cli-ux-audit
+- **description:** Audit any CLI tool for terminal user experience — help text, command structure, error messages, output formatting, discoverability, and accessibility — produces a scored report with actionable fixes
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit any CLI tool for terminal user experience"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review any CLI tool for terminal user experience"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run cli-ux-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# CLI UX Audit Report
+
+## Summary
+
+| Field | Value |
+|-------|-------|
+| **CLI** | widgetctl |
+| **Version** | 0.4.2 |
+| **Date** | 2026-04-21 |
+| **Overall Score** | 62/100 |
+| **Overall Verdict** | CONDITIONAL |
+| **Critical Issues** | 3 |
+| **Warnings** | 7 |
+| **Suggestions** | 5 |
+
+## CLI Identity
+
+| Field | Value |
+|-------|-------|
+| Binary path | `/usr/local/bin/widgetctl` |
+| Language / Runtime | Node 20 |
+| Framework | commander v12 |
+| Subcommand tree depth | 2 |
+| Top-level subcommands | 6 (`login`, `list`, `create`, `delete`, `sync`, `config`) |
+| Source repo | `github.com/example/widgetctl` |
+
+---
+
+## Phase Results
+
+### Phase 1: Discovery & Invocation -- CONTEXT
+
+- Binary resolves to `./node_modules/.bin/widgetctl` (Node wrapper).
+- Framework: commander — typo suggestions disabled by default.
+- Baseline probes captured in `.cli-ux-audit/probes/`.
+
+### Phase 2: Help & Documentation -- 9/15 -- FAIL
+
+| Check | Status | Details |
+|-------|--------|---------|
+| `--help` and `-h` both work | PASS | Identical output, exit 0 |
+| Per-subcommand help works | PASS | `widgetctl create --help` works |
+| Help to stdout | PASS | `--help 2>/dev/null` prints full content |
+| Synopsis line | PASS | `Usage: widgetctl [options] [command]` |
+| Options block with descriptions | PASS | Every flag has a description |
+| **Examples block** | **FAIL** | No examples in top-level or subcommand help |
+| Defaults shown inline | PARTIAL | Shown for some flags, missing for `--timeout` |
+| Wraps at narrow width | FAIL | `COLUMNS=40 widgetctl --help` produces long lines |
+| `--version` exits 0 | PASS | `0.4.2` |
+| Man page shipped | FAIL | No man page in package |
+
+### Phase 3: Command Structure & Argument Parsing -- 11/15 -- PASS WITH WARNINGS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Consistent subcommand grammar | PASS | Verb-first throughout |
+| Short aliases for common flags | PASS | `-v`, `-o`, `-q` present |
+| Negatable booleans | FAIL | `--color` yes, `--no-color` no |
+| Required-arg validation | PASS | `widgetctl create` without name fails with clear usage |
+| Unknown-flag rejection | PASS | `widgetctl --bogus` exits 1 |
+| Typo suggestions | FAIL | `widgetctl creaete` rejected without suggestion |
+| Flag order independence | PASS | — |
+| `--` separator | PASS | — |
+| **Destructive actions gated** | **FAIL** | `widgetctl delete <id>` runs without confirmation or `--yes` |
+| Tree depth ≤ 3 | PASS | Max depth 2 |
+| Mutually exclusive flags enforced | PASS | `--json` / `--yaml` mutually exclusive |
+
+### Phase 4: Error Messages & Exit Codes -- 8/15 -- FAIL
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Distinct exit codes | FAIL | Always exits 1 on any failure class |
+| `sysexits.h` convention | FAIL | — |
+| Errors to stderr | PASS | Errors routed to stderr |
+| Three-part error format | FAIL | Errors state what, not why or how to fix |
+| No raw stack traces | FAIL | Node `TypeError` stack printed on network failure |
+| Missing-input names the arg | PASS | — |
+| Graceful network/FS errors | PARTIAL | 401 shows generic "unauthorized"; no hint to run `widgetctl login` |
+| Clean signal handling | PASS | Ctrl+C during sync removes temp files |
+| Secrets redacted | PASS | Token redacted as `***` in error URLs |
+
+### Phase 5: Output Formatting -- 5/10 -- FAIL
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Aligned tables/lists | PASS | `widgetctl list` uses fixed-width columns |
+| Semantic colour usage | PASS | Red/green/yellow used semantically |
+| **`NO_COLOR` honoured** | **FAIL** | `NO_COLOR=1 widgetctl list` still emits ANSI |
+| Pipe-safe (strips ANSI) | FAIL | `widgetctl list | cat -v` shows `^[[32m` |
+| `--json` or structured mode | PASS | `--json` flag on `list` and `create` |
+| Progress to stderr | PASS | Spinner on `sync` writes to stderr |
+
+### Phase 6: Interactivity & Progress Feedback -- 7/10 -- PASS WITH WARNINGS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Feedback for ops > 2s | PASS | ora spinner during `sync` |
+| Spinners disabled on non-TTY | PARTIAL | Spinner suppressed but progress text still emitted |
+| Tested prompt library | PASS | Uses `@inquirer/prompts` |
+| Defaults shown in prompt | PASS | `[Y/n]` shown |
+| Non-interactive escape hatch | FAIL | No `--yes` / `--no-input` on `login` flow |
+| `CI=true` auto-detected | FAIL | Prompts still appear in GitHub Actions |
+| Ctrl+C on prompt exits 130 | PASS | — |
+
+### Phase 7: Discoverability & Onboarding -- 6/10 -- PASS WITH WARNINGS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| No-args shows help | PASS | Commander default |
+| Top-level subcommand list | PASS | — |
+| Typo suggestions | FAIL | See Phase 3 |
+| Shell completions | FAIL | No `completion` subcommand |
+| First-run guidance | PARTIAL | No docs URL in `--help`; README points to old URL |
+| `--version` includes commit/date | FAIL | Version only, no commit hash |
+
+### Phase 8: Accessibility & I18n -- 7/10 -- PASS WITH WARNINGS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Status has text/symbol cue | PASS | Uses ✓ / ✗ alongside colour |
+| CVD-safe palette | PASS | Red + ✗ and green + ✓ pairs |
+| Critical info as text | PASS | — |
+| Locale awareness | PARTIAL | Timestamps use local format; consider ISO 8601 |
+| Unicode degrades on `LANG=C` | FAIL | ✓ renders as `?` under `LANG=C` with no fallback |
+| High-contrast friendly | PASS | — |
+
+### Phase 9: Terminal Compatibility & Piping Safety -- 6/10 -- PASS WITH WARNINGS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| No ANSI leakage on pipes | FAIL | See Phase 5 |
+| `isatty` detection | PARTIAL | Spinner checks, colour does not |
+| Cross-terminal support | PASS | Tested on Windows Terminal, iTerm, cmd |
+| `COLUMNS` handling | PASS | Uses `process.stdout.columns`, falls back to 80 |
+| SIGWINCH (TUIs only) | N/A | Not a TUI |
+| Clean exit restores terminal | PASS | — |
+| `TERM=dumb` respected | FAIL | Still emits ANSI under `TERM=dumb` |
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "cli-ux-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

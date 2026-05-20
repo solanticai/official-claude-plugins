@@ -1,0 +1,137 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** meta-audience-builder
+- **description:** Build Meta custom and lookalike audiences with size estimation and ready-to-activate definitions.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Build Meta custom and lookalike audiences with size estimation and ready-to-activate definitions"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Build → Create)
+- user_input: "Create Meta custom and lookalike audiences with size estimation and ready-to-activate definitions"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run meta-audience-builder"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a working specification, not a hypothetical or placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Meta Audiences — Koala & Co. AU
+
+**Ad account:** act_1234567890
+**Pixel:** 123456789012345
+**Date:** 11/04/2026
+
+---
+
+## Retargeting audiences
+
+| Name | Source event | Retention | Approx size | Status |
+|---|---|---|---|---|
+| Retarget - Page Viewers - 180d | PageView | 180 days | ~14,000 | created |
+| Retarget - Product Viewers - 60d | ViewContent | 60 days | ~4,200 | created |
+| Retarget - Cart Abandoners - 14d | AddToCart (exclude Purchase 14d) | 14 days | ~180 | created, populating |
+| Retarget - Checkout Abandoners - 7d | InitiateCheckout (exclude Purchase 7d) | 7 days | ~60 | created, populating |
+
+---
+
+## Lookalike audiences
+
+| Name | Source audience | Country | Ratio | Approx size | Status |
+|---|---|---|---|---|---|
+| Lookalike - AU Purchasers 1% | Custom - AU Purchasers 180d | AU | 1% | ~200,000 | created |
+| Lookalike - AU Purchasers 3% | Custom - AU Purchasers 180d | AU | 3% | ~600,000 | created |
+| Lookalike - AU Subscribers 1% | Custom - Newsletter Subscribers | AU | 1% | ~200,000 | created |
+
+---
+
+## Exclusion audiences
+
+| Name | Source | Retention | Status |
+|---|---|---|---|
+| Exclusion - Recent Purchasers 30d | Purchase event | 30 days | created |
+| Exclusion - Existing Customers | Customer list (8,300 users uploaded, hashed) | — | created |
+
+---
+
+## Campaign use matrix
+
+| Campaign type | Include | Exclude |
+|---|---|---|
+| Retargeting (conversion) | `Retarget - Cart Abandoners - 14d`, `Retarget - Checkout Abandoners - 7d` | `Exclusion - Recent Purchasers 30d` |
+| Retargeting (re-engagement) | `Retarget - Page Viewers - 180d`, `Retarget - Product Viewers - 60d` | `Exclusion - Recent Purchasers 30d`, `Retarget - Cart Abandoners - 14d` |
+| Prospecting (1% LAL) | `Lookalike - AU Purchasers 1%`, `Lookalike - AU Subscribers 1%` | `Exclusion - Recent Purchasers 30d`, `Exclusion - Existing Customers`, `Retarget - Page Viewers - 180d` |
+| Prospecting (broader) | `Lookalike - AU Purchasers 3%` | Same as above |
+| Brand awareness | Broad interest + Lookalike 3% | `Exclusion - Recent Purchasers 30d` |
+
+---
+
+## Next steps
+
+1. Wait 24 hours for Cart Abandoners / Checkout Abandoners audiences to populate (currently 180 and 60 — they'll grow over time).
+2. Run `/ppc-manager:meta-creative-brief` to design creative for the Lookalike 1% prospecting campaign.
+3. Launch a Retargeting conversion campaign using Cart Abandoners 14d + Purchase exclusion next week.
+4. Launch a Prospecting campaign using Lookalike 1% + all exclusions after creative is ready.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "meta-audience-builder",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

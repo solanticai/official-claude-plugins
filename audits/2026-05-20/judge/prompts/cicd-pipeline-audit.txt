@@ -1,0 +1,206 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** cicd-pipeline-audit
+- **description:** Audit CI/CD pipelines (GitHub Actions, GitLab CI, CircleCI, Azure Pipelines, Jenkins, Bitbucket) for security, reliability, reproducibility, supply chain, and deploy safety. One sub-agent per workflow. Static, live, apply, and runtime modes.
+- **paths:** .github/workflows/*.{yml,yaml}
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit CI/CD pipelines (GitHub Actions, GitLab CI, CircleCI, Azure Pipelines, Jenkins, Bitbucket) for security, reliability, reproducibility, supply chain, and deploy safety"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review CI/CD pipelines (GitHub Actions, GitLab CI, CircleCI, Azure Pipelines, Jenkins, Bitbucket) for security, reliability, reproducibility, supply chain, and deploy safety"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run cicd-pipeline-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# CI/CD Pipeline Audit — acme-api
+
+**Audited:** 21/04/2026
+**Mode:** live
+**Platforms:** github-actions
+**Workflows audited:** 4
+**Verdict:** CONDITIONAL — score 63/100
+
+---
+
+## Executive Summary
+
+Four GitHub Actions workflows were audited. Two — `release.yml` and `deploy-prod.yml` — handle production artefacts and have significant security gaps: unpinned third-party actions in the release workflow's signing step, `GITHUB_TOKEN` relying on default write-all permissions in three of four workflows, and a secret echoed to the log in `deploy-prod.yml`. The CI test workflow is in good shape. Live-mode inspection showed `release.yml` has a 61% success rate over the last 50 runs (24 failed), suggesting further reliability investigation.
+
+**Top three risks:**
+1. `release.yml` — third-party signing action pinned by tag (can be moved by the author) *(ID: CI-001)*
+2. `deploy-prod.yml` — `DEPLOY_TOKEN` echoed into a debug log line *(ID: CI-002)*
+3. Three workflows rely on default `GITHUB_TOKEN` write-all scope *(ID: CI-007)*
+
+---
+
+## Category Scores
+
+| Category | Weight | Score | Notes |
+|---|---|---|---|
+| A. Security | 25 | 52 | SHA pinning missing, permissions too broad |
+| B. Reliability | 10 | 70 | Timeouts set; retries missing on flaky Stripe webhook step |
+| C. Reproducibility | 10 | 80 | ubuntu-latest still used on release workflow |
+| D. Speed & Cache | 10 | 85 | Cache keys fine |
+| E. Supply chain | 15 | 40 | No SBOM, no provenance, no signing |
+| F. Secrets hygiene | 15 | 55 | One echoed secret |
+| G. Deploy safety | 10 | 70 | Prod environment exists; no required reviewers |
+| H. Observability | 5 | 60 | Slack notification on failure only for release workflow |
+
+---
+
+## Per-Workflow Findings
+
+### `.github/workflows/release.yml` — HIGH RISK
+
+| ID | Sev | Category | Line | Issue |
+|---|---|---|---|---|
+| CI-001 | CRITICAL | A.3 | 17 | `actions/checkout@v4` tag-pinned |
+| CI-004 | HIGH | A.3 | 23 | `sigstore/cosign-installer@v3` tag-pinned |
+| CI-008 | HIGH | E.1 | 45 | `npm publish` without `--provenance` |
+| CI-011 | MEDIUM | C.1 | 8 | `runs-on: ubuntu-latest` on release workflow |
+
+### `.github/workflows/deploy-prod.yml` — HIGH RISK
+
+| ID | Sev | Category | Line | Issue |
+|---|---|---|---|---|
+| CI-002 | CRITICAL | F.1 | 33 | Secret echoed: `echo "Token: ${{ secrets.DEPLOY_TOKEN }}"` |
+| CI-007 | HIGH | A.7 | 4 | No `permissions:` block — default write-all |
+| CI-012 | MEDIUM | G.1 | 50 | No required reviewers on `production` environment |
+
+### `.github/workflows/ci-test.yml` — LOW RISK
+
+No CRITICAL / HIGH findings. Two INFO suggestions around caching.
+
+### `.github/workflows/stale-issues.yml` — LOW RISK
+
+No significant findings. Tag-pinned `actions/stale@v9` but low-risk scope.
+
+---
+
+## Cross-Workflow Pattern Findings
+
+- **Pattern CI-P1** — Three of four workflows rely on default `GITHUB_TOKEN` permissions. Add a top-level `permissions: contents: read` and override per-job. **HIGH**
+- **Pattern CI-P2** — All four workflows reference third-party actions by tag. Pin by SHA. **HIGH for release.yml, MEDIUM elsewhere.**
+
+---
+
+## Risk Register
+
+| ID | Severity | Category | Target | Evidence | Remediation |
+|---|---|---|---|---|---|
+| CI-001 | CRITICAL | A.3 | release.yml:17 | `uses: actions/checkout@v4` | Pin by commit SHA |
+| CI-002 | CRITICAL | F.1 | deploy-prod.yml:33 | `echo "Token: ${{ secrets.DEPLOY_TOKEN }}"` | Replace with length-check |
+| CI-004 | HIGH | A.3 | release.yml:23 | `sigstore/cosign-installer@v3` | Pin by SHA |
+| CI-007 | HIGH | A.7 | deploy-prod.yml:4 | No `permissions:` block | Add minimal block |
+| CI-008 | HIGH | E.1 | release.yml:45 | `npm publish` no provenance | Add `--provenance` |
+| CI-011 | MEDIUM | C.1 | release.yml:8 | `ubuntu-latest` | Pin `ubuntu-22.04` |
+| CI-012 | MEDIUM | G.1 | deploy-prod.yml:50 | Prod env has no reviewers | Require 1 reviewer |
+
+---
+
+## Runtime Baseline *(live mode)*
+
+| Workflow | Runs (50) | Success | Mean duration | P95 duration |
+|---|---|---|---|---|
+| release.yml | 50 | 61% | 12m14s | 34m02s |
+| deploy-prod.yml | 50 | 94% | 4m18s | 6m01s |
+| ci-test.yml | 50 | 88% | 7m33s | 11m20s |
+| stale-issues.yml | 30 | 100% | 22s | 45s |
+
+`release.yml` failure rate is too high. Investigate top five failure modes before shipping next release.
+
+---
+
+## Action Batches
+
+### Batch 1 — Critical (apply immediately)
+
+- Fix CI-001: pin `actions/checkout` by SHA in release.yml.
+- Fix CI-002: remove secret echo in deploy-prod.yml.
+- Fix CI-007: add minimal `permissions:` blocks.
+
+### Batch 2 — High (this week)
+
+- CI-004, CI-008: pin signing action + add `--provenance`.
+
+### Batch 3 — Medium (this month)
+
+- CI-011, CI-012: pin runner, add required reviewer on prod env.
+
+---
+
+## Suppressed Findings
+
+None (no `.cicd-ignore` present).
+
+---
+
+*Generated by `devops:cicd-pipeline-audit` — Anthril DevOps plugin*
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "cicd-pipeline-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

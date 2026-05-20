@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of entity-relationship-mapper's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Mapping is exhaustive — every input has an output and vice versa"
+      - "Report includes the canonical sections: \"Entity-Relationship Model — [Business Na\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

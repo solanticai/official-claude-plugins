@@ -1,0 +1,18 @@
+{
+  "skill": "brand-guidelines",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Input matches the canonical use case described."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to brand guidelines."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic question about skills, not brand guideline production."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'colour', 'Colour' section heading, 'neighbourhood', 'speciality' throughout."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "TOC lists Logo, Colour, Typography, Imagery, Voice, Application Examples, Asset Library, Governance — all canonical brand book sections."}
+    ],
+    "notes": "The artefact is a comprehensive brand book for Crema, including versioning, audience, brand story, logo variants with clear-space and minimum-size rules, do's/don'ts, colour palette with HEX/OKLCH, and references to typography/imagery/voice sections. Australian English is consistent (colour, neighbourhood, speciality). The truncated example clearly satisfies both criteria."
+  }
+}

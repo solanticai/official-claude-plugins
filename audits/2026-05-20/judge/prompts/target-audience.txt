@@ -1,0 +1,173 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** target-audience
+- **description:** Build buyer personas, ICPs, and audience segments with psychographics, demographics, jobs-to-be-done, channel preferences, and objection mapping
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Build buyer personas, ICPs, and audience segments with psychographics, demographics, jobs-to-be-done, channel preferences, and objection mapping"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Build → Create)
+- user_input: "Create buyer personas, ICPs, and audience segments with psychographics, demographics, jobs-to-be-done, channel preferences, and objection mapping"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run target-audience"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a working specification, not a hypothetical or placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Target Audience — Ledgerly
+
+**Date:** 11/04/2026
+**Stage:** Early traction (180 paying customers, 14 months since launch)
+**Geography:** Australia (NSW, VIC, QLD primary)
+**Brand identity reference:** Ledgerly brand-identity v2 (Mar 2026)
+
+---
+
+## 1. Audience Snapshot
+
+Ledgerly is an accounting and finance platform for Australian SMEs in the $1–10M revenue range — businesses too big for shoebox accounting and too small for an in-house finance team. The audience is defined less by industry than by the moment in a business's life: the founder is still doing the books themselves, has just realised they can't keep doing it forever, and is looking for the right combination of software and human help. Ledgerly's ICP is the founder who has just hired their first full-time bookkeeper and needs both of them to work in the same system without stepping on each other.
+
+---
+
+## 2. Segments
+
+### Segment 1 — The Solo Operator
+- **Definition:** Single-founder businesses doing their own books and reaching the limit of "just use a spreadsheet."
+- **Approximate size:** ~340,000 ABN-registered Australian sole traders with $200k–$1M revenue
+- **Core JTBD:** "When BAS time approaches, I want to stop dreading it, so I can focus on the work that actually pays the bills."
+- **Why pursue:** Largest segment by count; high pain density; lowest CAC via SEO. But also lowest LTV — many graduate out within 18 months.
+
+### Segment 2 — The Hand-Off Founder (ICP)
+- **Definition:** Founders of $1–10M revenue businesses who've just hired a bookkeeper or office manager and need a tool both can use.
+- **Approximate size:** ~52,000 Australian SMEs in this revenue band, growing ~6% year on year
+- **Core JTBD:** "When my new bookkeeper joins, I want to hand over the books cleanly without losing visibility, so I can stop being the bottleneck on every payment."
+- **Why pursue:** Highest LTV (avg AUD $4,800/year, 31-month retention). High word-of-mouth. Best fit for Ledgerly's "founder + bookkeeper collaboration" core feature.
+
+### Segment 3 — The Bookkeeper-Led
+- **Definition:** Australian bookkeepers running practices serving 5–30 client businesses, looking for a tool to standardise on.
+- **Approximate size:** ~14,000 registered AU bookkeepers
+- **Core JTBD:** "When I onboard a new client, I want to set up their books once and have it scale with them, so I can take on more clients without spending evenings catching up."
+- **Why pursue:** Force multiplier — one bookkeeper brings 5–30 client accounts. Higher CAC but higher contract value. Acquisition channel: trade associations and referrals from existing bookkeeper clients.
+
+### Segment 4 — The Outgrown-Xero
+- **Definition:** SMEs that started on Xero or MYOB and have hit the wall for their use case (typically: complex inventory, multi-entity, project-based revenue recognition).
+- **Approximate size:** ~28,000 Australian SMEs reporting frustration with Xero in customer surveys
+- **Core JTBD:** "When my financial model has outgrown my software, I want to switch without losing 7 years of historical data, so I can stop building hacks around the limitations."
+- **Why pursue:** Highest urgency, longest sales cycle. Strong fit but requires proven migration tooling.
+
+---
+
+## 3. Ideal Customer Profile (ICP)
+
+**ICP: The Hand-Off Founder**
+
+**Identifying signals** (how to recognise them in inbound):
+- Business revenue $1–10M (asks about pricing for "small teams", not "enterprise")
+- Mentions a bookkeeper (current or recently hired) by name
+- Asks about multi-user permissions
+- Uses phrases like "I'm spending too much time in the books"
+- Currently on Xero or MYOB but evaluating alternatives
+- Industry is services-heavy (consulting, trades, agencies, professional services) — not retail/e-commerce
+- Comes via referral from another founder or via "Xero alternative" SEO
+
+**Why they're the ideal:**
+- **Value alignment:** Ledgerly's product is built around founder + bookkeeper collaboration — this segment has both roles and feels the friction acutely
+- **Economic alignment:** Ledgerly's pricing (AUD $200–$400/mo) is 4–8x what Xero charges; the Hand-Off Founder is willing to pay because they're saving 5–8 founder-hours per week
+- **Cultural alignment:** This segment values "we just want it to work" over "we want every feature." Ledgerly's restraint matches their need.
+- **Strategic alignment:** They refer other founders. Word of mouth is Ledgerly's best acquisition channel.
+
+**Acquisition source:** 60% word-of-mouth referral, 25% SEO ("Xero alternative for services businesses"), 15% paid (LinkedIn ads targeting AU founders)
+**Approximate CAC:** AUD $480
+**Approximate LTV:** AUD $12,400 over 31 months
+**LTV:CAC ratio:** 25.8x (very strong)
+
+---
+
+## 4. Personas
+
+### Carla Nguyen, the Bookkeeper
+
+> "I've inherited so many Xero accounts that were set up wrong by founders who didn't know what a chart of accounts was. I just want a tool where the founder can use it without breaking it."
+
+**Demographic snapshot:**
+- Age: 34
+- Location: Western Sydney
+- Role: Senior bookkeeper at a 3-person bookkeeping practice; previously worked in-house at a manufacturing SME
+- Income: AUD $90k base + practice partnership share
+- Life stage: Married, two young kids, working 4 days a week
+- Tech comfort: High (uses 6+ tools daily)
+
+**Psychographic snapshot:**
+- **Identity:** "I'm the person who fixes the financial mess so the founder can run their business."
+- **Values:** Accuracy, efficiency, being indispensable
+- **Anxieties:** Audit risk; making mistakes that cost the founder money
+- **Aspirations:** To run her own bookkeeping practice within 3 years and become BAS-agent registered
+
+**Day-in-life:**
+8:30am drop-off at school, then to a co-working space. Carla works through 5–6 client accounts in a day, switching between Xero, MYOB, Hubdoc, and a stack of email follow-ups for missing receipts. The biggest friction in her day is founders who've made unauthorised changes to their charts of accounts and broken the repor
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "target-audience",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

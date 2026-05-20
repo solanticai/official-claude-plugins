@@ -1,0 +1,273 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** design-tokens
+- **description:** Generate design token systems exportable to CSS variables, Tailwind config, JSON, and Style Dictionary — covering colour, typography, spacing, radius, shadow, and motion
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Generate design token systems exportable to CSS variables, Tailwind config, JSON, and Style Dictionary"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Generate → Produce)
+- user_input: "Produce design token systems exportable to CSS variables, Tailwind config, JSON, and Style Dictionary"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run design-tokens"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is machine-readable where the description implies (valid JSON/SQL/YAML)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Design Tokens — Cadence
+
+**Date:** 11/04/2026
+**Source palette:** Cadence brand palette (Inkwell + Coral + warm neutrals)
+**Platforms:** Web (React + Tailwind v4), iOS (via Style Dictionary)
+**Modes:** Light + dark
+**Tailwind version:** v4
+
+---
+
+## 1. Token System Overview
+
+Cadence is a task management app for teams of 2–10 people. The token system covers all colour, type, space, and radius needs for the marketing site (Next.js) and the product UI (React Native + React Native Web). Shadow and motion are in scope because the product has heavy use of layered surfaces and micro-interactions.
+
+| Category | Token count (raw) | Token count (semantic) | In scope? |
+|---|---|---|---|
+| Colour | 18 | 22 | ✓ |
+| Typography | 18 | 9 | ✓ |
+| Spacing | 11 | — | ✓ |
+| Radius | 6 | 4 | ✓ |
+| Shadow | 4 | 3 | ✓ |
+| Motion | 7 | 4 | ✓ |
+| Z-index | 6 | — | ✓ |
+
+**Total tokens:** 121 (62 raw + 42 semantic + 11 spacing + 6 z-index)
+
+---
+
+## 2. Naming Convention
+
+- **Format:** dot-notation in W3C JSON, kebab-case in CSS variables
+- **Raw token pattern:** `category.subcategory.variant` (e.g. `color.brand.inkwell`, `space.4`)
+- **Semantic token pattern:** `category.role.variant` (e.g. `color.bg.page`, `color.text.primary`)
+- **Spacing scale base:** 4px
+- **Type scale steps:** 9 (xs through 5xl, plus a fluid `display` for hero)
+
+---
+
+## 3. Token Set (W3C JSON)
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "brand": {
+      "inkwell":   { "$value": "#1A1B2E" },
+      "coral":     { "$value": "#FF6B6B" },
+      "parchment": { "$value": "#FFF8F0" }
+    },
+    "neutral": {
+      "50":  { "$value": "#FBFAF7" },
+      "100": { "$value": "#F4F2EC" },
+      "200": { "$value": "#E5E2D8" },
+      "300": { "$value": "#CFCABC" },
+      "400": { "$value": "#A3A091" },
+      "500": { "$value": "#76746A" },
+      "600": { "$value": "#52514A" },
+      "700": { "$value": "#3A3933" },
+      "800": { "$value": "#26261F" },
+      "900": { "$value": "#161611" },
+      "950": { "$value": "#0A0A07" }
+    },
+    "semantic": {
+      "success": { "$value": "#34A77E" },
+      "warning": { "$value": "#E8A93C" },
+      "error":   { "$value": "#D8504F" },
+      "info":    { "$value": "#4A6FA5" }
+    },
+    "bg": {
+      "page":    { "$value": "{color.neutral.50}" },
+      "card":    { "$value": "#FFFFFF" },
+      "subtle":  { "$value": "{color.neutral.100}" },
+      "muted":   { "$value": "{color.neutral.200}" },
+      "inverse": { "$value": "{color.neutral.900}" }
+    },
+    "text": {
+      "primary":   { "$value": "{color.neutral.900}" },
+      "secondary": { "$value": "{color.neutral.600}" },
+      "disabled":  { "$value": "{color.neutral.400}" },
+      "inverse":   { "$value": "{color.neutral.50}" },
+      "link":      { "$value": "{color.brand.coral}" }
+    },
+    "border": {
+      "subtle":  { "$value": "{color.neutral.200}" },
+      "default": { "$value": "{color.neutral.300}" },
+      "strong":  { "$value": "{color.neutral.400}" },
+      "focus":   { "$value": "{color.brand.coral}" }
+    },
+    "button": {
+      "primary": {
+        "bg":       { "$value": "{color.brand.inkwell}" },
+        "text":     { "$value": "{color.neutral.50}" },
+        "bgHover":  { "$value": "{color.neutral.800}" }
+      },
+      "secondary": {
+        "bg":   { "$value": "{color.neutral.100}" },
+        "text": { "$value": "{color.neutral.900}" }
+      }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "0":  { "$value": "0px" },
+    "1":  { "$value": "4px" },
+    "2":  { "$value": "8px" },
+    "3":  { "$value": "12px" },
+    "4":  { "$value": "16px" },
+    "6":  { "$value": "24px" },
+    "8":  { "$value": "32px" },
+    "12": { "$value": "48px" },
+    "16": { "$value": "64px" },
+    "20": { "$value": "80px" },
+    "24": { "$value": "96px" }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans":    { "$value": "Inter, system-ui, -apple-system, sans-serif" },
+      "display": { "$value": "Tiempos Headline, Georgia, serif" },
+      "mono":    { "$value": "JetBrains Mono, ui-monospace, monospace" }
+    },
+    "size": {
+      "$type": "dimension",
+      "xs":      { "$value": "12px" },
+      "sm":      { "$value": "14px" },
+      "base":    { "$value": "16px" },
+      "lg":      { "$value": "18px" },
+      "xl":      { "$value": "20px" },
+      "2xl":     { "$value": "24px" },
+      "3xl":     { "$value": "30px" },
+      "4xl":     { "$value": "36px" },
+      "5xl":     { "$value": "48px" },
+      "display": { "$value": "clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem)" }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular":  { "$value": 400 },
+      "medium":   { "$value": 500 },
+      "semibold": { "$value": 600 },
+      "bold":     { "$value": 700 }
+    },
+    "lineHeight": {
+      "tight":   { "$value": "1.1" },
+      "normal":  { "$value": "1.5" },
+      "relaxed": { "$value": "1.75" }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "none": { "$value": "0px" },
+    "sm":   { "$value": "4px" },
+    "md":   { "$value": "8px" },
+    "lg":   { "$value": "12px" },
+    "xl":   { "$value": "16px" },
+    "full": { "$value": "9999px" }
+  },
+  "shadow": {
+    "sm": {
+      "$type": "shadow",
+      "$value": { "color": "#1A1B2E0d", "offsetX": "0px", "offsetY": "1px", "blur": "2px", "spread": "0px" }
+    },
+    "md": {
+      "$type": "shadow",
+      "$value": { "color": "#1A1B2E1a", "offsetX": "0px", "offsetY": "4px", "blur": "8px", "spread": "-2px" }
+    },
+    "lg": {
+      "$type": "shadow",
+      "$value": { "color": "#1A1B2E26", "offsetX": "0px", "offsetY": "12px", "blur": "24px", "spread": "-6px" }
+    },
+    "xl": {
+      "$type": "shadow",
+      "$value": { "color": "#1A1B2E33", "offsetX": "0px", "offsetY": "24px", "blur": "48px", "spread": "-12px" }
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "instant": { "$value": "100ms" },
+    "fast":    { "$value": "150ms" },
+    "normal":  { "$value": "250ms" },
+    "slow":    { "$value": "400ms" }
+  }
+}
+```
+
+---
+
+## 4. CSS Variables Export
+
+```css
+:root {
+  /* Bran
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "design-tokens",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

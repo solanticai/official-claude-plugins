@@ -1,0 +1,133 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** meta-pixel-setup
+- **description:** Create or audit a Meta Pixel — install via GTM, map events, and verify via Events Manager Test Events.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Create or audit a Meta Pixel"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Create → Build)
+- user_input: "Build or audit a Meta Pixel"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run meta-pixel-setup"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a complete, runnable specification — not a placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Meta Pixel Setup — Koala & Co. Online
+
+**Pixel ID:** 123456789012345
+**Container:** GTM-KOALA123
+**Date:** 11/04/2026
+
+---
+
+## Events installed
+
+| Event | Trigger | Params | eventID used |
+|---|---|---|---|
+| PageView | All Pages - Page View | — | — (page views don't need dedup) |
+| ViewContent | Custom Event `view_item` | `content_ids`, `content_type`, `value`, `currency` | `{{DL - event_id}}` |
+| AddToCart | Custom Event `add_to_cart` | `content_ids`, `content_type`, `value`, `currency`, `num_items` | `{{DL - event_id}}` |
+| InitiateCheckout | Custom Event `begin_checkout` | `value`, `currency`, `num_items`, `content_ids` | `{{DL - event_id}}` |
+| AddPaymentInfo | Custom Event `add_payment_info` | `value`, `currency` | `{{DL - event_id}}` |
+| Purchase | Custom Event `purchase` | `value`, `currency`, `content_ids`, `content_type`, `num_items` | `{{DL - event_id}}` |
+| Lead | Custom Event `newsletter_signup` | — | `{{DL - event_id}}` |
+
+Total: 7 event tags + 1 base pixel tag.
+
+---
+
+## AEM priority ranking (top 8)
+
+1. Purchase
+2. InitiateCheckout
+3. AddToCart
+4. AddPaymentInfo
+5. ViewContent
+6. Lead
+7. (nothing — only 6 configured)
+8. (nothing)
+
+---
+
+## Verification
+
+- [x] Base pixel fires on All Pages
+- [x] All 6 event tags fire in GTM preview
+- [x] Every event has `eventID` populated (verified in Test Events detail)
+- [x] Events appear in Meta Events Manager Test Events within 10 seconds
+
+---
+
+## Next steps
+
+1. Run `/ppc-manager:meta-capi-setup` — server-side CAPI using the GTM Server container Koala has on Cloudflare Workers.
+2. Run `/ppc-manager:meta-events-mapping` to produce the cross-platform event dictionary (GA4 ↔ Meta ↔ GTM).
+3. Rank the 6 events in Events Manager → Aggregated Event Measurement per the priority order above.
+4. Wait 48 hours, then check attribution in Meta Ads Manager.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "meta-pixel-setup",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

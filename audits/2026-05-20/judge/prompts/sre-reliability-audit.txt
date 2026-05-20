@@ -1,0 +1,195 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** sre-reliability-audit
+- **description:** Assess Site Reliability maturity across five dimensions — SLOs/SLIs, runbooks, on-call, postmortems, game days — with per-dimension commentary and uplift path. Static, live (PagerDuty/Opsgenie), and runtime (game day) modes.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Assess Site Reliability maturity across five dimensions"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Assess → Evaluate)
+- user_input: "Evaluate Site Reliability maturity across five dimensions"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run sre-reliability-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Assessment is bounded — explicit scope, explicit out-of-scope
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# SRE Reliability Audit — acme-api
+
+**Audited:** 21/04/2026
+**Mode:** live
+**Maturity tier:** **Developing** *(score 1.8/4)*
+
+---
+
+## TL;DR
+
+Acme has a `runbooks/` directory with 14 documents, but only 4 are linked from paging alerts and 3 of the 14 haven't been updated in more than a year. There is no written SLO — uptime is a verbal "four nines" commitment but nothing is measured. Oncall is a single Slack channel where three engineers self-assign during outages. Postmortems exist for three incidents but use different templates and have no tracked action items. One game day ran eighteen months ago. The biggest uplift per hour invested: write one SLO with burn-rate alerts — it will force structure on everything else.
+
+---
+
+## Dimension Heatmap
+
+| # | Dimension | Score (/4) | Tier |
+|---|---|---|---|
+| D1 | SLOs / SLIs | 0 | None |
+| D2 | Runbooks | 2 | Defined |
+| D3 | On-call | 1 | Ad-hoc |
+| D4 | Postmortems | 2 | Defined |
+| D5 | Game days | 1 | Ad-hoc |
+
+---
+
+## Per-Dimension Assessment
+
+### D1. SLOs & SLIs — 0/4 (None)
+
+No SLO/SLI files in the repo. Customer contracts mention uptime targets; these are not represented operationally.
+
+**Gaps:**
+- No SLO spec committed.
+- No measurement of success rate as a first-class metric.
+- No burn-rate alerts.
+
+### D2. Runbooks — 2/4 (Defined)
+
+Fourteen runbooks in `runbooks/`. Four are linked from Alertmanager; the other ten are orphaned. Three runbooks last updated > 365 days; their linked alerts reference endpoints that were deprecated.
+
+**Gaps:**
+- Runbook freshness SLA unset.
+- Most runbooks lack a "first step" executable command.
+- No auto-generation of ticket when an alert fires with no linked runbook.
+
+### D3. On-call — 1/4 (Ad-hoc)
+
+No rotation documented. Three engineers self-assign during business hours via a Slack channel. No written escalation policy. PagerDuty is used but the schedule is "everyone everyday" — meaning no-one is specifically accountable.
+
+**Gaps:**
+- Single-person oncall risk.
+- No response-time target.
+- Burnout risk — not measurable because no rotation.
+
+### D4. Postmortems — 2/4 (Defined)
+
+Three postmortems under `docs/postmortems/`, each using a different template. Action items are mentioned in prose but not tracked in Jira; two out of three review dates were missed.
+
+**Gaps:**
+- No canonical template (recommend the Anthril template).
+- No action-item tracker.
+- No cross-team postmortem review cadence.
+
+### D5. Game days — 1/4 (Ad-hoc)
+
+One documented game day from October 2024 that found three gaps. Two gaps fixed; one open. No subsequent game day.
+
+**Gaps:**
+- No cadence set.
+- No game-day runbook.
+- Fixes not tracked to completion.
+
+---
+
+## Incident Trend (live mode — PagerDuty)
+
+| Metric | 90d | 30d | Change |
+|---|---|---|---|
+| P1 incidents | 8 | 3 | ↑ 12% |
+| MTTR | 78min | 54min | ↓ 30% |
+| Repeat root causes | 4 | 2 | same |
+
+MTTR trend is positive but repeat root causes suggest learnings aren't turning into system changes.
+
+---
+
+## Uplift Path
+
+### Immediate (next 2 weeks)
+- Write one SLO for the `/api/*` success rate (99.5% over 30d) and commit `slo.yaml`.
+- Add a multi-window burn-rate Prometheus alert.
+- Run one game day scoped to the API: kill one pod; confirm recovery < 30s.
+
+### Short-term (this quarter)
+- Formal on-call rotation (one week on, three off).
+- Runbook freshness SLA: 90 days.
+- Consolidate postmortem templates; start tracking action items in Jira.
+
+### Long-term (next 6 months)
+- Expand SLOs to worker and webhook services.
+- Quarterly game day cadence.
+- Quarterly cross-team postmortem review.
+
+---
+
+## Suppressed
+
+None.
+
+---
+
+*Generated by `devops:sre-reliability-audit` — Anthril DevOps plugin*
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "sre-reliability-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

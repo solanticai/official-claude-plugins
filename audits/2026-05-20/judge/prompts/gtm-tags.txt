@@ -1,0 +1,158 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** gtm-tags
+- **description:** Create or audit GTM tags, triggers, and variables for a specific tracking need with ready-to-publish config.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Create or audit GTM tags, triggers, and variables for a specific tracking need with ready-to-publish config"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Create → Build)
+- user_input: "Build or audit GTM tags, triggers, and variables for a specific tracking need with ready-to-publish config"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run gtm-tags"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a complete, runnable specification — not a placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# GTM Tags — Add Meta Pixel Purchase Event — Koala & Co. Online
+
+**Container:** GTM-KOALA123
+**Workspace:** Default Workspace
+**Version:** Meta Pixel purchase event - 2026-04-11 (version_id `43`) — **Published**
+**Date:** 11/04/2026
+
+---
+
+## Goal
+
+Wire the Meta Pixel `Purchase` event to the same `purchase` dataLayer event GA4 and Google Ads already consume. Includes Meta Pixel base install (wasn't present before), the Purchase event tag with deduplication via `event_id`, and a Custom JS variable to convert the `items[]` array into Meta's `content_ids` format. This is the browser-side of Meta Pixel — the server-side (CAPI) will be wired separately via `/ppc-manager:meta-capi-setup`.
+
+---
+
+## Changes applied
+
+### Variables created
+
+| Name | Type | Parameter |
+|---|---|---|
+| `CONST - Meta Pixel ID` | Constant | `123456789012345` |
+| `JS - items to content_ids` | Custom JS | `function() { return ({{DL - items}} || []).map(function(i){return i.item_id}); }` |
+| `JS - items length` | Custom JS | `function() { return ({{DL - items}} || []).length; }` |
+
+### Triggers created
+
+| Name | Type | Filter |
+|---|---|---|
+| `Custom Event - purchase` | Custom Event | `event equals purchase` (re-used existing) |
+
+### Tags created
+
+| Name | Type | Firing trigger | Key parameters |
+|---|---|---|---|
+| `Con - Meta - Pixel Base` | Custom HTML | All Pages - Page View | `fbq('init', '{{CONST - Meta Pixel ID}}')` + `fbq('track', 'PageView')` |
+| `Con - Meta - Event - Purchase` | Custom HTML | Custom Event - purchase | `fbq('track', 'Purchase', {...}, { eventID: '{{DL - event_id}}' })` |
+
+### Tags updated
+
+(none)
+
+---
+
+## Preview verification
+
+- **Preview URL:** `https://tagassistant.google.com/?container_id=GTM-KOALA123&version_id=43`
+- **Steps performed:**
+  1. Opened preview URL, clicked Connect.
+  2. Navigated to `https://koalahomewares.com.au/products/wool-throw`.
+  3. Clicked Add to Cart.
+  4. Proceeded through checkout with a test card.
+  5. Landed on the order thank-you page.
+- **Tags fired in preview:**
+  - `Con - Meta - Pixel Base` — fired on every page view (correct)
+  - `Con - Meta - Event - Purchase` — fired once on the thank-you page (correct)
+- **Parameter values observed:**
+  - `value: 129.00`, `currency: 'AUD'`, `content_ids: ['SKU_WLT_001']`, `content_type: 'product'`, `num_items: 1`
+  - `eventID: '10042-abcd1234'` (matches `{{DL - transaction_id}}-{{checkout token}}`)
+- **Verification confirmed by user:** yes at 11/04/2026 14:32 AEST
+
+---
+
+## Published version
+
+- **Version ID:** 43
+- **Published at:** 11/04/2026 14:35 AEST
+- **Published by:** the ppc-gtm MCP (user-authorised)
+
+---
+
+## Next steps
+
+1. Monitor Meta Events Manager → Test Events for 1 hour to confirm the event arrives. Navigate to [business.facebook.com/events_manager](https://business.facebook.com/events_manager), pick the pixel, and watch Real-time.
+2. Run `/ppc-manager:meta-capi-setup` to wire the server-side Conversions API so Meta receives events even when the browser is blocked.
+3. After CAPI is installed, run `/ppc-manager:meta-events-mapping` to reconcile browser vs. server dedup.
+4. In 48 hours, run `/ppc-manager:campaign-audit` scoped to Meta to verify ROAS attribution is calculating correctly.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "gtm-tags",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

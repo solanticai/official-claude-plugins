@@ -38,8 +38,8 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of oauth-setup's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Report includes the canonical sections: \"Google accounts\", \"Google Ads accounts\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

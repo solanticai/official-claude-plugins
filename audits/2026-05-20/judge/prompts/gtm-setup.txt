@@ -1,0 +1,172 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** gtm-setup
+- **description:** Create or audit a GTM container with the core baseline configured ready for ongoing tag management.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Create or audit a GTM container with the core baseline configured ready for ongoing tag management"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Create → Build)
+- user_input: "Build or audit a GTM container with the core baseline configured ready for ongoing tag management"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run gtm-setup"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a complete, runnable specification — not a placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# GTM Setup — Change Log — Koala & Co. Online
+
+**Container:** GTM-KOALA123 (container_id `1234567890`)
+**Account:** Koala & Co. (account_id `4444333322`)
+**Workspace:** Default Workspace
+**Version:** GTM baseline setup - 2026-04-11 (version_id `42`) — **Published**
+**Date:** 11/04/2026
+
+---
+
+## Summary
+
+Koala & Co. Online is an Australian homewares retailer whose GTM container had accumulated two years of ad-hoc tagging. We audited the container, deleted four legacy Universal Analytics tags, renamed twelve tags to the standard convention, and installed the GA4 baseline (one Config tag on All Pages + Consent Mode v2 default-deny stub). The container now has a clean foundation for the upcoming `gtm-datalayer` and `ga4-events` work.
+
+---
+
+## Baseline status
+
+| Item | Before | After |
+|---|---|---|
+| GA4 Configuration tag | 0 (was UA) | 1 (Con - GA4 - Config) |
+| All Pages trigger | Built-in, unused | Built-in, attached to GA4 Config |
+| Consent Mode v2 stub | None | `Util - HTML - Consent Mode Init` (priority 100) |
+| Legacy UA tags | 4 | 0 |
+| Naming convention compliance | 42% | 100% |
+
+---
+
+## Changes applied
+
+### Variables created
+
+| Name | Type | Parameter |
+|---|---|---|
+| CONST - GA4 Measurement ID | Constant | `G-KOALAHOMES1` |
+| DL - event | Data Layer Variable | `event` |
+| DL - ecommerce.value | Data Layer Variable | `ecommerce.value` |
+| DL - ecommerce.currency | Data Layer Variable | `ecommerce.currency` |
+
+### Triggers created
+
+| Name | Type | Filter |
+|---|---|---|
+| All Pages - Page View | pageview | (built-in, no filter) |
+| Custom Event - purchase | customEvent | `event` equals `purchase` |
+
+### Tags created
+
+| Name | Type | Firing trigger |
+|---|---|---|
+| Con - GA4 - Config | gaawc (GA4 Configuration) | All Pages - Page View |
+| Util - HTML - Consent Mode Init | html (Custom HTML) | All Pages - Page View (priority 100) |
+
+### Tags renamed
+
+| Old name | New name |
+|---|---|
+| GA Tag | Con - GA4 - Config (also re-typed from `ua` to `gaawc`) |
+| Purchase Tracking | Con - GA4 - Event - purchase |
+| FB Pixel | Con - Meta - Pixel Base |
+| Google Ads Conv | Con - Google Ads - Purchase |
+| (+8 more renames) | |
+
+### Tags deleted
+
+| Name | Reason |
+|---|---|
+| UA - All Pages | Legacy Universal Analytics (sunsetted 2023) |
+| UA - Event Tracking | Legacy Universal Analytics |
+| UA - Ecommerce | Legacy Universal Analytics |
+| UA - Goals | Legacy Universal Analytics |
+
+---
+
+## Preview & verification
+
+- **Tag Assistant preview URL:** `https://tagassistant.google.com/?container_id=GTM-KOALA123&version_id=42`
+- **Verification steps:**
+  1. Open the preview URL in Chrome.
+  2. Visit `https://koalahomewares.com.au/` in the preview session.
+  3. Confirm `Con - GA4 - Config` fires on Page View.
+  4. Open GA4 DebugView (under Admin → DebugView) and confirm one `page_view` event appears from `debug_mode = true`.
+  5. Confirm `Util - HTML - Consent Mode Init` fires before the GA4 Config (priority 100 vs default 0).
+
+---
+
+## Recommended next steps
+
+1. Run `/ppc-manager:gtm-datalayer` to design the e-commerce dataLayer schema (Koala pushes `add_to_cart`, `begin_checkout`, `purchase` from a Shopify storefront — the existing snippets need rationalising).
+2. Run `/ppc-manager:ga4-events` to create the `purchase` conversion event and custom dimensions for `item_category` and `promo_code`.
+3. Run `/ppc-manager:meta-pixel-setup` to wire the Meta pixel with the same events (CAPI is already in place via a Shopify plugin — the skill will audit dedup).
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "gtm-setup",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

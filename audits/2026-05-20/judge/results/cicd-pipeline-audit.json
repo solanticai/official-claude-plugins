@@ -1,0 +1,20 @@
+{
+  "skill": "cicd-pipeline-audit",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is the canonical description verbatim."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Review is a direct synonym for Audit and the rest matches the description."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly invokes the skill by its kebab-case name."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH key forwarding on Windows is unrelated to CI/CD pipeline auditing."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Generic meta question about skills, not a request to audit pipelines."}
+  ],
+  "judge_result": {
+    "verdict": "partial",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'artefact', 'artefacts' and 'authorised'-style spellings; no American forms detected."},
+      {"text": "Findings cite file:line evidence and are categorised by severity", "met": true, "evidence": "Risk Register and per-workflow tables show file:line (e.g., release.yml:17, deploy-prod.yml:33) with CRITICAL/HIGH/MEDIUM severity columns."},
+      {"text": "Report includes the canonical sections:", "met": true, "evidence": "Contains Executive Summary, Category Scores, Per-Workflow Findings, Cross-Workflow Patterns, Risk Register, Runtime Baseline, Action Batches, Suppressed Findings."},
+      {"text": "Artefact references the input path or target by name (no placeholder paths)", "met": true, "evidence": "Names concrete target 'acme-api' and real workflow paths like .github/workflows/release.yml and deploy-prod.yml; no placeholders."}
+    ],
+    "notes": "All four judge criteria are satisfied by the example artefact. The criterion listing canonical sections is truncated in the prompt ('Report includes the canonical sections:' with no explicit list), so it was evaluated against the conventional audit-report sections, all of which are present. Verdict set to 'partial' only because the third criterion is under-specified in the prompt; on the evidence available the artefact fully meets it."
+  }
+}

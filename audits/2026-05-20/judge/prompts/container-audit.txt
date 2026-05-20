@@ -1,0 +1,196 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** container-audit
+- **description:** Audit Dockerfiles and docker-compose files for base image, user privileges, secret leaks, layer efficiency, signal handling, healthchecks, and compose safety. One sub-agent per Dockerfile. Static, live (Trivy/Grype), and apply modes.
+- **paths:** **/Dockerfile*
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit Dockerfiles and docker-compose files for base image, user privileges, secret leaks, layer efficiency, signal handling, healthchecks, and compose safety"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review Dockerfiles and docker-compose files for base image, user privileges, secret leaks, layer efficiency, signal handling, healthchecks, and compose safety"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run container-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# Container Audit — acme-api
+
+**Audited:** 21/04/2026
+**Mode:** live
+**Dockerfiles audited:** 2
+**Compose files audited:** 1
+**Verdict:** CONDITIONAL — score 58/100
+
+---
+
+## Executive Summary
+
+Two Dockerfiles (`Dockerfile` and `Dockerfile.worker`) and one `docker-compose.yml` were audited. The API image runs as root, ships a 1.4GB image because of a single-stage build that includes the full Node toolchain, and has no HEALTHCHECK. The worker image is better (non-root, multi-stage) but pins its base by tag not digest. Compose uses `privileged: true` on a debug sidecar container — flagged CRITICAL.
+
+**Top three risks:**
+1. `Dockerfile:14` — container runs as root *(CT-001)*
+2. `docker-compose.yml:33` — `privileged: true` on debug service *(CT-002)*
+3. `Dockerfile:7` — `ARG NPM_TOKEN` bakes token into image history *(CT-003)*
+
+---
+
+## Category Scores
+
+| Category | Weight | Score |
+|---|---|---|
+| A. Base image | 15 | 60 |
+| B. User & privileges | 20 | 40 |
+| C. Secrets & leaks | 20 | 50 |
+| D. Layer efficiency | 10 | 40 |
+| E. Signals & shutdown | 5 | 70 |
+| F. Healthcheck | 10 | 50 |
+| G. `.dockerignore` | 10 | 80 |
+| H. docker-compose | 10 | 50 |
+
+---
+
+## Per-Dockerfile Findings
+
+### `Dockerfile` — HIGH RISK
+
+| ID | Sev | Cat | Line | Issue |
+|---|---|---|---|---|
+| CT-001 | CRITICAL | B.1 | 14 | No `USER` directive |
+| CT-003 | HIGH | C.1 | 7 | `ARG NPM_TOKEN` |
+| CT-005 | HIGH | D.1 | 1 | Single-stage build ships 1.4GB |
+| CT-008 | MEDIUM | A.2 | 1 | `FROM node:20-alpine` (tag pin) |
+| CT-011 | MEDIUM | F.1 | — | No HEALTHCHECK |
+
+### `Dockerfile.worker` — LOW RISK
+
+| ID | Sev | Cat | Line | Issue |
+|---|---|---|---|---|
+| CT-009 | MEDIUM | A.2 | 1 | Tag pin |
+| CT-012 | INFO | E.3 | 29 | CMD in shell form |
+
+---
+
+## Compose Findings
+
+| ID | Sev | Line | Issue |
+|---|---|---|---|
+| CT-002 | CRITICAL | docker-compose.yml:33 | `privileged: true` on `debug` service |
+| CT-006 | HIGH | docker-compose.yml:18 | `network_mode: host` on `api` service |
+| CT-010 | MEDIUM | docker-compose.yml:42 | No resource limits |
+
+---
+
+## Image Scan *(Trivy)*
+
+| Image | Critical | High | Medium | Low |
+|---|---|---|---|---|
+| acme-api:local | 2 | 14 | 31 | 87 |
+| acme-worker:local | 0 | 3 | 8 | 24 |
+
+Two critical CVEs in `acme-api:local` (both in `libxml2` transitive). Upgrade base image and rebuild.
+
+---
+
+## Risk Register
+
+| ID | Severity | Category | Target | Evidence | Remediation |
+|---|---|---|---|---|---|
+| CT-001 | CRITICAL | B.1 | Dockerfile:14 | No USER set | `USER 10001:10001` |
+| CT-002 | CRITICAL | H.1 | docker-compose.yml:33 | `privileged: true` | Remove; scope caps explicitly |
+| CT-003 | HIGH | C.1 | Dockerfile:7 | `ARG NPM_TOKEN` | BuildKit `--mount=type=secret` |
+| CT-005 | HIGH | D.1 | Dockerfile:1 | Single-stage 1.4GB | Multi-stage build |
+| CT-006 | HIGH | H.2 | docker-compose.yml:18 | `network_mode: host` | Remove; map ports explicitly |
+
+---
+
+## Action Batches
+
+### Critical
+- CT-001: add USER directive
+- CT-002: remove privileged mode
+
+### High
+- CT-003: move to BuildKit secrets
+- CT-005: split into builder + runtime stages
+- CT-006: remove host networking
+
+### Medium
+- CT-008, CT-009: pin base images by digest
+- CT-010, CT-011: add resource limits and HEALTHCHECK
+
+---
+
+## Suppressed
+
+None.
+
+---
+
+*Generated by `devops:container-audit` — Anthril DevOps plugin*
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "container-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

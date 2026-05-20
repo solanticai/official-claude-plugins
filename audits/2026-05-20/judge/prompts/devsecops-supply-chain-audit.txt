@@ -1,0 +1,200 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** devsecops-supply-chain-audit
+- **description:** Audit software supply chain across every ecosystem (npm, pip, Go, Ruby, Cargo, Maven, Docker, Terraform) — pinning, vulnerabilities, secrets, SBOM, signing, branch protection, CODEOWNERS. One sub-agent per ecosystem. Three modes.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit software supply chain across every ecosystem (npm, pip, Go, Ruby, Cargo, Maven, Docker, Terraform)"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review software supply chain across every ecosystem (npm, pip, Go, Ruby, Cargo, Maven, Docker, Terraform)"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run devsecops-supply-chain-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# DevSecOps Supply Chain Audit — acme-api
+
+**Audited:** 21/04/2026
+**Mode:** live
+**Ecosystems:** npm, docker, terraform
+**SLSA Level:** L1
+**Verdict:** CONDITIONAL — score 55/100
+
+---
+
+## Executive Summary
+
+Three ecosystems scanned. npm has two HIGH CVEs in direct production dependencies (both prototype-pollution family) and one known-exploited CVE in a transitive dev dep (upgrading `vite` fixes it). Docker images pin by tag not digest. Terraform providers are unpinned in two modules. Branch protection is enabled on `main` but required reviewers is 0 — any maintainer can self-merge. No SBOM generation, no image signing. CODEOWNERS missing. Dependabot configured but the last 14 Dependabot PRs are unmerged.
+
+**Top risks:**
+1. `package-lock.json` — 2 HIGH CVEs in prod deps *(SEC-001)*
+2. Branch protection on `main` has 0 required reviewers *(SEC-003)*
+3. No CODEOWNERS — infra and workflows unprotected *(SEC-007)*
+
+---
+
+## Category Scores
+
+| Category | Weight | Score |
+|---|---|---|
+| A. Dependency pinning | 15 | 80 |
+| B. Vulnerability surface | 25 | 40 |
+| C. Secret patterns | 20 | 75 |
+| D. SBOM & provenance | 10 | 30 |
+| E. Image signing | 5 | 20 |
+| F. Branch protection | 15 | 50 |
+| G. CODEOWNERS | 5 | 20 |
+| H. Automation | 5 | 60 |
+
+---
+
+## Per-Ecosystem Findings
+
+### `npm`
+- SEC-001 HIGH B.2 `xlsx@0.18.5` CVE-2024-22363
+- SEC-002 HIGH B.2 `lodash@4.17.20` CVE-2021-23337
+- SEC-004 MEDIUM A.3 Two packages without integrity hashes in lockfile (investigate)
+
+### `docker`
+- SEC-008 HIGH D.4 Images referenced by tag in `charts/api/values.yaml`
+- SEC-012 MEDIUM E.1 Images not signed
+
+### `terraform`
+- SEC-009 MEDIUM A.4 `modules/vpc` provider range `~> 5` (too loose)
+- SEC-010 MEDIUM A.4 `modules/rds` no provider pin
+
+---
+
+## Repo-wide Findings
+
+- SEC-003 CRITICAL F.2 Branch protection requires 0 reviewers
+- SEC-005 HIGH F.4 Signed commits not required
+- SEC-006 HIGH D.1 No SBOM on releases
+- SEC-007 HIGH G.1 No `.github/CODEOWNERS`
+- SEC-011 MEDIUM H.5 14 Dependabot PRs open > 30 days
+
+---
+
+## SLSA Self-Assessment
+
+Current level: **L1** (GH Actions build + provenance generated via `actions/attest-build-provenance`).
+Gap to L2: add signed provenance publishing (cosign-sigstore) and attest attestations. ~2 days of work.
+
+Full detail in `slsa-self-assessment.md`.
+
+---
+
+## Vulnerability Scan Summary
+
+| Ecosystem | Critical | High | Medium | Low |
+|---|---|---|---|---|
+| npm | 0 | 2 | 11 | 47 |
+| docker/acme-api:local | 0 | 3 | 12 | 38 |
+| terraform | 0 | 0 | 0 | 0 |
+
+---
+
+## Risk Register
+
+| ID | Sev | Cat | Target | Evidence | Remediation |
+|---|---|---|---|---|---|
+| SEC-001 | HIGH | B.2 | npm xlsx@0.18.5 | CVE-2024-22363 | `npm i xlsx@0.20.2` |
+| SEC-003 | CRITICAL | F.2 | gh branches/main/protection | reviewers=0 | PATCH required_pull_request_reviews.required_approving_review_count=1 |
+| SEC-007 | HIGH | G.1 | .github/CODEOWNERS | absent | Add file with coverage for `.github/**`, `infra/**` |
+
+---
+
+## Action Batches
+
+### Critical
+- SEC-003: Require at least 1 reviewer on `main`.
+
+### High
+- SEC-001, SEC-002: upgrade vulnerable packages.
+- SEC-005: require signed commits.
+- SEC-006: enable SBOM + provenance on releases.
+- SEC-007: add CODEOWNERS.
+- SEC-008: pin docker images by digest.
+
+### Medium
+- SEC-009, SEC-010: tighten Terraform provider pins.
+- SEC-011: triage the backlog of Dependabot PRs.
+- SEC-012: sign container images.
+
+---
+
+## Suppressed
+
+None.
+
+---
+
+*Generated by `devops:devsecops-supply-chain-audit` — Anthril DevOps plugin*
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "devsecops-supply-chain-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

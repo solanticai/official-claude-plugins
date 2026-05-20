@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of competitor-analysis's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Conclusions are evidence-backed with explicit data points"
+      - "Report includes the canonical sections: \"1. Executive Summary\", \"2. Competitor Inventory\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

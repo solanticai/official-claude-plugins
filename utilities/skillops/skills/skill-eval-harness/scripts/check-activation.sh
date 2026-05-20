@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# check-activation.sh — heuristic activation classifier for a skill.
+# check-activation.sh — FAST-MODE-ONLY deterministic activation classifier.
 #
 # Usage:
 #   check-activation.sh <target_dir> <user_input>
@@ -8,18 +8,25 @@
 #   verdict=true|false
 #   reason=<short string>
 #
-# This is a deterministic stand-in for the actual Claude activation logic.
-# It approximates by:
-#   1. Tokenising the skill's `description` and `name` fields.
-#   2. Tokenising the user_input.
-#   3. Computing keyword overlap.
-#   4. Returning true if ≥ 2 content tokens overlap, otherwise false.
-# It also returns true if any `paths:` glob in the skill matches a path
-# mentioned in the input.
+# This is the harness's `--mode=fast` fallback. The default `--mode=full`
+# path uses an Agent invocation against templates/activation-prompt-template.md
+# (canonical implementation: a fresh Claude subagent reads the skill's
+# description + paths and the user input, then returns a structured
+# verdict). That path is implemented in the harness SKILL.md, not here —
+# this script intentionally remains a deterministic proxy.
 #
-# This is intentionally simple — the canonical activation decision is made
-# by Claude at runtime. The harness uses this as a fast proxy that lets us
-# write activation tests without needing a live Claude invocation per case.
+# Approximation strategy:
+#   1. Tokenise the skill's `description` and `name` fields.
+#   2. Tokenise the user_input.
+#   3. Compute keyword overlap.
+#   4. Return true if ≥ 2 content tokens overlap, otherwise false.
+# It also returns true if the input contains the skill name as a token.
+#
+# Known limitations of the fast mode:
+#   - Cannot distinguish paraphrased queries that share zero keywords with
+#     the description (semantic similarity is not captured).
+#   - Treats every keyword equally — no weighting by specificity.
+# Use --mode=full for accuracy; use this for speed.
 
 set -u
 

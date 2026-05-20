@@ -1,0 +1,125 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** utm-builder
+- **description:** Generate UTM-tagged URLs for paid and organic campaigns — consistent naming conventions, bulk CSV output, and validation against existing GA4 traffic sources to prevent data fragmentation.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Generate UTM-tagged URLs for paid and organic campaigns"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Generate → Produce)
+- user_input: "Produce UTM-tagged URLs for paid and organic campaigns"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run utm-builder"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is machine-readable where the description implies (valid JSON/SQL/YAML)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# UTM URLs — winter_throws_2026
+
+**Campaign:** winter_throws_2026
+**Date:** 11/04/2026
+
+---
+
+## URLs
+
+| # | Source | Medium | Content | Tagged URL |
+|---|---|---|---|---|
+| 1 | facebook | cpc | reel_hero | `https://koalahomewares.com.au/collections/throws?utm_source=facebook&utm_medium=cpc&utm_campaign=winter_throws_2026&utm_content=reel_hero` |
+| 2 | facebook | cpc | carousel_throws | `https://koalahomewares.com.au/collections/throws?utm_source=facebook&utm_medium=cpc&utm_campaign=winter_throws_2026&utm_content=carousel_throws` |
+| 3 | instagram | cpc | reel_hero | `https://koalahomewares.com.au/collections/throws?utm_source=instagram&utm_medium=cpc&utm_campaign=winter_throws_2026&utm_content=reel_hero` |
+| 4 | instagram | social | organic_post_week1 | `https://koalahomewares.com.au/collections/throws?utm_source=instagram&utm_medium=social&utm_campaign=winter_throws_2026&utm_content=organic_post_week1` |
+| 5 | mailchimp | email | newsletter_2026_05 | `https://koalahomewares.com.au/collections/throws?utm_source=mailchimp&utm_medium=email&utm_campaign=winter_throws_2026&utm_content=newsletter_2026_05` |
+| 6 | pinterest | cpc | pin_wool | `https://koalahomewares.com.au/collections/throws?utm_source=pinterest&utm_medium=cpc&utm_campaign=winter_throws_2026&utm_content=pin_wool` |
+| 7 | newsletter | referral | blog_winter_guide | `https://koalahomewares.com.au/collections/throws?utm_source=newsletter&utm_medium=referral&utm_campaign=winter_throws_2026&utm_content=blog_winter_guide` |
+
+Note: Google Ads URLs are **intentionally absent** — Koala uses auto-tagging (GCLID). Adding UTMs to Google Ads destination URLs would break auto-tagging.
+
+---
+
+## CSV export
+
+`utm_winter_throws_2026_2026-04-11.csv` — 7 URLs for distribution to: Meta ads manager, Instagram scheduler, Mailchimp email builder, Pinterest ads, blog CMS.
+
+---
+
+## Validation
+
+- Current GA4 sources matching: 5/7 (mailchimp, facebook, instagram — already in GA4 from previous campaigns)
+- New source/medium pairs added: 2 (pinterest/cpc, newsletter/referral — flagged as new)
+- Flagged inconsistencies: 0
+
+---
+
+## Next steps
+
+1. Paste the Facebook/Instagram URLs into Meta Ads Manager when creating the winter_throws_2026 campaign.
+2. Paste the Mailchimp URL into the 15/05 newsletter template.
+3. Paste the Pinterest URL into the Pinterest Ads campaign.
+4. Paste the newsletter referral URL into the winter-guide blog post.
+5. After campaigns launch, verify GA4 shows these 7 combinations under Acquisition → Traffic acquisition → source/medium.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "utm-builder",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

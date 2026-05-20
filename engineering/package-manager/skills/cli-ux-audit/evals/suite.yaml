@@ -38,8 +38,10 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of cli-ux-audit's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Findings cite file:line evidence and are categorised by severity"
+      - "Report includes the canonical sections: \"CLI Identity\", \"Phase Results\""
+      - "Artefact references the input path or target by name (no placeholder paths)"
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

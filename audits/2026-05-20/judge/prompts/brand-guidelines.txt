@@ -1,0 +1,225 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** brand-guidelines
+- **description:** Compile comprehensive brand guidelines covering logo, colour, typography, imagery, voice, and do's/don'ts — produces a complete brand book ready for design handoff
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Compile comprehensive brand guidelines covering logo, colour, typography, imagery, voice, and do's/don'ts"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Compile → Compile)
+- user_input: "Compile comprehensive brand guidelines covering logo, colour, typography, imagery, voice, and do's/don'ts"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run brand-guidelines"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Crema Brand Guidelines
+
+**Version:** 1.0
+**Date:** 11/04/2026
+**Brand owner:** Maya Tran (maya@crema.coffee)
+**Audience:** In-house team + agency partners + freelance photographers
+
+---
+
+## Table of Contents
+
+1. About These Guidelines
+2. Brand Story
+3. Logo
+4. Colour
+5. Typography
+6. Imagery and Iconography
+7. Voice and Messaging
+8. Application Examples
+9. Asset Library
+10. Contact and Governance
+
+---
+
+## 1. About These Guidelines
+
+### Purpose
+Crema is a Melbourne-based boutique coffee chain with 7 cafés and a wholesale roastery. This brand book is the source of truth for how Crema looks, sounds, and behaves across every customer touchpoint — from cup sleeves to email newsletters to wholesale invoices.
+
+### How to use this document
+- **Designers:** Sections 3–6 (Logo, Colour, Typography, Imagery)
+- **Copywriters:** Section 7 (Voice and Messaging)
+- **Marketers:** Sections 7 and 8 (Voice + Application Examples)
+- **Wholesale partners:** Sections 3 and 9 (Logo + Asset Library)
+- **Photographers:** Section 6.1 (Photography Style)
+
+### Update cadence
+Reviewed quarterly. Last reviewed: 11/04/2026.
+
+### Exception requests
+Email maya@crema.coffee with the proposed use case, the rule it bends, and the rationale. Brand owner responds within 5 business days.
+
+---
+
+## 2. Brand Story
+
+### Mission
+> We make every coffee in our shops the way we'd make one for a friend at our own kitchen table — slowly, accurately, and with someone we know in mind.
+
+### Vision
+> A Melbourne where every neighbourhood has a café where the staff know your order and the coffee is consistent enough to be boring.
+
+### Core Values
+
+- **Consistency over flair** — A perfect flat white every time matters more than latte art that wins competitions.
+- **Train like a craft, not like a job** — Every barista does a 6-week apprenticeship before pulling shots for paying customers.
+- **One bag, one story** — Every wholesale bean has a single producer, with the producer's name on the bag. No blends marketed as origin coffee.
+- **Slower is honest** — We refuse to install a third-wave robotic bar. Coffee made by humans takes the time it takes.
+
+### Brand Archetype
+**Primary:** The Caregiver (with a Sage secondary)
+**What this means in practice:** Crema treats its customers and staff like people the founders genuinely care about. The Sage side comes through in the technical precision of the craft and the willingness to explain why things are made a certain way. The brand is warm but never cute.
+
+### Who we serve
+- **Daily regulars** — locals within 800m of each shop, 25–55, white-collar or working from home, value consistency over novelty
+- **Wholesale customers** — independent restaurants, hotels, and small offices in Melbourne (5–50 staff)
+- **Coffee-curious gift buyers** — visiting Melbourne; buy a bag for a friend back home
+
+### Who we are NOT for
+- **Speciality-coffee tourists** seeking the latest experimental processing or rare microlot — Crema is craft, not novelty
+- **Convenience-seekers** wanting drive-through or 90-second espresso — we won't install drive-through
+- **Bulk corporate accounts** wanting white-label coffee — we only sell beans with the producer's name
+- **Customers seeking sweet flavoured drinks** — no syrups, no flavoured lattes
+
+---
+
+## 3. Logo
+
+### 3.1 Variants
+
+| Variant | When to use |
+|---|---|
+| **Primary horizontal lockup** (mark + wordmark) | Default. Storefront signage, business cards, hero images |
+| **Stacked lockup** (mark above wordmark) | Square contexts, social profile photos |
+| **Mark only** (the simplified C ring) | Cup sleeves, app icons, contexts < 50px |
+| **Wordmark only** (lowercase "crema" in serif) | Print headers, document footers, contexts where the mark is redundant |
+| **Single-colour black on cream** | Print, single-ink reproduction, newspaper |
+| **Reverse (cream on Espresso Brown)** | Dark backgrounds, dark mode |
+| **App icon** (mark in cream square) | iOS, Android |
+
+### 3.2 Clear Space
+
+Maintain clear space equal to **1× the height of the lowercase 'c'** in the wordmark on all sides. No element — including other logos, photographs, or text — may enter this zone.
+
+### 3.3 Minimum Size
+
+| Context | Minimum |
+|---|---|
+| Web (mark only) | 24×24px |
+| Web (full lockup) | 140px width |
+| Print (full lockup) | 30mm width |
+| Print (mark only) | 10mm |
+| Cup sleeve | 18mm width |
+
+### 3.4 Approved Backgrounds
+
+| Background | Logo variant |
+|---|---|
+| Cream `#F5EBD8` (Crema House Cream) | Primary (Espresso Brown) |
+| White | Primary (Espresso Brown) |
+| Sand `#E8D8B8` | Primary (Espresso Brown) |
+| Espresso Brown `#3A2A1F` | Reverse (Cream) |
+| Photography (with overlay) | Reverse (Cream), with 30% black overlay below |
+
+### 3.5 Misuse — Do Not
+
+1. **Don't stretch or distort.** The lockup proportions are fixed.
+2. **Don't change the colours** — Cream and Espresso Brown only.
+3. **Don't add effects** — no drop shadows, gradients, glow, or 3D treatment.
+4. **Don't rotate** the logo. Ever.
+5. **Don't outline** the wordmark or mark.
+6. **Don't recreate** from memory — always use the official files.
+7. **Don't place on busy backgrounds** without the 30% black overlay.
+8. **Don't combine with other logos** in lockups (e.g. wholesale partner co-branding) without brand owner approval.
+9. **Don't change the typeface** of the wordmark — it's a custom modification of Domaine Display.
+10. **Don't use the mark and wordmark separately on the same surface** — pick one variant per surface.
+
+---
+
+## 4. Colour
+
+### 4.1 Palette
+
+(Generated by `color-palette` skill — see palette spec for full HSL/OKLCH detail.)
+
+| Role | Name | HEX | OKLCH |
+|---|---|---|---|
+| Primary | Espresso Brown | `#3A2A1F` | `0.27 0.04 60` |
+| Secondary | Crema House Cream | `#F5EBD8` | `0.92 0.05 90` |
+| Accent | Sand | `#E8D8B8` | `0.86 0.06 85` |
+| Success | Olive | `#5D6B3A` | `0.50 0.10 130` |
+| Warning | Roast Amber | `#C97A2A` | `0.62 0.16 60` |
+| Error | Burnt Red | `#A03A28` | `0.45 0.16 25` |
+| Info | (uses Espresso Brown 
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "brand-guidelines",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

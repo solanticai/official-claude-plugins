@@ -1,0 +1,232 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** npm-package-audit
+- **description:** Audit npm packages for publishing quality, cross-OS compatibility, type declarations, build config, security, and CI/CD — produces a scored report with actionable fixes
+- **paths:** **/package.json
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit npm packages for publishing quality, cross-OS compatibility, type declarations, build config, security, and CI/CD"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review npm packages for publishing quality, cross-OS compatibility, type declarations, build config, security, and CI/CD"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run npm-package-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+4. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# npm Package Audit Report
+
+## Summary
+
+| Field | Value |
+|-------|-------|
+| **Package** | @acme/toolkit@2.3.1 |
+| **Date** | 2026-04-08 |
+| **Overall Score** | 78/100 |
+| **Overall Verdict** | PASS WITH WARNINGS |
+| **Critical Issues** | 0 |
+| **Warnings** | 7 |
+| **Suggestions** | 5 |
+
+## Package Identity
+
+| Field | Value |
+|-------|-------|
+| Name | @acme/toolkit |
+| Version | 2.3.1 |
+| Description | A composable CLI toolkit for building developer tools with subcommands, prompts, and structured output |
+| License | MIT |
+| Build Tool | tsup |
+| Test Framework | vitest |
+| CI/CD | GitHub Actions |
+
+---
+
+## Phase Results
+
+### Phase 1: Package Discovery -- CONTEXT
+
+@acme/toolkit is a TypeScript CLI toolkit built on commander.js. It provides a plugin-based architecture for building developer tools with subcommand registration, interactive prompts via @inquirer/prompts, and structured JSON/table output formatters. The package ships both a library API and a `toolkit` CLI binary.
+
+**Tech Stack:**
+- Runtime: Node.js >= 18.0.0
+- Language: TypeScript 5.4 (strict mode)
+- Build: tsup 8.0.2 (dual CJS + ESM output)
+- Test: vitest 1.6.0 with @vitest/coverage-v8
+- Lint: ESLint 8.57 + Prettier 3.2
+- Git hooks: Husky 9.0 + lint-staged
+- CI: GitHub Actions (test, lint, build on push/PR)
+
+**Dependencies (6 direct):**
+- commander@12.1.0 -- CLI framework
+- @inquirer/prompts@5.0.5 -- interactive prompts
+- chalk@5.3.0 -- terminal colors (ESM-only)
+- cli-table3@0.6.4 -- table output
+- zod@3.23.8 -- input validation
+- cosmiconfig@9.0.0 -- config file loading
+
+**Dev Dependencies (14):** tsup, vitest, typescript, eslint, prettier, husky, lint-staged, @types/node, @vitest/coverage-v8, @changesets/cli, concurrently, rimraf, tsx, publint
+
+---
+
+### Phase 2: package.json Quality -- 13/15 -- PASS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| name | PASS | Scoped name `@acme/toolkit` follows npm conventions |
+| version | PASS | 2.3.1 valid semver |
+| description | PASS | Clear, under 120 chars, describes purpose |
+| license | PASS | MIT, file present and matches |
+| author | PASS | `Acme Corp <eng@acme.dev>` with email |
+| repository | PASS | `github:acme-org/toolkit` resolves correctly |
+| homepage | FAIL | Missing -- should point to docs site or repo README |
+| bugs | PASS | `https://github.com/acme-org/toolkit/issues` |
+| keywords | FAIL | Only 2 keywords (`cli`, `toolkit`) -- recommend 5+ for discoverability |
+| engines | PASS | `"node": ">=18.0.0"` specified |
+| files | PASS | `["dist", "bin", "README.md", "LICENSE"]` -- correctly scoped |
+| type | PASS | `"module"` set (ESM-first) |
+| sideEffects | PASS | `false` declared for tree shaking |
+| packageManager | PASS | `"pnpm@9.1.0"` pinned via corepack |
+
+**Findings:**
+
+- **[W-001] Missing `homepage` field** (`package.json:1`)
+  Add `"homepage": "https://github.com/acme-org/toolkit#readme"` or a dedicated docs URL. npm and GitHub both surface this field prominently.
+
+- **[W-002] Only 2 keywords** (`package.json:8`)
+  Current: `["cli", "toolkit"]`. Suggest adding: `"developer-tools"`, `"commander"`, `"subcommands"`, `"typescript"`, `"cli-framework"` for better npm search ranking.
+
+---
+
+### Phase 3: Exports Map & Entry Points -- 15/15 -- PASS
+
+| Export Path | Types | Import | Require | Status |
+|-------------|-------|--------|---------|--------|
+| `"."` | `./dist/index.d.ts` | `./dist/index.mjs` | `./dist/index.cjs` | PASS |
+| `"./cli"` | `./dist/cli.d.ts` | `./dist/cli.mjs` | `./dist/cli.cjs` | PASS |
+| `"./formatters"` | `./dist/formatters/index.d.ts` | `./dist/formatters/index.mjs` | `./dist/formatters/index.cjs` | PASS |
+| `"./prompts"` | `./dist/prompts/index.d.ts` | `./dist/prompts/index.mjs` | `./dist/prompts/index.cjs` | PASS |
+| `"./package.json"` | -- | `./package.json` | `./package.json` | PASS |
+
+All export paths verified:
+- `publint` reports 0 issues
+- `arethetypeswrong` reports 0 problems
+- `types` condition listed before `import`/`require` in all entries
+- `default` fallback present for older bundlers
+- `bin` field: `{ "toolkit": "./bin/toolkit.mjs" }` resolves correctly
+
+---
+
+### Phase 4: Build Configuration -- 12/15 -- PASS WITH WARNINGS
+
+| Check | Status | Details |
+|-------|--------|---------|
+| Dual CJS/ESM | PASS | tsup outputs both `.mjs` and `.cjs` per entry |
+| Source maps | PASS | `sourcemap: true` in tsup.config.ts |
+| Type declarations | PASS | `dts: true` generates .d.ts for all entries |
+| Clean builds | FAIL | No `clean: true` in tsup config; stale files can leak into dist |
+| Tree shaking | PASS | `treeshake: true` with `sideEffects: false` |
+| Bundle size | PASS | 42KB minified (main entry), 18KB gzipped |
+| External deps | PASS | All 6 runtime deps correctly externalized |
+| Build reproducibility | FAIL | Build script is a complex one-liner, hard to debug |
+
+**Findings:**
+
+- **[W-003] No clean step before build** (`tsup.config.ts:1`)
+  The tsup config does not set `clean: true`. Stale output files from previous builds can leak into the dist directory and get published. Add `clean: true` to `tsup.config.ts` or prepend `rimraf dist &&` to the build script.
+
+  ```ts
+  // tsup.config.ts -- current
+  export default defineConfig({
+    entry: ['src/index.ts', 'src/cli.ts', 'src/formatters/index.ts', 'src/prompts/index.ts'],
+    format: ['cjs', 'esm'],
+    dts: true,
+    sourcemap: true,
+    treeshake: true,
+  });
+  ```
+
+  Recommended fix:
+  ```ts
+  export default defineConfig({
+    // ... existing config
+    clean: true,
+  });
+  ```
+
+- **[W-004] Build script is an opaque one-liner** (`package.json:14`)
+  Current: `"build": "rimraf dist && tsup && node scripts/patch-cjs.mjs && node scripts/copy-bin.mjs && publint"`
+  This 5-step pipeline is fragile and hard to debug. Break into named scripts or use a build orchestrator:
+
+  ```json
+  {
+    "build": "pnpm run build:clean && pnpm run build:compile && pnpm run build:patch && pnpm run build:bin && pnpm run build:verify",
+    "build:clean": "rimraf dist",
+    "build:compile": "tsup"
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "npm-package-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

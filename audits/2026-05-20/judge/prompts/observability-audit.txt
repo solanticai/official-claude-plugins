@@ -1,0 +1,186 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** observability-audit
+- **description:** Score observability across the four pillars — logs, metrics, traces, and alerts/dashboards — with per-service coverage heatmap. Cross-cutting synthesis. Static, live (Prometheus/Grafana/OTel/Datadog), and runtime (synthetic alert) modes.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Score observability across the four pillars"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Score → Score)
+- user_input: "Score observability across the four pillars"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run observability-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Report includes the canonical sections: \
+3. Artefact references the input path or target by name (no placeholder paths)
+
+### Artefact (example output)
+```
+# Observability Audit — acme-api
+
+**Audited:** 21/04/2026
+**Mode:** live
+**Services identified:** 3 (api, worker, webhook)
+**Verdict:** Observability patchy — score 48/100
+
+---
+
+## Executive Summary
+
+Structured logging is in place for `api` and `worker` via `pino` but `webhook` still uses `console.log`. Metrics exist only for `api` via an un-maintained `prom-client` integration; the scrape config points at a disused staging Prometheus. No distributed tracing anywhere. Alerts exist in Alertmanager but three of five fire on cause-based thresholds (CPU > 80%) with no runbook link — two of those have fired 47 times in the last 30 days without a human responding, indicating alert fatigue. No Grafana dashboards in the repo; dashboards live in Grafana UI and have not been exported.
+
+**Biggest gaps:**
+1. No distributed tracing anywhere — diagnosing cross-service issues takes hours.
+2. Three paging alerts are cause-based and noisy; team ignores them.
+3. No correlation ID plumbing — can't link a log line to the request that produced it.
+
+---
+
+## Pillar Scores
+
+| Pillar | Score (/5) |
+|---|---|
+| Logs | 2 |
+| Metrics | 2 |
+| Traces | 0 |
+| Alerts & Dashboards | 2 |
+
+Aggregate: (2+2+0+2)/20 × 100 = **30/100** (normalised: 48 after severity weighting).
+
+---
+
+## Service × Pillar Heatmap
+
+| Service | Logs | Metrics | Traces | Alerts |
+|---|---|---|---|---|
+| api | 3 | 2 | 0 | 3 |
+| worker | 3 | 1 | 0 | 1 |
+| webhook | 0 | 0 | 0 | 0 |
+
+---
+
+## Per-Pillar Findings
+
+### Logs
+- OBS-001 HIGH `webhook` service uses `console.log` only (`src/webhook/handler.ts`).
+- OBS-003 MEDIUM No correlation ID propagation between `api` → `worker` (via queue).
+- OBS-004 MEDIUM No PII scrubbing at sink; full payloads logged on error.
+
+### Metrics
+- OBS-002 HIGH `api` metrics endpoint points at `prometheus-staging` in `k8s/api/servicemonitor.yaml:12`. Staging Prometheus was decommissioned.
+- OBS-006 MEDIUM No business metrics — only HTTP-level.
+
+### Traces
+- OBS-005 CRITICAL No distributed tracing anywhere. Adding `@opentelemetry/api` with an OTel collector is ~2 days of work.
+
+### Alerts & Dashboards
+- OBS-007 HIGH `HighCPU`, `HighMemory`, `HighDiskIO` alerts are cause-based; fired 47 times in last 30 days; no humans responded.
+- OBS-008 HIGH No runbook links on three paging alerts.
+- OBS-009 MEDIUM No Grafana dashboards in Git.
+
+---
+
+## Synthetic Alert Trace
+
+Target (non-prod): push `api_error_rate{service="api"}` = 0.5 for 2m.
+
+| Hop | Latency | Result |
+|---|---|---|
+| Prometheus rule eval | 30s | FIRED (expected) |
+| Alertmanager receive | 2s | routed |
+| Slack notification | 1s | delivered |
+| Runbook link follow | N/A | **404 — https://wiki.internal/runbooks/api-errors does not exist** |
+
+→ Runtime test failure: runbook link broken.
+
+---
+
+## Action List
+
+### Immediate
+- Fix `api/webhook` metrics scrape target (OBS-002).
+- Repair broken runbook links (OBS-008).
+- Add structured logger to `webhook` (OBS-001).
+
+### Short-term (this quarter)
+- Introduce OTel tracing across api + worker + webhook (OBS-005).
+- Replace CPU-based alerts with SLO burn-rate alerts (OBS-007).
+- Add correlation ID propagation through the queue (OBS-003).
+
+### Long-term
+- Dashboards-as-code (Grafana JSON in Git) (OBS-009).
+- PII scrubbing at log sink (OBS-004).
+- Business-domain metrics (OBS-006).
+
+---
+
+## Suppressed
+
+None.
+
+---
+
+*Generated by `devops:observability-audit` — Anthril DevOps plugin*
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "observability-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

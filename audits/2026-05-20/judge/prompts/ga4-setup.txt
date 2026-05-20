@@ -1,0 +1,174 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** ga4-setup
+- **description:** Configure a GA4 property end-to-end — data streams, retention/links, and a clean baseline ready for event taxonomy work.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Configure a GA4 property end-to-end"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Configure → Configure)
+- user_input: "Configure a GA4 property end-to-end"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run ga4-setup"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Configuration is complete; no required keys left blank
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# GA4 Setup — Koala & Co. Online
+
+**Property:** properties/789012345
+**Account:** Koala & Co. (accounts/987654321)
+**Date:** 11/04/2026
+
+---
+
+## Snapshot
+
+- **Currency:** AUD
+- **Time zone:** Australia/Sydney
+- **Industry:** SHOPPING
+- **Created:** 2024-06-15T03:12:45+00:00
+- **Data streams:** 1 (WEB)
+- **Google Ads links:** 0
+
+---
+
+## Audit findings
+
+### Already correct
+
+| Area | Setting |
+|---|---|
+| Property currency | AUD |
+| Property time zone | Australia/Sydney |
+| Industry category | SHOPPING |
+| Web data stream exists | `Koala Homewares Web` (G-KOALAHOMES1) |
+| Enhanced Measurement — page_view | ON |
+| Enhanced Measurement — outbound clicks | ON |
+
+### Needs fixing
+
+| Area | Current | Desired | Severity | How to fix |
+|---|---|---|---|---|
+| Data retention | 2 months | 14 months | **high** | Manual — Admin → Data retention → 14 months |
+| Unwanted referrals | empty | `checkout.stripe.com`, `www.paypal.com`, `zip.co` | **high** | Manual — Admin → Data streams → Web → Configure tag settings → Show all → List unwanted referrals |
+| Google Ads link | none | linked to customer 123-456-7890 | **high** | MCP write (supported in v1.1; v1.0 = manual Admin → Product links → Google Ads) |
+| Enhanced Measurement — site search | OFF | ON, query param `q` | medium | Manual — Admin → Data streams → Web → Enhanced Measurement → Configure |
+| `PROPERTY_TYPE_ORDINARY` | ok | ok | — | No action |
+
+### Manual steps (not automatable in v1.0)
+
+1. Admin → Data collection and modification → Data retention → Event data retention = 14 months → Save.
+2. Admin → Data streams → `Koala Homewares Web` → Tag settings → Show all → List unwanted referrals → add `checkout.stripe.com`, `www.paypal.com`, `zip.co`, `checkout.afterpay.com`, `buy.humm.com.au`.
+3. Admin → Data streams → `Koala Homewares Web` → Enhanced Measurement → Configure → Turn ON Site search → Query parameter `q` → Save.
+4. Admin → Product links → Google Ads links → Link → pick the `Koala & Co. AU` customer → enable Personalized advertising → Save.
+
+---
+
+## Changes applied via MCP
+
+- **list_google_ads_links** (read) — confirmed zero links exist.
+- **get_property_details** (read) — confirmed baseline metadata.
+- **list_data_streams** (read) — confirmed single web stream.
+
+No write operations performed in v1.0; all fixes are in the manual steps list above.
+
+---
+
+## Smoke report (last 30 days)
+
+| Event name | Event count |
+|---|---|
+| `page_view` | 142,311 |
+| `session_start` | 38,904 |
+| `first_visit` | 22,711 |
+| `scroll` | 31,552 |
+| `click` | 8,433 |
+| `view_item` | 6,120 |
+| `add_to_cart` | 1,089 |
+| `begin_checkout` | 487 |
+| `purchase` | 203 |
+| `form_submit` | 128 |
+| `user_engagement` | 41,220 |
+
+**Top 5 observations:**
+
+1. Funnel is healthy: `view_item` (6,120) → `add_to_cart` (1,089) → `begin_checkout` (487) → `purchase` (203). That's a 3.3% end-to-end conversion, decent for homewares.
+2. `purchase` is not yet marked as a conversion event — fix via `/ppc-manager:ga4-events`.
+3. `user_engagement` is only 29% of `session_start`, suggesting high bounce. Worth exploring in `/ppc-manager:campaign-audit`.
+4. `view_cart` is missing — Shopify native analytics doesn't push it. Add to the dataLayer via `/ppc-manager:gtm-datalayer` if needed for cart abandonment flows.
+5. Meta-related events (e.g. `fb_ad_click_impression`) are missing — expected, because the Meta Pixel events go to Meta Ads Manager, not GA4.
+
+---
+
+## Next steps
+
+1. Complete the 4 manual steps in the Admin UI. Timebox ~10 minutes.
+2. Run `/ppc-manager:ga4-events` to mark `purchase` as a conversion event and create custom dimensions for `item_category`, `coupon`, and `payment_type`.
+3. Run `/ppc-manager:google-ads-account-setup` to mirror the GA4 conversions into Google Ads.
+4. In 7 days, re-run `/ppc-manager:ga4-setup` (audit only) to confirm the manual fixes stuck.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "ga4-setup",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

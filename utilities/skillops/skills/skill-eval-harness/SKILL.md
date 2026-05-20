@@ -59,7 +59,10 @@ Run every `test_cases[]` entry from each suite and capture results.
 ### Steps
 1. For each suite, load the YAML via `bash scripts/parse-suite.sh "$suite_path"` → JSON on stdout.
 2. For each `test_cases[i]`:
-   - **Activation tests** (`expected_activation` set): pass the case's `user_input` to `bash scripts/check-activation.sh "$target_dir" "$user_input"` which determines whether the skill's description / paths would trigger. Compare to `expected_activation`. Record `pass|fail`.
+   - **Activation tests** (`expected_activation` set):
+     - **`--mode=full` (default):** load `templates/activation-prompt-template.md`, substitute `{{skill_name}}` / `{{skill_description}}` / `{{skill_paths}}` from the skill's frontmatter and `{{user_input}}` from the case. Invoke `Agent` with `subagent_type: "Explore"` (fresh context, no conversation history); parse the returned JSON `{verdict, confidence, reason}`. Compare `verdict` to `expected_activation`.
+     - **`--mode=fast`:** fall back to `bash scripts/check-activation.sh "$target_dir" "$user_input"` — a deterministic keyword-overlap proxy. Faster but less accurate; the report header notes the proxy mode.
+     - Record `pass|fail` plus the classifier's `reason` for the per-case evidence.
    - **Functional tests** (`expected_outputs` set): the harness cannot execute the skill itself, so it delegates to a `subagent_type=claude` Agent invocation that runs the skill via its slash command with `user_input` as args, working in a tmp directory. After the agent returns, validate each `expected_outputs[]` entry — `file_created` (path glob match), `contains` (text match in output), `equals` (exact match), `matches` (regex). Record per-entry pass/fail.
    - **Edge-case tests** (`expected_error` set): same agent invocation, but the case passes if the skill emits the named error code or matches the error regex. Record `pass|fail`.
 3. Save all per-case results into `results[]` — `{id, kind, pass, evidence, artefacts[]}`.
@@ -157,6 +160,6 @@ Two artefacts in cwd plus one in-tree append:
 
 - `resolve-suite.sh` — `$ARGUMENTS` → absolute `evals/suite.yaml` path
 - `parse-suite.sh` — YAML suite → JSON on stdout (prefers `yq`, awk fallback for the simple schema)
-- `check-activation.sh` — simulate the activation classifier against a user_input string
+- `check-activation.sh` — **fast-mode only** — deterministic keyword-overlap proxy for the activation classifier. The default `--mode=full` uses an Agent invocation against `templates/activation-prompt-template.md`.
 - `diff-runs.sh` — compare two run JSON files; emit `{new_failures[],new_passes[],unchanged}`
 - `run-all.sh` — convenience wrapper that globs and dispatches the harness across every suite (used by CI)

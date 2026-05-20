@@ -1,0 +1,176 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** dead-code-audit
+- **description:** Audit a codebase for dead code — unused exports, orphaned files, dead dependencies, unreachable branches, abandoned flags, unused CSS — across multiple languages. Produces a confidence-scored report with cleanup actions. Use for dead code, code cleanup, bundle bloat, pre-refactor analysis.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit a codebase for dead code"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review a codebase for dead code"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run dead-code-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Dead Code Audit — acme-platform
+
+| Field | Value |
+|---|---|
+| **Date** | 11/04/2026 |
+| **Auditor** | Claude (dead-code-audit skill) |
+| **Stack** | TypeScript, Python, JavaScript, CSS |
+| **Total findings** | 26 |
+| **High-confidence (≥90)** | 11 |
+| **Estimated LOC savings** | 1,847 |
+| **Total score** | 71/100 |
+| **Verdict** | MODERATE DEBT |
+
+---
+
+## 1. Executive Summary
+
+The `acme-platform` monorepo contains a Next.js 15 frontend (`apps/web`), a FastAPI backend (`apps/api`), and three internal libraries (`packages/ui`, `packages/sdk`, `packages/types`). The audit ran knip 5.x against the JS/TS workspace, vulture 2.13 against the Python service, and stylelint+grep against the CSS, scanning 412 source files (excluding `node_modules/`, `.venv/`, `.next/`, and one `__generated__/` directory).
+
+The codebase is in **moderate debt**. Most findings cluster in three areas: (1) sixteen unused exports left over from the v3.0 API rename, (2) a fifty-two-package devDependency footprint with eight verifiably unused entries totaling ~340 MB on disk, and (3) a Python `services/` directory containing two FastAPI route handlers that were moved behind a feature flag in late 2025 and never re-enabled. None of the findings touch live request paths.
+
+One DB column candidate (`workspace_users.legacy_invite_token`) is flagged informationally but **must not be deleted via this audit** — it requires a coordinated migration outside the scope of this skill.
+
+**Top wins (highest impact, lowest risk):**
+1. **DC-001** — Remove `formatLegacyDate` and 5 sibling exports from `packages/sdk/src/dates/legacy.ts` (148 LOC, batch 4)
+2. **DC-009** — Drop 8 unused devDependencies (`@types/jest`, `eslint-plugin-jest`, `cypress`, `puppeteer`, +4) (~340 MB install, batch 5)
+3. **DC-014** — Delete `apps/web/src/components/charts/LegacyBarChart.tsx` and its test file (412 LOC, batch 4)
+
+**Top risks (highest cost-of-error):**
+1. The FastAPI routes in DC-018/DC-019 may still be referenced from the partner integration's manual smoke tests — verify with the partner team before deletion.
+2. Three Tailwind classes flagged in DC-020 are constructed dynamically (`bg-${status}-500`) — these are NOT dead and should be added to `.deadcode-ignore`.
+3. The DB column `workspace_users.legacy_invite_token` (DC-026) is FLAG-ONLY — do not action without a schema migration plan.
+
+---
+
+## 2. Stack & Tooling
+
+| Language | Files | Tool | Version | Status |
+|---|---|---|---|---|
+| TypeScript | 287 (.ts) + 64 (.tsx) | knip | 5.42.1 | ran |
+| JavaScript | 12 (.js) + 0 (.jsx) | knip | 5.42.1 | ran |
+| Python | 38 (.py) | vulture | 2.13 | ran |
+| Python | 38 (.py) | ruff F401,F841 | 0.6.9 | ran |
+| CSS | 4 files | stylelint + grep | n/a | ran |
+| Go | 0 | deadcode | n/a | skipped — no Go files |
+| Rust | 0 | cargo-machete | n/a | skipped — no Cargo.toml |
+
+**Skipped tools:** none other than language-not-detected.
+
+**`.deadcode-ignore` loaded:** yes — 14 entries
+
+**Excluded paths:** `node_modules/`, `.venv/`, `.next/`, `apps/web/src/__generated__/`, `packages/sdk/dist/`, `apps/api/migrations/`
+
+---
+
+## 3. Findings by Confidence Tier
+
+### 3a. CRITICAL — High confidence (90–100%)
+
+| ID | File | Line | Symbol | Subtype | Confidence | LOC | Action |
+|---|---|---|---|---|---|---|---|
+| DC-001 | packages/sdk/src/dates/legacy.ts | 12 | formatLegacyDate | unused-export | 95 | 32 | Batch 4 |
+| DC-002 | packages/sdk/src/dates/legacy.ts | 48 | parseLegacyDate | unused-export | 95 | 28 | Batch 4 |
+| DC-003 | packages/sdk/src/dates/legacy.ts | 81 | LegacyDateFormat | unused-export | 95 | 6 | Batch 4 |
+| DC-004 | apps/web/src/lib/format.ts | 14 | _ | unused-import | 100 | 1 | Batch 1 |
+| DC-005 | apps/web/src/lib/format.ts | 67 | unusedHelper | unused-local | 100 | 4 | Batch 1 |
+| DC-006 | apps/api/services/billing.py | 142 | (after raise) | unreachable-code | 100 | 8 | Batch 2 |
+| DC-007 | packages/ui/src/Button/Button.tsx | 23 | _legacyVariant | unused-private-member | 92 | 5 | Batch 3 |
+| DC-008 | packages/ui/src/Button/Button.tsx | 28 | _internalRef | unused-private-member | 92 | 3 | Batch 3 |
+| DC-009 | (8 packages) | — | (devDeps) | unused-dev-dep | 95 | — | Batch 5 |
+| DC-010 | apps/web/Dockerfile | 18 | builder-test | dead-docker-stage | 100 | 12 | Batch 7 |
+| DC-011 | docs/architecture.md | 47 | ./missing-link.md | broken-doc-link | 100 | — | Batch 8 |
+
+### 3b. WARNING — Medium confidence (70–89%)
+
+| ID | File | Line | Symbol | Subtype | Confidence | LOC | Action |
+|---|---|---|---|---|---|---|---|
+| DC-012 | packages/sdk/src/dates/legacy.ts | 95 | LEGACY_DATE_LOCALES | unused-export | 78 | 12 | Batch 4 |
+| DC-013 | apps/web/src/hooks/useLegacyAuth.ts | 8 | useLegacyAuth | unused-react-component | 85 | 64 | Batch 4 |
+| DC-014 | apps/web/src/components/charts/LegacyBarChart.tsx | 1 | (file) | unused-file | 88 | 412 | Batch 4 |
+| DC-015 | apps/web/src/components/charts/LegacyBarChart.test.tsx | 1 | (file) | orphaned-test-file | 88 | 87 | Batch 4 |
+| DC-016 | apps/api/utils/string_helpers.py | 22 | snake_to_camel | unused-export | 75 | 14 | Batch 4 |
+| DC-017 | apps/api/utils/string_helpers.py | 41 | camel_to_kebab | unused-export | 75 | 11 | Batch 4 |
+| DC-018 | apps/api/services/legacy_routes.py | 18 | legacy_invoice_handler | unused-api-route | 72 | 38 | Batch 4 — VERIFY WITH PARTNER TEAM |
+| DC-019 | apps/api/services/legacy_routes.py | 67 | legacy_export_handler | unused-api-route | 72 | 51 | Batch 4 — VERIFY WITH PARTNER TEAM |
+| DC-021 | .env.example | 12 | LEGACY_API_PROXY_URL | unused-env-var | 80 | 1 | Batch 7 |
+| DC-022 | apps/web/src/config/flags.ts | 34 | enableLegacyDashboard | dead-feature-flag | 78 | 3 | Batch 7 |
+| DC-023 | .github/workflows/legacy-deploy.yml | 1 | (whole file) | unused-ci-job | 85 | 67 | Batch 7 |
+
+### 3c. SUGGESTION — Low confidence (60–69%)
+
+| ID | File | Line | Symbol | Subtype | Confidence | LOC | Notes |
+|---|---|---|---|---|---|---|---|
+| DC-024 | packages/ui/src/styles/legacy.css | 8 | .legacy-card-shadow | unused-css
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "dead-code-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

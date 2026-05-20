@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of skill-creator's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Scaffolded artefact has all required sections and no TODO markers"
+      - "Report includes the canonical sections: \"Skill Directory Structure\", \"Generated SKILL.md Structure\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

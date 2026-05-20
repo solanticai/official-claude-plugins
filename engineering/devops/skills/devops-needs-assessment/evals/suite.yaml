@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of devops-needs-assessment's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Report includes the canonical sections: \"TL;DR\", \"What your app looks like right now\""
+      - "Artefact references the input path or target by name (no placeholder paths)"
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

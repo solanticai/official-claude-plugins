@@ -1,0 +1,180 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** google-pmax-campaign
+- **description:** Build a Google Ads Performance Max campaign — asset groups, audience signals, and asset specs ready for production.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Build a Google Ads Performance Max campaign"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Build → Create)
+- user_input: "Create a Google Ads Performance Max campaign"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run google-pmax-campaign"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a working specification, not a hypothetical or placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Google Performance Max Campaign — Koala - PMax - Homewares Q2
+
+**Customer:** 1234567890 (Koala & Co. AU)
+**Campaign:** Koala - PMax - Homewares Q2
+**Budget:** AUD 150.00 / day
+**Bidding:** Maximize conversion value, no tROAS for first 30 days
+**Status:** draft (manual setup required in v1.0)
+**Date:** 11/04/2026
+
+---
+
+## Asset groups
+
+### Cosy Winter Throws
+
+- **Theme:** Winter warmth, natural fibres, bedroom lifestyle
+- **Final URL:** https://koalahomewares.com.au/collections/throws
+- **Audience signal:** Customer list "Throws buyers 2024-2025" + custom segment "wool/linen throw searches" (50+ seed queries)
+
+**Headlines (short):**
+1. Koala Wool Throws
+2. Aussie Made Warmth
+3. Merino & Linen Throws
+4. Shop Handmade Throws
+5. Free Shipping Over $150
+
+**Headlines (long):**
+1. Handmade wool and linen throws for the Australian winter
+2. Shop Koala & Co. throws — natural fibres, timeless design
+3. Premium merino and linen throws, made in Australia
+
+**Descriptions:**
+- Shop Koala throws online — free shipping over $150. (53 chars, short)
+- Handmade wool and linen throws, curated for Australian homes. (62 chars, long)
+- Natural, timeless, and warm. Shop the Koala throws collection. (63 chars, long)
+
+**Image brief:** 20 images total — 10 square (1200×1200) and 10 landscape (1200×628). Mix of hero product shots (5), styled bedroom lifestyle (7), and macro texture / material detail (8). Warm palette (rust, ochre, ivory, charcoal). All photography in-house — no stock.
+
+**Video brief:** 1× 30-second hero video showcasing the throws collection — slow pans, soft morning light, 2–3 scene cuts, no voiceover, text overlay with brand + tagline + URL. Upload to Koala & Co. YouTube channel.
+
+### Living Room Rugs
+
+- **Theme:** Living room refresh, natural texture, family rooms
+- **Final URL:** https://koalahomewares.com.au/collections/rugs
+- **Audience signal:** Customer list "Rug buyers 2024-2025" + URL visits to `kmart.com.au/rugs`, `fantasticfurniture.com.au/rugs`, `adairs.com.au/rugs`
+
+(... same structure as above)
+
+### Cushion Collection
+
+(... same structure)
+
+---
+
+## URL expansion exclusions
+
+```
+koalahomewares.com.au/blog/*
+koalahomewares.com.au/about
+koalahomewares.com.au/contact
+koalahomewares.com.au/shipping-returns
+koalahomewares.com.au/terms
+koalahomewares.com.au/privacy
+koalahomewares.com.au/account/*
+```
+
+---
+
+## Merchant Center feed filter (retail)
+
+Include:
+- `product_type CONTAINS "Throws"` OR `product_type CONTAINS "Rugs"` OR `product_type CONTAINS "Cushions"`
+- `custom_label_0 != "clearance"` (exclude sunset stock)
+- `price > 79.00` (exclude low-margin accessories)
+
+---
+
+## Readiness checklist
+
+- [x] Merchant Center linked and feed approved
+- [x] Conversion actions Primary with values (GA4 `purchase` with `value` field)
+- [ ] ≥15 images per asset group — **not yet ready**, photo shoot scheduled 18/04/2026
+- [ ] ≥1 video per asset group — **not yet ready**, video production week of 22/04/2026
+- [x] Audience signals defined
+- [x] URL expansion exclusions configured
+- [x] Daily budget approved
+- [x] Learning period expectations set (no judgement until 2 weeks in)
+
+---
+
+## Next steps
+
+1. Complete photo and video production (scheduled 18–26/04/2026).
+2. Create the campaign manually in Google Ads UI → Campaigns → New campaign → Sales → Performance Max.
+3. Paste each asset group's inputs exactly as specified above.
+4. Upload Merchant Center feed with the filter above.
+5. Launch in PAUSED.
+6. Review together before enabling.
+7. Run `/ppc-manager:campaign-audit --scope pmax` on day 15 (not earlier — first 2 weeks are learning).
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "google-pmax-campaign",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

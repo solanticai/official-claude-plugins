@@ -1,0 +1,168 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** postgres-schema-audit
+- **description:** Audit any Postgres schema (Supabase via MCP or any Postgres 13+ via read-only connection) for structural and relational design quality. Produces a markdown report, ER diagram, JSON sidecar, and draft migrations-suggested.sql. Use for database design, schema audit, FK/constraint/trigger/RPC review, or pre-migration cleanup.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit any Postgres schema (Supabase via MCP or any Postgres 13+ via read-only connection) for structural and relational design quality"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review any Postgres schema (Supabase via MCP or any Postgres 13+ via read-only connection) for structural and relational design quality"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run postgres-schema-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Postgres Schema Audit — AcmeOps
+
+| Field | Value |
+|---|---|
+| **Date** | 20/04/2026 |
+| **Auditor** | Claude (postgres-schema-audit skill) |
+| **Execution mode** | supabase-mcp |
+| **Project** | acme-ops-production (xxxx-xxxx-xxxx) |
+| **Postgres version** | PostgreSQL 15.6 on aarch64-unknown-linux-gnu |
+| **Schemas audited** | public, operations, billing |
+| **Schemas skipped** | analytics (role lacked access), legacy (suppressed by `.db-design-ignore`) |
+| **Tables examined** | 34 |
+| **Columns examined** | 287 |
+| **Foreign keys examined** | 19 |
+| **Triggers / RPCs examined** | 11 / 23 |
+| **RLS policies examined** | 52 |
+| **Total findings** | 47 |
+| **CRITICAL / HIGH / MEDIUM / LOW / INFO / FLAG-ONLY** | 3 / 11 / 19 / 4 / 8 / 2 |
+| **Supabase advisors integrated** | yes — 12 security, 6 performance merged |
+| **`.db-design-ignore` loaded** | yes — 14 entries |
+| **Completeness** | 94/100 |
+| **Tier** | MOSTLY AUDITED |
+
+> **Completeness** measures how thoroughly the skill traced the database — NOT a quality grade. The 6-point deduction reflects `analytics` being inaccessible and `pg_stat_user_indexes` returning permission denied on 3 tables (E3 check partial).
+
+> This example was produced in **supabase-mcp** mode, so the report header shows the Supabase project ref and `get_advisors` evidence is integrated into the findings below (look for `evidence_source: "supabase-advisor"` tags). A parallel audit in **direct-postgres** mode against the same database would produce the same structural findings with 3 fewer corroborations and a header showing the connection name + host + db + user instead of the project ref.
+
+---
+
+## 1. Executive Summary
+
+The AcmeOps production database has three user-owned schemas totalling 34 tables. `operations` is the dominant domain (21 tables, heavily inter-referenced), `public` holds shared reference data (8 tables, mostly read-only), and `billing` is an independent domain (5 tables, few cross-schema relationships). Three parallel sub-agents completed all ten audit categories across the three accessible schemas.
+
+The database is in **moderate design debt**. The dominant issues cluster in three areas: (1) six `workspace_id` columns stored as `text` rather than `uuid`, all without foreign key constraints, across `operations`; (2) three tables with RLS disabled where tenancy-sensitive data lives (`operations.task_comments`, `operations.user_preferences`, `billing.invoices`); and (3) eight SECURITY DEFINER functions in `public` without a locked `search_path`. None of the cross-schema FKs are broken, but two duplicate enum definitions across `public` and `operations` suggest consolidation.
+
+**Top findings by blast radius (most tables affected):**
+1. DB-001 — A5 fk-wrong-type — 6 tables in `operations` have `workspace_id text` referencing `operations.workspaces.id uuid`
+2. DB-002 — G1 rls-disabled-on-user-table — 3 user-owned tables have RLS disabled
+3. DB-003 — F2 security-definer-no-search-path — 8 functions in `public` are exploitable
+
+**Top risks (highest cost-of-error):**
+1. **CRITICAL** — G2 — `operations.task_comments` has RLS enabled but no policies; writes succeed only because the app uses service-role. Dropping service-role usage would break the app.
+2. **CRITICAL** — F2 — `public.reset_password(text)` is SECURITY DEFINER with no search_path locked. Callable by `anon` role.
+3. **CRITICAL** — A5 — `operations.tasks.workspace_id text` should be `uuid`. Any FK comparison fails silently when case or whitespace differs.
+
+**Top relationship improvements:**
+1. DB-001 — Add FK `operations.tasks.workspace_id → operations.workspaces.id` (after converting to `uuid`)
+2. DB-014 — Add FK `operations.contracts.client_id → public.clients.id`
+3. DB-023 — Add junction table `operations.task_tags` instead of `tags text[]` on `operations.tasks`
+
+---
+
+## 2. Schemas Overview
+
+| Schema | Tables | Columns | FKs | Triggers | RPCs | Policies | RLS-enabled | Findings | Status |
+|---|---|---|---|---|---|---|---|---|---|
+| public | 8 | 56 | 4 | 2 | 12 | 8 | 4 / 8 | 15 | ok |
+| operations | 21 | 198 | 12 | 7 | 8 | 38 | 18 / 21 | 27 | ok |
+| billing | 5 | 33 | 3 | 2 | 3 | 6 | 4 / 5 | 5 | ok |
+
+---
+
+## 3. Findings by Severity
+
+### 3a. CRITICAL
+
+| ID | Target | Category | Subtype | Evidence | Remediation |
+|---|---|---|---|---|---|
+| DB-001 | `operations.tasks.workspace_id` | A | A5 fk-wrong-type | `column is text; referenced PK is uuid` | See DB-001 |
+| DB-002 | `operations.task_comments` | G | G2 rls-enabled-no-policies | `relrowsecurity=true, pg_policies rows=0` | See DB-002 |
+| DB-003 | `public.reset_password(text)` | F | F2 security-definer-no-search-path | `prosecdef=true, proconfig is NULL` | See DB-003 |
+
+### 3b. HIGH
+
+| ID | Target | Category | Subtype | Evidence | Remediation |
+|---|---|---|---|---|---|
+| DB-004 | `operations.task_comments.task_id` | A | A3 fk-shaped-no-constraint | `column text, pattern matches uuid` | See DB-004 |
+| DB-005 | `operations.contracts.created_by` | A | A3 fk-shaped-no-constraint | `same as above` | See DB-005 |
+| DB-006 | `operations.contracts` | C | C3 missing-unique-natural-key | `contract_number has duplicates possible` | See DB-006 |
+| DB-007 | `operations.tasks.created_at` | B | B4 timestamp-without-tz | `data_type = timestamp without time zone` | See DB-007 |
+| DB-008 | `operations.tasks.metadata` | B | B5 json-instead-of-jsonb | `udt_name = json` | See DB-008 |
+| DB-009 | `public.users` | G | G1 rls-disabled-on-user-table | `relrowsecurity=false` | See DB-009 |
+| DB-010 | `operations.user_preferences` | G | G1 rls-disabled-on-user-table | `relrowsecurity=false` | See DB-010 |
+| DB-011 | `billing.invoices` | G | G1 rls-disabled-on-user-table | `relrowsecurity=false` | See DB-011 |
+| DB-012 | `operations.tasks` policy `tasks_all_ops` | G | G3 policy-using-true | `USING (true), WITH CHECK NULL` | See DB-012 |
+| DB-013 | `operations.trigger_update_history()` | F | F7 dead-trigger | `trigger references function that no longer exists` | See 
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "postgres-schema-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

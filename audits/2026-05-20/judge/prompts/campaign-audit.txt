@@ -1,0 +1,179 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** campaign-audit
+- **description:** Audit a PPC account (Google Ads or Meta) for performance issues with prioritised fixes.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Audit a PPC account (Google Ads or Meta) for performance issues with prioritised fixes"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Audit → Review)
+- user_input: "Review a PPC account (Google Ads or Meta) for performance issues with prioritised fixes"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run campaign-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Findings cite file:line evidence and are categorised by severity
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Campaign Audit — Koala & Co. AU
+
+**Account:** 1234567890 (Google Ads) + act_1234567890 (Meta)
+**Period:** 12/03/2026 to 11/04/2026 (30 days)
+**Total spend:** $11,280 AUD ($6,820 Google Ads + $4,460 Meta)
+**Conversions:** 224 purchases (Google Ads 132, Meta 92)
+**Overall health score:** 68/100
+**Date:** 11/04/2026
+
+---
+
+## Executive summary
+
+Koala & Co. is running a healthy Google Ads account with strong branded search performance but has three significant tuning opportunities: $1,240/month in wasted spend on non-converting generic queries, under-utilised Responsive Search Ad headline slots, and a missing negative keyword list. Meta Ads is tracking-constrained — the pixel fires cleanly but CAPI is not yet installed, causing conversion undercount of ~35% based on GA4 reconciliation. Fixing these three blockers would unlock an estimated $2,800/month of efficiency.
+
+---
+
+## Blockers (fix immediately)
+
+| # | Finding | Data point | $ impact / month | Effort | Remediation |
+|---|---|---|---|---|---|
+| 1 | Meta CAPI not installed; pixel only | GA4 Meta Purchase = 141, Meta Ads Purchase = 92, 35% undercount | $1,100 | medium | Run `/ppc-manager:meta-capi-setup` with Cloudflare Worker backend |
+| 2 | Google Ads wasting spend on 12 non-converting keywords | 12 kw with >200 clicks each, $0 conversions, $1,240 total spend | $1,240 | low | Add to negatives via shared list |
+| 3 | Google Ads Search campaign missing sitelink/callout extensions | Campaign `Koala - Search - Homewares` has 0 sitelinks | $420 | low | Install 4 sitelinks + 4 callouts via Google Ads UI |
+
+---
+
+## Tuning (next optimisation cycle)
+
+| # | Finding | Data point | $ impact / month | Effort | Remediation |
+|---|---|---|---|---|---|
+| 4 | RSA `Throws - Wool` only uses 3 headlines of 15 | 3/15 headlines, CTR 2.1% | $280 | low | Run `/ppc-manager:google-ads-copy` to get 12 more headlines |
+| 5 | No Meta retargeting exclusion for recent buyers | Cart Abandoners 14d audience includes users who purchased | $140 | low | Run `/ppc-manager:meta-audience-builder` to rebuild with Exclusion - Recent Purchasers 30d |
+| 6 | Meta creative frequency = 4.8 on the main prospecting ad set | Frequency trending up from 3.2 to 4.8 over 7 days | $320 | medium | Run `/ppc-manager:meta-creative-brief` for 2 new variants |
+| 7 | Google Ads Ad group `Rugs - Wool` bids set to manual $0.80 in a market with $1.50 avg | Lost impression share (budget) = 42% | $180 | low | Raise bids to $1.40-$1.50 manually |
+
+---
+
+## Experiments (to test next)
+
+| # | Hypothesis | Rationale | Test design |
+|---|---|---|---|
+| 1 | Performance Max campaign will outperform Search for prospecting | PMax typically 15–25% cheaper CPA than Search for retail with strong feed | Run `/ppc-manager:google-pmax-campaign` with $100/day budget alongside existing Search for 30 days, compare CPA |
+| 2 | Lookalike 1% LAL for Meta will outperform broad interest targeting | Current broad targeting CPA = $48, Lookalike should be ~$35 based on benchmark | Pause one broad ad set, launch lookalike ad set with same budget for 14 days |
+
+---
+
+## Cross-platform reconciliation
+
+| Source | Purchases | Value (AUD) | Variance |
+|---|---|---|---|
+| GA4 | 273 | $34,820 | baseline |
+| Google Ads | 132 | $18,600 | -5% (expected) |
+| Meta | 92 | $12,450 | -35% (**BLOCKER** — install CAPI) |
+
+---
+
+## Health scores by area
+
+| Area | Score | Severity |
+|---|---|---|
+| Account setup (billing, linking, conversion actions) | 88/100 | ok |
+| Structure (naming, grouping, match types) | 72/100 | ok |
+| Tracking (pixel, CAPI, dedup) | 54/100 | warning |
+| Creative (CTR, frequency, age) | 68/100 | warning |
+| Audience (retargeting, lookalikes, exclusions) | 60/100 | warning |
+| Landing page (alignment, speed) | 78/100 | ok |
+| **Overall** | **68/100** | warning |
+
+---
+
+## Remediation playbook
+
+### Immediate (this week)
+
+1. Install Meta CAPI via Cloudflare Worker — `/ppc-manager:meta-capi-setup`. Target: EMQ ≥7.0 on Purchase. ETA: 2 days including deployment.
+2. Add the 12 wasted-spend keywords to the shared negative list. Also add 6 new negatives from the search-terms report.
+3. Install sitelinks + callouts on `Koala - Search - Homewares` manually in Google Ads UI. ETA: 20 minutes.
+
+### Next (next 2 weeks)
+
+1. Run `/ppc-manager:google-ads-copy` to generate 12 new RSA headlines for `Throws - Wool` ad group.
+2. Run `/ppc-manager:meta-audience-builder` to rebuild retargeting audiences with proper purchaser exclusion.
+3. Run `/ppc-manager:meta-creative-brief` for 2 new ad variants to rotate into the main prospecting ad set.
+
+### Backlog
+
+1. Test Performance Max campaign (see Experiment 1).
+2. Test Meta Lookalike 1% ad set (see Experiment 2).
+3. Re-audit in 14 days to verify fixes landed.
+
+---
+
+## Next steps
+
+1. Start with blocker #1 (Meta CAPI) — highest dollar impact with medium effort.
+2. Re-run `/ppc-manager:campaign-audit` on 25/04/2026 to measure progress.
+3. If health score rises to ≥80, move to monthly audit cadence.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "campaign-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

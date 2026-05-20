@@ -1,0 +1,135 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** resource-dashboard
+- **description:** Launch a localhost browser dashboard showing live Claude process tree, memory use, MCP servers, and orphan count
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Launch a localhost browser dashboard showing live Claude process tree, memory use, MCP servers, and orphan count"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Launch → Launch)
+- user_input: "Launch a localhost browser dashboard showing live Claude process tree, memory use, MCP servers, and orphan count"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run resource-dashboard"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+
+### Artefact (example output)
+```
+# Example Launch — Resource Dashboard
+
+A successful launch on a fresh workstation. The server was not already running; the script started a detached Python process, polled the health endpoint, and opened the browser.
+
+---
+
+## User invocation
+
+```
+/resource-dashboard
+```
+
+## Expected console output
+
+```
+Dashboard launched at http://127.0.0.1:8765 (PID 24812)
+Bind: 127.0.0.1 only — not reachable from other machines
+Run /resource-dashboard-stop to shut it down.
+```
+
+## Expected browser tab
+
+The dashboard opens with three panels:
+
+1. **Process tree** — Claude Desktop (1 root), Claude Code CLI sessions (2), VS Code extension (1), and child subagent processes shown indented.
+2. **MCP servers** — 3 healthy MCP servers (parent labels visible) and a warning row for any orphan whose Claude parent has died.
+3. **Memory chart** — rolling 2-minute window, sampled at 5 s intervals, separated by Claude family / MCP / Codex.
+
+A "Kill all orphans" button is enabled only when `orphan_count > 0`. Clicking it issues `POST /api/kill-orphans`; the server validates each candidate PID is (a) classified as an MCP server and (b) flagged orphan, refusing any other PID with HTTP 403.
+
+## Custom port
+
+```
+/resource-dashboard --port 9000
+```
+
+```
+Dashboard launched at http://127.0.0.1:9000 (PID 24813)
+```
+
+## Already running
+
+If a previous session left the server alive, the launch script detects it via the health check and re-opens the browser without spawning a duplicate:
+
+```
+Dashboard already running at http://127.0.0.1:8765
+Opening browser...
+```
+
+## Shutdown
+
+```
+/resource-dashboard-stop
+```
+
+Server stopped gracefully (SIGTERM); orphan-kill state is forgotten between runs.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "resource-dashboard",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

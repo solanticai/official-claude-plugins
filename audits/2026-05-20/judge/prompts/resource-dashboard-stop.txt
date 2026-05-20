@@ -1,0 +1,133 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** resource-dashboard-stop
+- **description:** Shut down the Resource Manager localhost dashboard server
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Shut down the Resource Manager localhost dashboard server"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Shut → Shut)
+- user_input: "Shut down the Resource Manager localhost dashboard server"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run resource-dashboard-stop"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+
+### Artefact (example output)
+```
+# Example Stop — Resource Dashboard Stop
+
+Three realistic invocations: graceful shutdown succeeds, graceful fails and the PID-file fallback kicks in, and the no-op when no server is running.
+
+---
+
+## 1. Graceful shutdown (HTTP succeeds)
+
+```
+/resource-dashboard-stop
+```
+
+```
+Dashboard on port 8765 stopped.
+```
+
+The skill issued `POST http://127.0.0.1:8765/api/shutdown` with a 2-second timeout. The server responded `204 No Content`, finished its in-flight request, and exited cleanly.
+
+---
+
+## 2. HTTP shutdown fails — PID-file fallback
+
+If the dashboard process is hung or the API endpoint is unreachable, the skill falls back to killing the PID recorded in `$CLAUDE_PLUGIN_DATA/dashboard.pid`:
+
+```
+/resource-dashboard-stop --port 9000
+```
+
+```
+Dashboard (pid 24812) stopped via pid-file.
+```
+
+On Windows the kill is `taskkill //PID 24812 //F`; on macOS / Linux it is `kill 24812`. The PID-file is removed afterwards so subsequent runs don't try to kill an already-dead PID.
+
+---
+
+## 3. No dashboard running
+
+```
+/resource-dashboard-stop
+```
+
+```
+No dashboard running on port 8765.
+```
+
+Idempotent — safe to run when no dashboard is up. No errors, no side effects.
+
+---
+
+## Notes
+
+- The skill never kills MCP servers, child processes, or anything other than the dashboard's own PID. Safe to invoke at any time.
+- After this skill exits, `/resource-dashboard` can be re-run to start a fresh server.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "resource-dashboard-stop",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

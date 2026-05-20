@@ -1,0 +1,163 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** meta-events-mapping
+- **description:** Produce a cross-platform event dictionary — mapping each business event across GA4, Meta Pixel/CAPI, and dataLayer with param schemas.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Produce a cross-platform event dictionary"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Produce → Generate)
+- user_input: "Generate a cross-platform event dictionary"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run meta-events-mapping"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is structured and parseable per the declared schema
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Event Dictionary — Koala & Co. Online
+
+**Date:** 11/04/2026
+**Owner:** Data & Analytics team (Koala & Co.)
+
+---
+
+## Canonical events
+
+| Business event | GA4 | Meta Pixel | Meta CAPI | GTM DL | Notes |
+|---|---|---|---|---|---|
+| Page load | `page_view` | `PageView` | `PageView` | `page_view` | Enhanced Measurement on GA4 |
+| Product view | `view_item` | `ViewContent` | `ViewContent` | `view_item` | Requires currency/value |
+| Add to cart | `add_to_cart` | `AddToCart` | (not forwarded) | `add_to_cart` | Browser-only to reduce noise |
+| Begin checkout | `begin_checkout` | `InitiateCheckout` | `InitiateCheckout` | `begin_checkout` | |
+| Add payment | `add_payment_info` | `AddPaymentInfo` | `AddPaymentInfo` | `add_payment_info` | |
+| Purchase | `purchase` | `Purchase` | `Purchase` | `purchase` | Revenue event, CAPI dedup via `event_id` |
+| Newsletter | `newsletter_signup` | `Subscribe` | `Subscribe` | `newsletter_signup` | Custom Meta event |
+
+---
+
+## Param schemas per event
+
+### Purchase (`purchase`)
+
+**GA4 params:**
+- `transaction_id` (string): Shopify order number, also used as GA4 dedup key
+- `currency` (string): `AUD`
+- `value` (number): Total order value inc. tax and shipping
+- `tax` (number): GST
+- `shipping` (number): Shipping cost
+- `coupon` (string): Discount code if applied
+- `items[]` (array): Enhanced Ecommerce items shape — `item_id`, `item_name`, `item_brand`, `item_category`, `item_variant`, `price`, `quantity`
+
+**Meta Pixel params:**
+- `currency`: Same as GA4
+- `value`: Same as GA4
+- `content_ids`: Array of SKUs (derived from `items[].item_id` via JS helper)
+- `content_type`: Literal `'product'`
+- `num_items`: Derived from `items.length`
+- `eventID` (top-level, for dedup): `{{DL - event_id}}`
+
+**Meta CAPI `custom_data`:**
+- `currency`: Same
+- `value`: Same
+- `content_ids`: Same
+- `content_type`: `'product'`
+- `num_items`: Same
+- `event_id` (top-level): Same as browser pixel's `eventID`
+
+### Newsletter (`newsletter_signup`)
+
+**GA4 params:**
+- `list_name` (string): Which list (`main_footer`, `popup`, `checkout`)
+
+**Meta Pixel params:**
+- Using `Subscribe` as the custom event (closest standard is `CompleteRegistration` but `Subscribe` matches the subscription semantic better)
+- No params beyond `eventID`
+
+**Meta CAPI `custom_data`:**
+- `status`: `'subscribed'`
+
+---
+
+## Inconsistencies found
+
+| Finding | Severity | Fix |
+|---|---|---|
+| `add_to_cart` fires in GA4 and Meta browser but not CAPI | medium | Intentional — noisy event, not worth server-side cost |
+| `view_item` fires ~3x per page load on Shopify for variant changes | medium | Deduplicate by `event_id` on the client — one push per `item_id`/minute |
+| Meta Pixel `Purchase` has `eventID`, Meta CAPI doesn't always receive it | **high** | Verify Cloudflare Worker includes `event_id` from POST body in every CAPI event |
+| GA4 shows AUD 25,340 last 30 days, Meta shows USD 16,200 | low | Currency conversion expected — not a bug |
+| GA4 `transaction_id` is the Shopify order number, CAPI `event_id` appends checkout token | low | Functional but different shapes. Document that `transaction_id` ≠ `event_id` but both are unique |
+
+---
+
+## Next steps
+
+1. Circulate this doc to dev + marketing as canonical reference (store in Notion + this repo).
+2. Fix the `high` severity CAPI `event_id` issue — update the Cloudflare Worker to always forward the browser's `event_id`.
+3. Run `/ppc-manager:campaign-audit --scope meta` to verify Meta attribution is clean after the fix.
+4. Re-run this skill in 30 days to check for drift.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "meta-events-mapping",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

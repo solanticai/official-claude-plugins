@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of cohort-analysis-builder's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Artefact includes both the design and its rationale (trade-offs surfaced)"
+      - "Report includes the canonical sections: \"Cohort Analysis Framework — [Business Na\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

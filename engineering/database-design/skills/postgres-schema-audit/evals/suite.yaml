@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of postgres-schema-audit's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Findings cite file:line evidence and are categorised by severity"
+      - "Report includes the canonical sections: \"1. Executive Summary\", \"2. Schemas Overview\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

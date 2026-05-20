@@ -38,8 +38,8 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of entity-disambiguation's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Report includes the canonical sections: \"Entity Disambiguation Report — [Project/\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

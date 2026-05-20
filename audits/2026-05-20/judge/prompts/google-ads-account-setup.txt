@@ -1,0 +1,154 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** google-ads-account-setup
+- **description:** Set up or audit a Google Ads account — billing/conversion tracking, linked accounts, and baseline structure.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Set up or audit a Google Ads account"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Set → Set)
+- user_input: "Set up or audit a Google Ads account"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run google-ads-account-setup"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Google Ads Account Setup — Koala & Co. AU
+
+**Customer ID:** 1234567890
+**Currency:** AUD
+**Time zone:** Australia/Sydney
+**Test account:** false
+**Date:** 11/04/2026
+
+---
+
+## Audit findings
+
+| Area | Current | Desired | Severity |
+|---|---|---|---|
+| Auto-tagging | ON | ON | ok |
+| Currency | AUD | AUD | ok |
+| Time zone | Australia/Sydney | Australia/Sydney | ok |
+| GA4 link | none | linked to 789012345 | **high** |
+| Merchant Center link | none | linked (has Shopify feed) | **high** |
+| Conversion actions | 2 manual (Purchase, AddToCart) | GA4-imported Purchase | **high** (duplicate) |
+| Auto-apply recommendations | ON | OFF | medium |
+| Negative keyword lists | 0 | 1 (Shared brand negatives) | low |
+
+---
+
+## Conversion actions
+
+| Name | Category | Primary? | Attribution | Source | Status |
+|---|---|---|---|---|---|
+| Purchase (manual tag) | Purchase | yes | Last click | Google Ads tag | **flagged for removal** |
+| AddToCart (manual tag) | Add to cart | no | Last click | Google Ads tag | **flagged for removal** |
+| GA4 - purchase | Purchase | yes | Data-driven | GA4 import | **NEW, recommended** |
+
+---
+
+## Linked accounts
+
+| Link type | Target | Status |
+|---|---|---|
+| GA4 | properties/789012345 | to be linked |
+| Merchant Center | (Shopify feed) | to be linked |
+| YouTube channel | — | N/A (no video) |
+
+---
+
+## Fix plan
+
+### Automatable fixes applied via MCP
+
+- None in v1.0 — account linking + conversion deletion are manual-only.
+
+### Manual fixes
+
+1. **Link GA4:** Tools → Linked accounts → Google Analytics (GA4) → Link `properties/789012345` → enable Personalized advertising.
+2. **Import GA4 conversions:** Tools → Measurement → Conversions → New conversion action → Import → GA4 properties → Web → pick `purchase` → Create.
+3. **Disable old manual conversions:** Conversions → pick `Purchase (manual tag)` → Edit → Status = Removed. Repeat for `AddToCart (manual tag)`.
+4. **Link Merchant Center:** Tools → Linked accounts → Google Merchant Center → Link (opens a Shopify-connected MC account).
+5. **Disable auto-apply recommendations:** Recommendations → Auto-apply → Untick every category → Save.
+6. **Create a shared negative keyword list:** Tools → Shared library → Negative keyword lists → Create "Brand negatives" with `competitor name`, `cheap`, `free`.
+
+### Wait for data
+
+- Attribution model change to Data-driven — already set by the GA4 import, will activate once 300+ conversions accumulate (~30 days at current rate).
+- Smart Bidding migration — current conversion volume is ~200/month, not enough for tCPA/tROAS yet. Revisit in 60 days.
+
+---
+
+## Next steps
+
+1. Complete the 6 manual fixes above. Timebox ~25 minutes.
+2. Run `/ppc-manager:keyword-research` to build the keyword list for the first Search campaign.
+3. Run `/ppc-manager:google-search-campaign` to launch the campaign in PAUSED state.
+4. Review and enable once the Search campaign structure is approved.
+5. In 7 days, run `/ppc-manager:campaign-audit` to verify conversions are attributing correctly.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "google-ads-account-setup",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

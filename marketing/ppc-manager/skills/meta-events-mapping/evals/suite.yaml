@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of meta-events-mapping's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Output is structured and parseable per the declared schema"
+      - "Report includes the canonical sections: \"Canonical events\", \"Param schemas per event\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

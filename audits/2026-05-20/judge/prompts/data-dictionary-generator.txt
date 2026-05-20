@@ -1,0 +1,230 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** data-dictionary-generator
+- **description:** Auto-generate comprehensive data dictionaries from database schemas, CSV files, or API responses with column definitions, relationships, and Mermaid ERD
+- **paths:** **/*.sql, **/migrations/**, **/schema.*
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Auto-generate comprehensive data dictionaries from database schemas, CSV files, or API responses with column definitions, relationships, and Mermaid ERD"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Auto → Auto)
+- user_input: "Auto-generate comprehensive data dictionaries from database schemas, CSV files, or API responses with column definitions, relationships, and Mermaid ERD"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run data-dictionary-generator"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Data Dictionary: TaskFlow Project Management
+
+> Generated on 2026-04-04 | Source: PostgreSQL (Supabase) | Generator: data-dictionary-generator
+
+---
+
+## Schema Overview
+
+| Metric | Value |
+|--------|-------|
+| Database type | PostgreSQL 15 (Supabase) |
+| Schema | public |
+| Total tables | 6 |
+| Total columns | 34 |
+| Total relationships | 9 |
+| PII columns detected | 3 |
+| Schema version / last migration | 20260401120000 |
+
+---
+
+## Table Dictionary
+
+### organisations
+
+**Description:** Top-level tenant entity representing a company or team that owns projects and members. All business data is scoped to an organisation.
+
+**Purpose:** Transactional (tenant root)
+
+**Estimated rows:** 1,200
+
+| Column | Type | Nullable | Default | Description | PII |
+|--------|------|----------|---------|-------------|-----|
+| id | uuid | No | gen_random_uuid() | Unique identifier for the organisation | -- |
+| name | text | No | -- | Display name of the organisation | -- |
+| slug | text | No | -- | URL-friendly unique identifier used in permalinks | -- |
+| plan | text | No | 'free' | Current subscription plan (free, pro, enterprise) | -- |
+| created_at | timestamptz | No | now() | Timestamp when the organisation was created | -- |
+| updated_at | timestamptz | No | now() | Timestamp when the organisation was last modified | -- |
+
+**Constraints:**
+- PRIMARY KEY: `id`
+- UNIQUE: `slug`
+- CHECK: `plan IN ('free', 'pro', 'enterprise')`
+
+**Indexes:**
+- `organisations_pkey` on `(id)` [btree]
+- `organisations_slug_key` on `(slug)` [btree, unique]
+
+---
+
+### profiles
+
+**Description:** User profile information linked to Supabase authentication. Each profile belongs to an organisation and represents a team member.
+
+**Purpose:** User/Identity
+
+**Estimated rows:** 8,500
+
+| Column | Type | Nullable | Default | Description | PII |
+|--------|------|----------|---------|-------------|-----|
+| id | uuid | No | -- | References auth.users(id); unique identifier for the user | -- |
+| org_id | uuid | No | -- | Organisation this profile belongs to (multi-tenancy key) | -- |
+| full_name | text | No | -- | User's display name | PII: Name (Medium) |
+| email | citext | No | -- | User's email address, case-insensitive | PII: Email (Medium) |
+| role | text | No | 'member' | Role within the organisation (owner, admin, member) | -- |
+| avatar_url | text | Yes | NULL | URL to the user's profile image | PII: Biometric-adj. (Low) |
+| created_at | timestamptz | No | now() | Timestamp when the profile was created | -- |
+
+**Constraints:**
+- PRIMARY KEY: `id`
+- FOREIGN KEY: `id` references `auth.users(id)` ON DELETE CASCADE
+- FOREIGN KEY: `org_id` references `organisations(id)` ON DELETE CASCADE
+- UNIQUE: `email`
+- CHECK: `role IN ('owner', 'admin', 'member')`
+
+**Indexes:**
+- `profiles_pkey` on `(id)` [btree]
+- `profiles_org_id_idx` on `(org_id)` [btree]
+- `profiles_email_key` on `(email)` [btree, unique]
+
+---
+
+### tasks
+
+**Description:** Individual work items within a project. Tasks track assignment, priority, status, and due dates. Supports soft deletion via the deleted_at column.
+
+**Purpose:** Transactional
+
+**Estimated rows:** 145,000
+
+| Column | Type | Nullable | Default | Description | PII |
+|--------|------|----------|---------|-------------|-----|
+| id | uuid | No | gen_random_uuid() | Unique identifier for the task | -- |
+| project_id | uuid | No | -- | Project this task belongs to | -- |
+| title | text | No | -- | Short summary of the task | -- |
+| description | text | Yes | NULL | Detailed description or acceptance criteria | -- |
+| status | text | No | 'todo' | Current workflow status (todo, in_progress, review, done) | -- |
+| priority | text | No | 'medium' | Task priority level (low, medium, high, urgent) | -- |
+| assignee_id | uuid | Yes | NULL | Profile assigned to complete this task | -- |
+| due_date | date | Yes | NULL | Target completion date | -- |
+| created_at | timestamptz | No | now() | Timestamp when the task was created | -- |
+| updated_at | timestamptz | No | now() | Timestamp when the task was last modified | -- |
+| deleted_at | timestamptz | Yes | NULL | Soft delete timestamp; non-null means logically deleted | -- |
+
+**Constraints:**
+- PRIMARY KEY: `id`
+- FOREIGN KEY: `project_id` references `projects(id)` ON DELETE CASCADE
+- FOREIGN KEY: `assignee_id` references `profiles(id)` ON DELETE SET NULL
+- CHECK: `status IN ('todo', 'in_progress', 'review', 'done')`
+- CHECK: `priority IN ('low', 'medium', 'high', 'urgent')`
+
+**Indexes:**
+- `tasks_pkey` on `(id)` [btree]
+- `tasks_project_id_idx` on `(project_id)` [btree]
+- `tasks_assignee_id_idx` on `(assignee_id)` [btree]
+- `tasks_status_idx` on `(status)` WHERE `deleted_at IS NULL` [btree, partial]
+
+---
+
+## Relationship Map
+
+| From Table | From Column | To Table | To Column | Type | Cardinality | Source |
+|-----------|-------------|----------|-----------|------|-------------|--------|
+| profiles | id | auth.users | id | FK | 1:1 | Explicit |
+| profiles | org_id | organisations | id | FK | N:1 | Explicit |
+| projects | org_id | organisations | id | FK | N:1 | Explicit |
+| projects | created_by | profiles | id | FK | N:1 | Explicit |
+| tasks | project_id | projects | id | FK | N:1 | Explicit |
+| tasks | assignee_id | profiles | id | FK | N:1 | Explicit |
+| task_comments | task_id | tasks | id | FK | N:1 | Explicit |
+| task_comments | author_id | profiles | id | FK | N:1 | Explicit |
+| project_members | project_id | projects | id | FK | N:1 | Explicit (junction) |
+| project_members | profile_id | profiles | id | FK | N:1 | Explicit (junction) |
+
+---
+
+## Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    organisations ||--o{ profiles : "has members"
+    organisations ||--o{ projects : "owns"
+    projects ||--o{ tasks : "contains"
+    projects ||--o{ project_members : "has"
+    profiles ||--o{ project_members : "joins"
+    profiles ||--o{ tasks : "assigned"
+    profiles ||--o{ task_comments : "authors"
+    tasks ||--o{ task_comments : "has"
+    profiles }o--|| auth_users : "authen
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "data-dictionary-generator",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

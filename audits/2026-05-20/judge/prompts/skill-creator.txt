@@ -1,0 +1,153 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** skill-creator
+- **description:** Scaffold new Claude Code skills with proper frontmatter, directory structure, templates, examples, and supporting files
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Scaffold new Claude Code skills with proper frontmatter, directory structure, templates, examples, and supporting files"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Scaffold → Generate)
+- user_input: "Generate new Claude Code skills with proper frontmatter, directory structure, templates, examples, and supporting files"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run skill-creator"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Scaffolded artefact has all required sections and no TODO markers
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Example: Creating a "Customer Churn Predictor" Skill
+
+## Skill Requirements
+
+| Field | Value |
+|-------|-------|
+| Name | `customer-churn-predictor` |
+| Category | Data Analysis & Intelligence |
+| Description | Predict customer churn risk using behavioural signals, usage patterns, and engagement metrics with actionable retention recommendations |
+| Complexity | Medium (300 lines) |
+| Argument Hint | `[customer-data-description]` |
+| Tools | Read Grep Glob Write Edit Bash Agent |
+| Subagent | No (interactive analysis) |
+| Ultrathink | Yes (complex pattern analysis) |
+| Dynamic Context | No |
+| Visual Outputs | Mermaid diagram for churn funnel |
+
+## Generated Directory
+
+```
+skills/customer-churn-predictor/
+├── skill.md              (285 lines)
+├── LICENSE.txt
+├── templates/
+│   └── output-template.md
+├── examples/
+│   └── example-output.md
+└── scripts/
+    └── churn-signals.py
+```
+
+## Generated SKILL.md (excerpt)
+
+```yaml
+---
+name: customer-churn-predictor
+description: Predict customer churn risk using behavioural signals, usage patterns, and engagement metrics with actionable retention recommendations
+argument-hint: [customer-data-description]
+allowed-tools: Read Grep Glob Write Edit Bash Agent
+---
+
+# Customer Churn Predictor
+
+ultrathink
+
+## User Context
+
+The user has provided the following customer data context:
+
+$ARGUMENTS
+
+If no arguments were provided, begin Phase 1 by asking about the customer data available and business model.
+
+---
+
+## System Prompt
+
+You are a customer analytics specialist who identifies churn risk patterns...
+```
+
+## Validation Results
+
+| Check | Status |
+|-------|--------|
+| SKILL.md under 500 lines | PASS (285 lines) |
+| Valid YAML frontmatter | PASS |
+| Description under 250 chars | PASS (143 chars) |
+| $ARGUMENTS used | PASS |
+| ultrathink included | PASS |
+| templates/ populated | PASS |
+| examples/ populated | PASS |
+| reference.md needed | NO (under 400 lines) |
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "skill-creator",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

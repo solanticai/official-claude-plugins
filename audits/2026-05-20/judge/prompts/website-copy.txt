@@ -1,0 +1,221 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** website-copy
+- **description:** Generate website copy for homepage, about, features, pricing, and contact pages aligned to brand voice — SEO-aware, conversion-focused, with meta descriptions and CTAs
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Generate website copy for homepage, about, features, pricing, and contact pages aligned to brand voice"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Generate → Produce)
+- user_input: "Produce website copy for homepage, about, features, pricing, and contact pages aligned to brand voice"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run website-copy"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Output is machine-readable where the description implies (valid JSON/SQL/YAML)
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Stillwater Website Copy
+
+**Date:** 11/04/2026
+**Site goal:** Lead generation (free trial signups for the Stillwater meditation app)
+**Brand voice reference:** Stillwater brand-identity v1 (Mar 2026)
+**Audience reference:** Stillwater target-audience v1 (Mar 2026)
+
+---
+
+## 0. Site Overview
+
+### Sitemap
+- Homepage
+- How it works
+- Library (the content offering)
+- Pricing
+- Science (evidence/research)
+- About
+- Contact
+- FAQ
+
+### Voice notes
+- **Voice attributes:** Calm (not sleepy), Considered (not academic), Honest (not preachy), Quietly Confident (never shouty)
+- **Tone defaults:** 30% formality, 15% energy, 20% humour, 70% warmth
+- **Banned words:** journey, mindfulness journey, transform, unlock, awaken, heal, sacred, holistic, vibes, energy (in spiritual sense), guru, master, expert (used about ourselves)
+
+### Conversion goals per page
+- Homepage → Free trial signup
+- How it works → Free trial signup
+- Library → Free trial signup
+- Pricing → Free trial signup
+- Science → Read more (warm trust-building)
+- About → No conversion; pure trust building
+- Contact → Form submission
+- FAQ → Free trial signup
+
+---
+
+## 1. Homepage
+
+**URL slug:** /
+**Conversion goal:** Free trial signup
+
+### Hero
+
+**Headline:** A meditation app that doesn't try to fix you.
+
+**Subhead:** Stillwater is 12 minutes a day, no streaks, no notifications, no in-app guru. Just quiet practice for people who want to be a little less busy in their own heads.
+
+**Primary CTA:** [Start your 14-day free trial]
+**Secondary CTA:** [Listen to a sample]
+
+### Social proof bar
+
+> Used by 18,400+ people across Australia, New Zealand, and the UK. Featured in The Saturday Paper, ABC Radio National, and the Cleveland Clinic Mindfulness Library.
+
+### Problem section
+
+**Headline:** Most meditation apps are loud.
+
+You wanted a few quiet minutes. You got streaks, badges, gentle nags, daily challenges, and a notification asking why you didn't meditate yesterday. The "calm" app turns out to be just another piece of software trying to optimise you. By the time you've cleared the popups, the seven minutes you had for stillness are gone.
+
+### Solution section
+
+**Headline:** We built the opposite.
+
+Stillwater is 12 minutes. There's no streak. There's no notification. There's no AI assistant suggesting today's session based on your mood. There's a library of 240+ practices recorded by 14 teachers — Buddhist, secular, somatic, Zen — and a single screen where you press play. That's the entire app.
+
+If you don't open it for two weeks, we don't email you. The point of meditation is not to feel guilty about it.
+
+### Features highlight
+
+#### One quiet screen
+The app is one screen with one button. No newsfeed, no daily intention, no streak counter, no profile. Open the app, pick a practice, press play. That's it.
+
+#### A real library, not a content marketing pipeline
+240+ practices from 14 teachers across Buddhist, secular, somatic, and Zen traditions. We pay teachers a flat fee — never per-stream — so the library is curated, not algorithmic.
+
+#### No notifications. Ever.
+We will not email you. We will not push you a notification. We will not guilt-trip you with a streak. The practice is the reward.
+
+#### Honest about what meditation does (and doesn't)
+We don't promise you'll heal trauma, lose weight, become more productive, or unlock your potential. We promise that 12 minutes a day in a quiet room will make you a little less reactive over a few months. That's the whole pitch.
+
+### Differentiator section
+
+**Headline:** Why we're not Headspace.
+
+Headspace, Calm, and the dozen apps like them are good at one thing: getting you to open the app. They're optimised for engagement, which means notifications, streaks, social features, and a constant stream of new content.
+
+Stillwater is optimised for the opposite. Our success metric is not minutes-in-app — it's the year-2 retention rate of the people who keep practising whether the app is open or closed. We measure how many of our users have built a habit so quiet that they don't even need us anymore. That's the whole point.
+
+### Social proof
+
+> "I tried Headspace, Calm, Insight Timer, and three others. They all made meditation feel like another app I had to manage. Stillwater is the first one that just gets out of my way and lets me sit."
+> — Sarah Kowalski, GP, Melbourne
+
+> "I've been meditating for 11 years. I use Stillwater because it's the only app that doesn't try to teach me anything I don't already know."
+> — David Mendez, secondary school teacher, Auckland
+
+### Final CTA
+
+**Headline:** Start with 12 minutes.
+
+Free for 14 days. No credit card. If you don't open it again after the trial, we won't email you to ask why.
+
+**CTA:** [Start your 14-day free trial]
+**Friction reducer:** No credit card required.
+
+---
+
+## 2. About
+
+**URL slug:** /about
+**Conversion goal:** Build trust → drive to free trial
+
+### Hero
+
+**Headline:** We built the meditation app we wanted.
+
+**Subhead:** Stillwater started in 2023 because none of the existing apps were quiet enough.
+
+### Origin story
+
+In 2022, Anna Rinaldi was a clinical psychologist in Brisbane recommending mindfulness apps to her clients. She kept hearing the same complaint: "I tried it but it felt like another thing I was failing at."
+
+Anna had been meditating for 16 years. She knew that meditation, when it works, is the opposite of a habit-tracking gamified app. It's a quiet thing you do because you've decided to. Streaks, notifications, and "your mood today" prompts undermine the entire practice.
+
+So in late 2022, Anna and her partner Jordan (a designer who'd previously built apps for two of the meditation companies Anna was complaining about) sat down and asked: what would the opposite app look like?
+
+The opposite app:
+- Has no streak
+- Has no notifications
+- Has no AI
+- Has no social features
+- Has no profile
+- Has 240+ practices and one play button
+
+They built it in their kitchen over six months. The first version had three teachers and 28 practices. Today it ha
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "website-copy",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

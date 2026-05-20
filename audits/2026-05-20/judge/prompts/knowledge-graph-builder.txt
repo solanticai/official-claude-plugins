@@ -1,0 +1,256 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** knowledge-graph-builder
+- **description:** Construct knowledge graph specifications from business entities and relationships for Neo4j, JSON-LD, or Supabase/PostgreSQL JSONB implementation
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Construct knowledge graph specifications from business entities and relationships for Neo4j, JSON-LD, or Supabase/PostgreSQL JSONB implementation"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Construct → Construct)
+- user_input: "Construct knowledge graph specifications from business entities and relationships for Neo4j, JSON-LD, or Supabase/PostgreSQL JSONB implementation"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run knowledge-graph-builder"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Knowledge Graph: Apex Strategy Partners
+
+**Business:** Apex Strategy Partners - Management Consulting
+**Domain:** Professional services consulting (strategy, operations, digital transformation)
+**Location:** Melbourne, VIC
+**Date:** 2026-04-04
+
+---
+
+## 1. Node Types
+
+| Node Type | Count | Key Properties |
+|---|---|---|
+| Consultant | 14 | name, role, seniority, dayRate, specialisations[], startDate |
+| Client | 9 | name, industry, abn, contractValue, status |
+| Project | 17 | name, type, startDate, endDate, budget, status, methodology |
+| Skill | 22 | name, category, demandLevel |
+| Industry | 6 | name, sectorCode, activeClientCount |
+
+---
+
+## 2. Edge Types
+
+| Edge | From | To | Properties |
+|---|---|---|---|
+| `ASSIGNED_TO` | Consultant | Project | role, allocation%, startDate, endDate |
+| `CONTRACTED_BY` | Project | Client | contractId, signedDate, value |
+| `HAS_SKILL` | Consultant | Skill | proficiencyLevel (1-5), certified (bool) |
+| `REQUIRES_SKILL` | Project | Skill | importance (critical/preferred), minLevel |
+| `OPERATES_IN` | Client | Industry | isPrimary (bool) |
+| `REFERRED_BY` | Client | Client | referralDate, referralFee |
+| `MANAGES` | Consultant | Consultant | since, reportingLine |
+| `DELIVERED_FOR` | Consultant | Client | projectCount, totalBilledHours, npsScore |
+
+---
+
+## 3. Graph Statistics
+
+| Metric | Value |
+|---|---|
+| Total nodes | 68 |
+| Total edges | 143 |
+| Avg. degree (Consultant) | 8.2 |
+| Most connected node | "Digital Transformation" (Skill) -- 11 edges |
+| Orphan nodes | 0 |
+| Clusters (Louvain) | 3 (Strategy, Operations, Digital) |
+
+---
+
+## 4. Sample Subgraph: Project Staffing
+
+```
+[Sarah Chen]---ASSIGNED_TO{role:"Lead", allocation:80%}--->[Digital Roadmap - ANZ Bank]
+[Sarah Chen]---HAS_SKILL{level:5, certified:true}-------->[Digital Transformation]
+[James Okonkwo]---ASSIGNED_TO{role:"Analyst", allocation:100%}--->[Digital Roadmap - ANZ Bank]
+[Digital Roadmap - ANZ Bank]---CONTRACTED_BY{value:$485K}--->[ANZ Bank]
+[Digital Roadmap - ANZ Bank]---REQUIRES_SKILL{importance:"critical"}--->[Digital Transformation]
+[Digital Roadmap - ANZ Bank]---REQUIRES_SKILL{importance:"preferred"}--->[Change Management]
+[ANZ Bank]---OPERATES_IN{isPrimary:true}--->[Financial Services]
+[ANZ Bank]---REFERRED_BY{date:"2025-11-02"}--->[Telstra]
+```
+
+---
+
+## 5. JSON-LD Representation
+
+```json
+{
+  "@context": {
+    "@vocab": "https://apexstrategy.com.au/ontology/",
+    "schema": "https://schema.org/",
+    "name": "schema:name",
+    "skills": { "@id": "hasSkill", "@container": "@set" }
+  },
+  "@graph": [
+    {
+      "@type": "Consultant",
+      "@id": "urn:apex:consultant:sarah-chen",
+      "name": "Sarah Chen",
+      "role": "Principal Consultant",
+      "seniority": "Senior",
+      "dayRate": { "@value": "2800", "currency": "AUD" },
+      "skills": [
+        {
+          "@type": "SkillAssignment",
+          "skill": { "@id": "urn:apex:skill:digital-transformation" },
+          "proficiencyLevel": 5,
+          "certified": true
+        },
+        {
+          "@type": "SkillAssignment",
+          "skill": { "@id": "urn:apex:skill:stakeholder-management" },
+          "proficiencyLevel": 4,
+          "certified": false
+        }
+      ]
+    },
+    {
+      "@type": "Project",
+      "@id": "urn:apex:project:anz-digital-roadmap",
+      "name": "Digital Roadmap - ANZ Bank",
+      "methodology": "Agile Discovery",
+      "budget": 485000,
+      "status": "active",
+      "startDate": "2026-02-10",
+      "endDate": "2026-07-31",
+      "contractedBy": { "@id": "urn:apex:client:anz-bank" },
+      "requiredSkills": [
+        { "skill": { "@id": "urn:apex:skill:digital-transformation" }, "importance": "critical" }
+      ],
+      "assignments": [
+        { "consultant": { "@id": "urn:apex:consultant:sarah-chen" }, "role": "Lead", "allocation": 0.8 },
+        { "consultant": { "@id": "urn:apex:consultant:james-okonkwo" }, "role": "Analyst", "allocation": 1.0 }
+      ]
+    },
+    {
+      "@type": "Client",
+      "@id": "urn:apex:client:anz-bank",
+      "name": "ANZ Bank",
+      "industry": { "@id": "urn:apex:industry:financial-services" },
+      "abn": "11 005 357 522",
+      "contractValue": 485000,
+      "status": "active"
+    }
+  ]
+}
+```
+
+---
+
+## 6. PostgreSQL JSONB Implementation
+
+```sql
+-- Nodes table with JSONB properties
+CREATE TABLE kg_nodes (
+    id          TEXT PRIMARY KEY,           -- e.g. 'consultant:sarah-chen'
+    node_type   TEXT NOT NULL,              -- 'Consultant', 'Client', 'Project', etc.
+    properties  JSONB NOT NULL DEFAULT '{}',
+    created_at  TIMESTAMPTZ DEFAULT now(),
+    updated_at  TIMESTAMPTZ DEFAULT now()
+);
+
+-- Edges table with JSONB properties
+CREATE TABLE kg_edges (
+    id          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    edge_type   TEXT NOT NULL,              -- 'ASSIGNED_TO', 'HAS_SKILL', etc.
+    from_id     TEXT NOT NULL REFERENCES kg_nodes(id),
+    to_id       TEXT NOT NULL REFERENCES kg_nodes(id),
+    properties  JSONB NOT NULL DEFAULT '{}',
+    created_at  TIMESTAMPTZ DEFAULT now(),
+    UNIQUE (edge_type, from_id, to_id)
+);
+
+-- Indexes for common traversal patterns
+CREATE INDEX idx_edges_from   ON kg_edges (from_id, edge_type);
+CREATE INDEX idx_edges_to     ON kg_edges (to_id, edge_type);
+CREATE INDEX idx_nodes_type   ON kg_nodes (node_type);
+CREATE INDEX idx_nodes_props  ON kg_nodes USING GIN (properties);
+
+-- Example: Find all consultants on a project with their skills
+SELECT
+    c.properties->>'name'           AS consultant_name,
+    a.properties->>'role'           AS project_role,
+    (a.properties->>'allocation')::NUMERIC * 100 AS allocation_pct,
+    json_agg(s.properties->>'name') AS skills
+FROM kg_nodes p
+JOIN kg_edges a  ON a.to_id = p.id AND a.edge_type = 'ASSIGNED_TO'
+JOIN kg_nodes c  ON c.id = a.from_id
+LEFT JOIN kg_edges hs ON hs.from_id = c.id AND hs.edge_type = 'HAS_SKILL'
+LEFT JOIN kg_nodes s  ON s.id = hs.to_id
+WHERE p.id = 'project:anz-digital-roadmap'
+GROUP BY c.id, c.properties, a.properties;
+
+-- Result:
+-- consultant_name 
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "knowledge-graph-builder",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

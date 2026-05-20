@@ -1,0 +1,161 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** meta-capi-setup
+- **description:** Configure Meta Conversions API (CAPI) — server-side event forwarding with deduplication and test validation.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Configure Meta Conversions API (CAPI)"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Configure → Configure)
+- user_input: "Configure Meta Conversions API (CAPI)"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run meta-capi-setup"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Configuration is complete; no required keys left blank
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Meta CAPI Setup — Koala & Co. Online
+
+**Pixel ID:** 123456789012345
+**Backend:** Cloudflare Worker (Koala hosts on Cloudflare)
+**Date:** 11/04/2026
+
+---
+
+## Dedup strategy
+
+- `event_id` source: `{{ order.order_number }}-{{ checkout.token | slice: 0, 8 }}` (from `gtm-datalayer`)
+- Browser events: fired from GTM via `meta-pixel-setup`
+- Server events: fired from `api.koalahomewares.com.au/capi` on every Shopify order
+- Dedup method: matching `event_name` (Purchase) + `event_id`
+
+---
+
+## Events forwarded server-side
+
+| Event | Params | `user_data` fields | EMQ target |
+|---|---|---|---|
+| Purchase | currency, value, content_ids, content_type, num_items | email, phone, fn, ln, city, zip, country, client_ip_address, client_user_agent, fbc, fbp | ≥8.0 |
+| Lead | — | email, client_ip_address, client_user_agent, fbc, fbp | ≥6.0 |
+| InitiateCheckout | value, currency | email, client_ip_address, client_user_agent, fbc, fbp | ≥6.0 |
+
+Only Purchase, Lead, and InitiateCheckout are CAPI-forwarded — lower-funnel events (ViewContent, AddToCart) stay browser-only to reduce noise.
+
+---
+
+## Implementation
+
+- **Backend:** Cloudflare Worker
+- **File path:** `workers/meta-capi/src/index.ts`
+- **Deploy target:** `api.koalahomewares.com.au/capi`
+- **Code:** adapted from `reference.md` Section 4 (Cloudflare Worker sample). Reads pixel ID, access token, and test event code from Cloudflare Worker environment variables.
+
+### Deployment
+
+```bash
+wrangler deploy
+```
+
+### Env vars (Cloudflare secrets)
+
+```
+META_PIXEL_ID = 123456789012345
+META_ACCESS_TOKEN = <long-lived token from ppc-manager vault>
+META_TEST_EVENT_CODE = TESTAKOALA (for staging only, remove in production)
+```
+
+---
+
+## Test Events validation
+
+- Test code used: `TESTAKOALA`
+- Events sent: 12 (1 Purchase, 3 Lead, 8 InitiateCheckout over 10 minutes)
+- Events received in Test Events: 12/12
+- Current EMQ: 7.8 (Purchase), 5.9 (Lead), 6.1 (InitiateCheckout)
+- Target EMQ: 7.0+ — Purchase exceeds, Lead needs more user_data (add city/zip if available)
+
+---
+
+## Production checklist
+
+- [x] PII hashed (SHA-256, lowercased, trimmed) — worker uses `crypto.subtle.digest('SHA-256', ...)`
+- [x] `event_id` matches browser counterpart — verified via Shopify order metadata passed through
+- [x] `action_source = "website"`
+- [x] IP and user_agent included — from `cf-connecting-ip` and `user-agent` headers
+- [x] `fbc` and `fbp` cookies forwarded — passed from browser in the POST body
+- [ ] Test event code removed from production — **not yet**, staging still uses `TESTAKOALA`
+- [x] Access token stored in env vars, not source — Cloudflare Worker secret
+
+---
+
+## Next steps
+
+1. Deploy to Cloudflare production env (remove `META_TEST_EVENT_CODE` secret).
+2. Monitor Events Manager → Overview for 48 hours. Expect total events to increase 30–50 % as CAPI catches what the browser pixel loses to ad blockers.
+3. Run `/ppc-manager:meta-events-mapping` to produce the cross-platform event dictionary.
+4. If `Lead` EMQ stays below 7.0 after a week, add `city` and `zip` from the form to the CAPI payload.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "meta-capi-setup",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

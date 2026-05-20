@@ -38,8 +38,9 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative"
-      - "Output matches the structure of ga4-setup's example file"
+      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "Configuration is complete; no required keys left blank"
+      - "Report includes the canonical sections: \"Snapshot\", \"Audit findings\""
     timeout_seconds: 240
   - id: edge-empty-input
     kind: edge-case

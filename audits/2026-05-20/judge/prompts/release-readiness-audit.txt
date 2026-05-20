@@ -1,0 +1,190 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** release-readiness-audit
+- **description:** Pre-production go/no-go gate. Given a branch or diff, assesses migration safety, rollback path, config drift, runbook coverage, monitoring coverage, and deploy strategy fit. Static, live, and runtime (canary smoke) modes.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Pre-production go/no-go gate"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Pre → Pre)
+- user_input: "Pre-production go/no-go gate"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run release-readiness-audit"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Release Readiness Audit — acme-api / release/2026-04-21
+
+**Audited:** 21/04/2026 14:30
+**Mode:** live
+**Base:** main
+**Change scope:** 42 files, 2 migrations, 3 new env vars
+**Verdict:** **NO-GO**
+
+---
+
+## Executive Summary
+
+Two migrations in this release. Migration 004 drops `users.old_email` — a column that the current deployed code still reads via the legacy auth flow. This is a forward-only change with no rollback path and will break logins for any user whose session was issued before the previous release. The canary smoke test showed an 8% error rate increase on `/api/auth/login`, consistent with the migration-caused breakage. Hold the release until the old_email read path is removed in an earlier deploy and this release becomes additive-only.
+
+---
+
+## Gate Results
+
+| Gate | Result |
+|---|---|
+| G1. Migration safety | FAIL — destructive DROP without expand/contract |
+| G2. Rollback path | FAIL — forward-only |
+| G3. Config drift | PASS |
+| G4. Runbook coverage | WARN — new Stripe webhook lacks runbook |
+| G5. Monitoring coverage | WARN — no alert on new webhook failure rate |
+| G6. Deploy strategy fit | FAIL — should be expand/contract over two releases |
+| G7. Canary smoke | FAIL — 8% error bump on login |
+
+---
+
+## Change Scope
+
+### Files
+
+| Category | Count |
+|---|---|
+| Code (src/) | 32 |
+| Migrations | 2 |
+| Config | 3 |
+| CI | 1 |
+| Docs | 4 |
+
+### Migrations
+
+- `migrations/20260419_add_stripe_webhook_table.sql` — additive; safe.
+- `migrations/20260420_drop_users_old_email.sql` — **destructive; DROP COLUMN on 4.2M rows**.
+
+### New env vars
+
+- `STRIPE_WEBHOOK_SECRET` — documented in `.env.example`
+- `STRIPE_API_KEY` — documented
+- `STRIPE_WEBHOOK_TOLERANCE_SECONDS` — documented
+
+### New dependencies
+
+- `stripe@15.3.0`
+
+---
+
+## Findings
+
+### CRITICAL
+
+- **REL-001** — `migrations/20260420_drop_users_old_email.sql` drops a column read by `src/auth/legacy.ts:84`. This release does not remove that read first.
+- **REL-002** — No rollback plan. Restoring `users.old_email` requires a from-backup operation with up to 24h data loss.
+
+### HIGH
+
+- **REL-003** — New Stripe webhook handler (`src/webhooks/stripe.ts`) has no runbook entry.
+- **REL-004** — Canary smoke test failed: login error rate 8% vs 0.8% baseline.
+
+### MEDIUM
+
+- **REL-005** — No alert on Stripe webhook signature failures; a misconfigured webhook would fail silently.
+
+---
+
+## Pre-deploy Checklist
+
+- [ ] Split this release: first release removes reads from `users.old_email`; second release drops the column.
+- [ ] Add a runbook entry for Stripe webhook failures.
+- [ ] Add a Prometheus rule alerting on `stripe_webhook_signature_failures_total > 3` over 5m.
+- [ ] Re-run canary on the split release.
+
+## Post-deploy Checklist *(if NO-GO overruled)*
+
+Do not overrule without the above checklist complete.
+
+---
+
+## Rollback
+
+See `rollback-procedure.md`.
+
+Summary: forward-only. No rollback path exists for Migration 20260420. Abort this release.
+
+---
+
+## Canary Smoke Results
+
+| Check | Baseline | Canary | Delta |
+|---|---|---|---|
+| /healthz | 200 | 200 | OK |
+| /api/auth/login error rate | 0.8% | 8.0% | +7.2pp FAIL |
+| /api/auth/login p95 | 120ms | 145ms | +25ms OK |
+| Stripe webhook 200 rate | N/A | 96% | N/A |
+
+---
+
+*Generated by `devops:release-readiness-audit` — Anthril DevOps plugin*
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "release-readiness-audit",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

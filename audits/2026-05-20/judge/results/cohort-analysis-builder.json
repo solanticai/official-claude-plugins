@@ -1,0 +1,19 @@
+{
+  "skill": "cohort-analysis-builder",
+  "activation_results": [
+    {"id": "activate-positive-canonical", "verdict": true, "expected": true, "pass": true, "reason": "Input is a verbatim match of the skill description."},
+    {"id": "activate-positive-paraphrase", "verdict": true, "expected": true, "pass": true, "reason": "Only the leading verb is swapped; intent matches the canonical use case."},
+    {"id": "activate-positive-name-mention", "verdict": true, "expected": true, "pass": true, "reason": "User explicitly names the skill, which should trigger activation."},
+    {"id": "activate-negative-unrelated", "verdict": false, "expected": false, "pass": true, "reason": "SSH configuration is unrelated to cohort analysis."},
+    {"id": "activate-negative-near-miss", "verdict": false, "expected": false, "pass": true, "reason": "Meta question about skills in general, not about cohort analysis."}
+  ],
+  "judge_result": {
+    "verdict": "pass",
+    "criterion_results": [
+      {"text": "Australian English used throughout the narrative (colour, optimise, behaviour, organise)", "met": true, "evidence": "Uses 'visualisation', 'stabilises', 'analyse', and AEST/Australia/Sydney timezones consistent with Australian English."},
+      {"text": "Artefact includes both the design and its rationale (trade-offs surfaced)", "met": true, "evidence": "Includes SQL design steps plus Interpretation, Key Findings, Recommended Actions table with expected impact, and benchmarks discussing trade-offs (e.g., excluding December cohort)."},
+      {"text": "Report includes the canonical sections", "met": true, "evidence": "Contains cohort definition header, step-by-step SQL (assignment, activity flags, retention matrix), heatmap visualisation, interpretation, recommendations, and benchmarks."}
+    ],
+    "notes": "The artefact is a comprehensive cohort analysis covering definition, SQL implementation across three logical steps, a retention heatmap and curve visualisation spec, interpretation with findings, prioritised recommendations, and Australian SaaS benchmarks. Australian English spellings (visualisation, stabilises, analyse) and AEST timezone usage confirm locale compliance. Trade-offs are surfaced via the recommendation around excluding the December cohort and prioritised action impact estimates."
+  }
+}

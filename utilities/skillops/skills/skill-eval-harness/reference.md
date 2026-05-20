@@ -58,7 +58,7 @@ The harness uses two independent judging layers:
 
 | Test kind | What the deterministic judge checks |
 |---|---|
-| activation | `expected_activation` matches `check-activation.sh` verdict |
+| activation | `expected_activation` matches the classifier verdict. In `--mode=full` the classifier is an `Agent` invocation against `templates/activation-prompt-template.md`; in `--mode=fast` it falls back to `check-activation.sh` (keyword-overlap proxy). |
 | functional | every entry in `expected_outputs[]` is satisfied — file globs match, text appears, regex matches |
 | edge-case | the skill's emitted error matches `expected_error` (literal or regex) |
 | regression | the artefact diff against a previous run is empty for stable cases |

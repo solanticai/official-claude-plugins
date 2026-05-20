@@ -1,0 +1,238 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** entity-relationship-mapper
+- **description:** Map business domains to entity-relationship models with Schema.org types, JSON-LD @graph output, consistent @id structures, and sameAs connections
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Map business domains to entity-relationship models with Schema"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Map → Diagram)
+- user_input: "Diagram business domains to entity-relationship models with Schema"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run entity-relationship-mapper"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Mapping is exhaustive — every input has an output and vice versa
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Entity-Relationship Map: Reliable Plumbing Solutions
+
+**Business:** Reliable Plumbing Solutions Pty Ltd
+**Domain:** Local plumbing services, residential and commercial
+**Location:** Northern Beaches, Sydney, NSW
+**Date:** 2026-04-04
+
+---
+
+## 1. Entity Inventory
+
+| Entity Type | Count | Description |
+|---|---|---|
+| Organisation | 1 | The plumbing business itself |
+| Person | 4 | Owner, licensed plumbers, apprentice |
+| Service | 6 | Distinct service offerings |
+| ServiceArea | 3 | Geographic coverage zones |
+| Review | 12 | Customer reviews across platforms |
+| Offer | 3 | Current promotional offers |
+
+---
+
+## 2. Entity Definitions and @id Architecture
+
+Each entity uses a deterministic URI structure anchored to the business domain.
+
+| Entity | @type (Schema.org) | @id Pattern | Example |
+|---|---|---|---|
+| Organisation | `PlumbingBusiness` | `https://reliableplumbing.com.au/#org` | `/#org` |
+| Person | `Person` | `https://reliableplumbing.com.au/#person/{slug}` | `/#person/dave-mitchell` |
+| Service | `Service` | `https://reliableplumbing.com.au/#service/{slug}` | `/#service/blocked-drains` |
+| ServiceArea | `GeoCircle` / `AdministrativeArea` | `https://reliableplumbing.com.au/#area/{slug}` | `/#area/northern-beaches` |
+| Review | `Review` | `https://reliableplumbing.com.au/#review/{platform}-{index}` | `/#review/google-001` |
+| Offer | `Offer` | `https://reliableplumbing.com.au/#offer/{slug}` | `/#offer/senior-discount` |
+
+---
+
+## 3. Entity-Relationship Diagram
+
+```
+                    +-----------------+
+                    |  Organisation   |
+                    |  (PlumbingBiz)  |
+                    +--------+--------+
+                             |
+          +------------------+------------------+
+          |                  |                  |
+    employs/owns       provides           areaServed
+          |                  |                  |
+  +-------+------+   +------+------+   +-------+-------+
+  |    Person    |   |   Service   |   |  ServiceArea  |
+  | (Plumber x4) |   | (6 types)   |   | (3 zones)     |
+  +--------------+   +------+------+   +---------------+
+                            |
+                      hasOffer
+                            |
+                     +------+------+
+                     |    Offer    |
+                     | (3 promos)  |
+                     +-------------+
+
+  +-------------+
+  |   Review    |-----> itemReviewed ----> Organisation
+  | (12 total)  |-----> author ---------> Person (customer, external)
+  +-------------+
+```
+
+---
+
+## 4. Relationship Matrix
+
+| From | Relation | To | Cardinality |
+|---|---|---|---|
+| Organisation | `employee` | Person | 1:N |
+| Organisation | `hasOfferCatalog` | Service | 1:N |
+| Organisation | `areaServed` | ServiceArea | 1:N |
+| Service | `offers` | Offer | 1:N |
+| Review | `itemReviewed` | Organisation | N:1 |
+| Review | `author` | Person (external) | N:1 |
+| Person | `worksFor` | Organisation | N:1 |
+| Person | `knowsAbout` | Service | N:N |
+
+---
+
+## 5. sameAs Link Mappings
+
+| Entity | Platform | sameAs URI |
+|---|---|---|
+| Organisation | Google Business | `https://www.google.com/maps?cid=12345678901234567` |
+| Organisation | Facebook | `https://www.facebook.com/ReliablePlumbingSydney` |
+| Organisation | ServiceSeeking | `https://www.serviceseeking.com.au/profile/reliable-plumbing` |
+| Organisation | Hipages | `https://hipages.com.au/connect/reliableplumbingsolutions` |
+| Organisation | ABN Lookup | `https://abr.business.gov.au/ABN/View?abn=51234567890` |
+| Person (Dave) | LinkedIn | `https://www.linkedin.com/in/dave-mitchell-plumber` |
+
+---
+
+## 6. JSON-LD @graph Snippet
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Plumber",
+      "@id": "https://reliableplumbing.com.au/#org",
+      "name": "Reliable Plumbing Solutions Pty Ltd",
+      "url": "https://reliableplumbing.com.au",
+      "telephone": "+61-2-9876-5432",
+      "abn": "51 234 567 890",
+      "priceRange": "$$",
+      "areaServed": [
+        { "@id": "https://reliableplumbing.com.au/#area/northern-beaches" },
+        { "@id": "https://reliableplumbing.com.au/#area/north-shore" },
+        { "@id": "https://reliableplumbing.com.au/#area/hills-district" }
+      ],
+      "employee": [
+        { "@id": "https://reliableplumbing.com.au/#person/dave-mitchell" }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "itemListElement": [
+          { "@id": "https://reliableplumbing.com.au/#service/blocked-drains" },
+          { "@id": "https://reliableplumbing.com.au/#service/hot-water-systems" },
+          { "@id": "https://reliableplumbing.com.au/#service/leak-detection" },
+          { "@id": "https://reliableplumbing.com.au/#service/gas-fitting" },
+          { "@id": "https://reliableplumbing.com.au/#service/bathroom-renovations" },
+          { "@id": "https://reliableplumbing.com.au/#service/emergency-plumbing" }
+        ]
+      },
+      "sameAs": [
+        "https://www.facebook.com/ReliablePlumbingSydney",
+        "https://hipages.com.au/connect/reliableplumbingsolutions"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "12"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://reliableplumbing.com.au/#person/dave-mitchell",
+      "name": "Dave Mitchell",
+      "jobTitle": "Owner & Licensed Plumber",
+      "worksFor": { "@id": "https://reliableplumbing.com.au/#org" },
+      "knowsAbout": ["Gas Fitting", "Blocked Drains", "Hot Water Systems"],
+      "sameAs": "https://www.linkedin.com/in/dave-mitchell-plumber"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://reliableplumbing.com.au/#service/blocked-drains",
+      "name": "Blocked Drain Clearing",
+      "description": "CCTV drain inspection and high-pressure jet blasting for residential and commercial blocked drains.",
+      "provider": { "@id": "https://reliableplumbing.com.au/#org" },
+      "areaServed": { "@id": "https://reliableplumbi
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "entity-relationship-mapper",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

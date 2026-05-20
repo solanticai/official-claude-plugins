@@ -1,0 +1,170 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** write-path-mapping
+- **description:** Map the write path of a project across multiple frameworks — entry points, validation, auth, persistence, side-effects. Outputs report, Mermaid diagrams, JSON sidecar. Flags unauth writes, missing RLS, cache gaps. Use for write path, mutation audit, RLS audit.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Map the write path of a project across multiple frameworks"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Map → Diagram)
+- user_input: "Diagram the write path of a project across multiple frameworks"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run write-path-mapping"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Mapping is exhaustive — every input has an output and vice versa
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Write Path Map — AcmeOps
+
+| Field | Value |
+|---|---|
+| **Date** | 11/04/2026 |
+| **Mapper** | Claude (write-path-mapping skill) |
+| **Stack** | typescript, nextjs, supabase-edge-functions |
+| **Persistence** | supabase (postgres), redis (upstash), s3, stripe, resend |
+| **Live DB mode** | supabase-mcp |
+| **Total write paths** | 15 |
+| **Unique persistence targets** | 22 |
+| **Risks — CRITICAL / HIGH / MEDIUM / INFO** | 3 / 4 / 5 / 6 |
+| **Completeness** | 97/100 |
+| **Tier** | FULLY MAPPED |
+
+> Completeness measures how thoroughly the skill traced the system — it is NOT a quality grade. AcmeOps was traced to verification depth 9 on 14 of 15 paths. The one gap is the Stripe webhook consumer, which delegates into an internal `billingService` module that uses dynamic dispatch (flagged INFO, not a completeness failure).
+
+---
+
+## 1. Executive Summary
+
+AcmeOps is a Next.js 15 App Router application on Supabase with 15 discovered write endpoints spanning 6 domains (Tasks, Contracts, Auth, Billing, Files, Webhooks). Persistence is centralised on Postgres (via Supabase JS), with secondary writes to Redis (cache invalidation), S3 (file uploads), Stripe (payment mutations), and Resend (transactional email).
+
+The skill spawned 4 parallel `Explore` sub-agents in Phase 2 (partitioned by top-level folder: `app/api/`, `app/actions/`, `supabase/functions/`, `workers/`) and 2 in Phase 5 (handler batches of 10, one per user-facing domain). Total completeness is 97% — only the `billingService` dynamic dispatch kept it from 100.
+
+**Top write paths by fan-out (highest blast radius):**
+1. WP-011 — `POST /api/tasks/bulk-import` — 5 persistence targets (Postgres, Redis, S3, Resend, Datadog)
+2. WP-013 — `apply-workspace-template` edge function — 4 targets (Postgres × 2, Redis, Supabase realtime)
+3. WP-006 — `POST /api/contracts` — 3 targets (Postgres, Redis, Resend)
+
+**Top risks (highest cost-of-error):**
+1. **CRITICAL** — `unauth-write` — `POST /api/public/referrals` has no auth middleware (WP-009)
+2. **CRITICAL** — `missing-rls` — `operations.notes` table has no INSERT policy (WP-005)
+3. **CRITICAL** — `service-role-overreach` — `admin-impersonate` edge function accepts user-supplied `target_user_id` and writes with service role (WP-014)
+
+**Top data-domain hotspots (tables written by the most entries):**
+1. `operations.tasks` — written by 5 entries
+2. `operations.audit_log` — written by 9 entries (all via triggers)
+3. `operations.workspace_counters` — written by 6 entries (via triggers)
+
+---
+
+## 2. Stack & Persistence
+
+| Layer | Value |
+|---|---|
+| Languages | typescript, javascript, sql |
+| Frameworks | nextjs (App Router), react, supabase-edge-functions, cloudflare-workers |
+| Monorepo | turborepo (3 packages: `web`, `workers`, `shared`) |
+| Persistence | supabase (postgres), redis (upstash), s3, stripe (external API), resend (external API) |
+| Schema file count | 47 migrations |
+| Tables discovered | 28 |
+| RLS-enabled tables | 27 |
+| RLS policies discovered | 82 |
+| Triggers discovered | 11 |
+| Cron jobs / scheduled tasks | 3 (`pg_cron` weekly rollup, Vercel Cron daily digest, Supabase `schedule` memory cleanup) |
+| Queue producers / consumers | 4 / 4 (BullMQ on Upstash Redis) |
+| Live DB enrichment | supabase-mcp (pg_policies, pg_trigger, information_schema queried live) |
+| `.write-path-ignore` loaded | yes — 12 entries |
+| Excluded paths | `src/__generated__/`, `supabase/migrations/`, `src/types/database.types.ts` |
+
+---
+
+## 3. Write Paths by Severity
+
+### 3a. CRITICAL
+
+| ID | Entry | Persistence | Risk(s) | Notes |
+|---|---|---|---|---|
+| WP-009 | `POST /api/public/referrals` — `app/api/public/referrals/route.ts:14` | `operations.referrals` (insert) | `unauth-write`, `missing-validation` | No auth middleware and no Zod schema. Public form with no compensating control. |
+| WP-005 | `POST /api/notes` — `app/api/notes/route.ts:12` | `operations.notes` (insert) | `missing-rls` | Table has RLS enabled but NO `FOR INSERT` policy for `authenticated`. Writes currently succeed only because the handler uses the service role. |
+| WP-014 | `admin-impersonate` edge function — `supabase/functions/admin-impersonate/index.ts:22` | `auth.users` (update), `operations.audit_log` (insert) | `service-role-overreach`, `cross-tenant-leak` | Accepts `target_user_id` from request body and writes with `SUPABASE_SERVICE_ROLE_KEY`. No check that caller is a super admin. |
+
+### 3b. HIGH
+
+| ID | Entry | Persistence | Risk(s) | Notes |
+|---|---|---|---|---|
+| WP-011 | `POST /api/tasks/bulk-import` — `app/api/tasks/bulk-import/route.ts:19` | `operations.tasks` × N (insert loop), Redis, S3, Resend, Datadog | `missing-transaction`, `unbounded-input`, `fan-out-write` | Loops `items.map(i => supabase.from('tasks').insert(i))` without a tx and without a hard array-length cap. |
+| WP-012 | Stripe webhook `/api/webhooks/stripe` — `app/api/webhooks/stripe/route.ts:31` | `billing.subscriptions` (update), `operations.audit_log` (insert) | `idempotency-missing` | Signature is verified, but the handler does not track the event ID to protect against replays. |
+| WP-003 | Queue `email-send` producer — `src/services/email.ts:44` | `queue:email-send` (publish) | `orphan-queue-consumer` | Producer found in `web/`, consumer expected in `workers/` but not found during Phase 6 sub-agent sweep. |
+| WP-008 | `DELETE /api/files/:id` — `app/api/files/[id]/route.ts:18` | `operations.files` (delete), S3 (delete), Redis (del) | `cache-invalidation-gap` | Redis key `workspace:{id}:files:*` is only invalidated for the current user, not the whole workspace list. |
+
+### 3c. MEDIUM
+
+| ID | Entry | Persistence | Risk(s) | Notes |
+|---|---|---|---|---|
+| WP-002 | `POST /api/uploads` — `app/api/uploads/route.ts:15` | S3 (putObject), `operations.files` (insert) | `file-upload-no-mime-check`, `missing-size-limit` | Accepts any MIME type and no max file size configured. |
+| WP-007 | `PATCH /api/workspaces/:id` — `app/api/workspaces/[id]/route.ts:22` | `operations.work
+
+... [example truncated for prompt size]
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "write-path-mapping",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.

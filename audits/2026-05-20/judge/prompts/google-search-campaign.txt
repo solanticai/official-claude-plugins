@@ -1,0 +1,180 @@
+You are evaluating a Claude Code skill. Two independent tasks; return ONE JSON object with both results. No prose outside the JSON.
+
+## Skill under test
+
+- **name:** google-search-campaign
+- **description:** Build a Google Ads Search campaign — ad group structure, responsive search ads, and bid strategy.
+- **paths:** (none)
+
+## Task 1 — Activation classification (5 cases)
+
+For each case below, decide whether the skill would activate (be invoked) for the given user input. Use only the description and skill name as evidence.
+
+### Case 1 — id: activate-positive-canonical
+- description: should fire on the canonical use case
+- user_input: "Build a Google Ads Search campaign"
+- expected_activation: true
+
+### Case 2 — id: activate-positive-paraphrase
+- description: should fire when leading verb is swapped (Build → Create)
+- user_input: "Create a Google Ads Search campaign"
+- expected_activation: true
+
+### Case 3 — id: activate-positive-name-mention
+- description: should fire when the skill is mentioned by name
+- user_input: "run google-search-campaign"
+- expected_activation: true
+
+### Case 4 — id: activate-negative-unrelated
+- description: should NOT fire on unrelated coding question
+- user_input: "how do I configure SSH key forwarding on Windows?"
+- expected_activation: false
+
+### Case 5 — id: activate-negative-near-miss
+- description: should NOT fire on a query that names a related concept but is out of scope
+- user_input: "remind me what skills are"
+- expected_activation: false
+
+
+Rules:
+- `verdict: true` only when a reasonable reader of the description would expect the skill to fire.
+- Borderline cases → `false`. Activation should be precise.
+
+## Task 2 — Functional judge
+
+Read the example artefact below — it is the kind of output this skill should produce. Verify each judge criterion against the artefact.
+
+### Functional case
+produces the artefact described in examples/
+
+### Judge criteria
+1. Australian English used throughout the narrative (colour, optimise, behaviour, organise)
+2. Artefact is a working specification, not a hypothetical or placeholder
+3. Report includes the canonical sections: \
+
+### Artefact (example output)
+```
+# Google Search Campaign — Koala - Search - Homewares
+
+**Customer:** 1234567890 (Koala & Co. AU)
+**Campaign:** Koala - Search - Homewares
+**Budget:** AUD 75.00 / day
+**Status:** PAUSED (awaiting user enable)
+**Date:** 11/04/2026
+
+---
+
+## Structure
+
+| Ad group | Keywords | Match mix | RSA |
+|---|---|---|---|
+| Throws - Wool | 18 | 12 Phrase / 4 Exact / 2 Broad | 15 h / 4 d |
+| Throws - Linen | 14 | 10 Phrase / 4 Exact / 0 Broad | 15 h / 4 d |
+| Cushions - Linen | 22 | 16 Phrase / 5 Exact / 1 Broad | 15 h / 4 d |
+| Rugs - Wool | 19 | 13 Phrase / 5 Exact / 1 Broad | 15 h / 4 d |
+| Home fragrance | 16 | 11 Phrase / 4 Exact / 1 Broad | 15 h / 4 d |
+
+Totals: 5 ad groups, 89 keywords, 5 RSAs.
+
+---
+
+## Ad group detail
+
+### Throws - Wool
+
+**Landing page:** `https://koalahomewares.com.au/collections/throws/wool`
+**Default CPC bid:** AUD 1.50
+
+**Keywords:**
+
+| Keyword | Match type |
+|---|---|
+| wool throw blanket | Phrase |
+| merino wool throw | Phrase |
+| "wool throw" | Phrase |
+| [wool throw australia] | Exact |
+| [merino throw blanket] | Exact |
+| wool throw for couch | Phrase |
+| … 12 more | |
+
+**RSA:**
+
+- Headlines: 15 (pinned: 3 — "Koala & Co." @ H1, "Handmade Australian Wool" @ H2, "Shop Wool Throws" @ H3)
+- Descriptions: 4
+- Path: /throws/wool
+
+### Rugs - Wool
+
+**Landing page:** `https://koalahomewares.com.au/collections/rugs/wool`
+**Default CPC bid:** AUD 1.80
+
+... (4 more ad groups with the same structure)
+
+---
+
+## Negative keywords
+
+| Keyword | Match type | Source |
+|---|---|---|
+| free | Broad | Canonical negatives |
+| cheap | Broad | Canonical negatives |
+| wholesale | Broad | Canonical negatives |
+| diy | Broad | Canonical negatives |
+| tutorial | Broad | Canonical negatives |
+| adairs | Phrase | Competitor excludes |
+| pillow talk | Phrase | Competitor excludes |
+| bed bath n table | Phrase | Competitor excludes |
+| craigslist | Broad | Canonical negatives |
+| gumtree | Broad | Canonical negatives |
+| facebook marketplace | Broad | Canonical negatives |
+| pet bed | Phrase | Koala does not sell pet beds |
+| … 15 more | | |
+
+Installed as **Shared Negative Keyword List: Koala - Core Negatives** so it can be reused on future campaigns.
+
+---
+
+## Readiness checklist
+
+- [x] Conversion tracking imported from GA4 (`GA4 - purchase` is Primary conversion)
+- [x] Billing active
+- [x] Merchant Center linked (Shopify feed, ID 789012345)
+- [ ] Ad extensions installed (**manual**: 4 sitelinks, 4 callouts, 1 structured snippet — see reference.md)
+- [x] Landing page live (HTTP 200 for all 5 URLs)
+- [x] Daily budget approved ($75 AUD)
+- [ ] User confirmed ENABLE (waiting)
+
+---
+
+## Next steps
+
+1. Install ad extensions via UI (Assets → Add → Sitelinks / Callouts / Structured snippets).
+2. Tick the remaining two checkboxes.
+3. Enable the campaign: `ppc-google-ads:enable_campaign(customer_id=1234567890, campaign_id=987654321)`.
+4. Monitor daily for the first week. Expect ~2–3 days before Google settles on a baseline.
+5. In 7 days, run `/ppc-manager:campaign-audit --scope google-ads` to review initial performance and apply fixes.
+
+```
+
+
+## Output schema
+
+Return exactly this JSON shape (no markdown fences, no preamble, no trailing prose):
+
+```json
+{
+  "skill": "google-search-campaign",
+  "activation_results": [
+    {"id": "<case-id>", "verdict": true | false, "expected": true | false, "pass": true | false, "reason": "<one sentence>"}
+  ],
+  "judge_result": {
+    "verdict": "pass" | "fail" | "partial",
+    "criterion_results": [
+      {"text": "<criterion>", "met": true | false, "evidence": "<short>"}
+    ],
+    "notes": "<one paragraph>"
+  }
+}
+```
+
+Return the JSON only.
