@@ -2,7 +2,7 @@
 
 A curated library of Claude Code plugins organised into eight customer-facing categories — **Lifestyle**, **SMB**, **Marketing**, **Engineering**, **Data Science**, **Economics**, **Utilities**, and **SEO** — packaged as a Claude Code marketplace with standalone plugins.
 
-**14 plugins · 89 production-ready skills · Australian English throughout · evidence-backed markdown outputs.**
+**13 plugins · 89 production-ready skills · Australian English throughout · evidence-backed markdown outputs.**
 
 Maintained by [@Anthril](https://github.com/anthril).
 
@@ -23,7 +23,6 @@ Maintained by [@Anthril](https://github.com/anthril).
 /plugin install database-design@anthril-claude-plugins
 /plugin install package-manager@anthril-claude-plugins
 /plugin install data-analysis@anthril-claude-plugins
-/plugin install knowledge-engineering@anthril-claude-plugins
 /plugin install business-economics@anthril-claude-plugins
 /plugin install skill-ops@anthril-claude-plugins
 /plugin install resource-manager@anthril-claude-plugins
@@ -164,10 +163,11 @@ Every DevOps skill supports three operating modes: static (default), `--live` (u
 | [`devsecops-supply-chain-audit`](engineering/devops/skills/devsecops-supply-chain-audit/) | Audit supply chain across every ecosystem detected — pinning, vulnerabilities, secrets, SBOM, signing, branch protection |
 | [`sre-reliability-audit`](engineering/devops/skills/sre-reliability-audit/) | Assess Site Reliability maturity — SLOs, runbooks, on-call, postmortems, game days |
 
-#### Database Design (`engineering/database-design` — 1 skill)
+#### Database Design (`engineering/database-design` — 2 skills)
 
 | Skill | Description |
 |-------|-------------|
+| [`business-data-model-designer`](engineering/database-design/skills/business-data-model-designer/) | Design complete Supabase/PostgreSQL data models from an application description — ERD, SQL migrations, RLS policies, indexes, triggers. Auto-activates on `**/supabase/migrations/**` and `**/schema.sql` |
 | [`postgres-schema-audit`](engineering/database-design/skills/postgres-schema-audit/) | Audit any Postgres 13+ schema (Supabase via MCP, or RDS/Cloud SQL/Neon/Railway/self-hosted via a read-only connection) — parallel per-schema sub-agents across ten audit categories, producing evidence-backed findings, an ER diagram, and draft migration SQL |
 
 #### Package Manager (`engineering/package-manager` — 2 skills)
@@ -188,15 +188,6 @@ Every DevOps skill supports three operating modes: static (default), `--live` (u
 | [`data-pipeline-architecture`](data-science/data-analysis/skills/data-pipeline-architecture/) | Design ETL/ELT pipeline architectures with data flow diagrams, transformation specs, orchestration, and error handling for Supabase and BigQuery |
 | [`data-dictionary-generator`](data-science/data-analysis/skills/data-dictionary-generator/) | Auto-generate comprehensive data dictionaries from database schemas, CSV files, or API responses with column definitions and Mermaid ERD |
 | [`dataset-profiling-quality-audit`](data-science/data-analysis/skills/dataset-profiling-quality-audit/) | Profile datasets and audit data quality — completeness, validity, consistency, uniqueness, timeliness, accuracy |
-
-#### Knowledge Engineering (`data-science/knowledge-engineering` — 4 skills)
-
-| Skill | Description |
-|-------|-------------|
-| [`business-data-model-designer`](data-science/knowledge-engineering/skills/business-data-model-designer/) | Design complete Supabase/PostgreSQL data models with ERD, SQL migrations, RLS policies, indexes, and triggers |
-| [`entity-disambiguation`](data-science/knowledge-engineering/skills/entity-disambiguation/) | Resolve entity ambiguity across data sources — canonical records, merge decisions, and sameAs link mappings |
-| [`entity-relationship-mapper`](data-science/knowledge-engineering/skills/entity-relationship-mapper/) | Map business domains to entity-relationship models with Schema.org types, JSON-LD `@graph` output, and sameAs connections |
-| [`knowledge-graph-builder`](data-science/knowledge-engineering/skills/knowledge-graph-builder/) | Construct knowledge graph specifications for Neo4j, JSON-LD, or Supabase/PostgreSQL JSONB implementation |
 
 ### Economics
 
@@ -237,7 +228,7 @@ General-purpose utility skills that don't fit a single domain. Plugin name renam
 
 ### SEO
 
-#### SEO Toolkit (`seo/seo-toolkit` — 17 skills)
+#### SEO Toolkit (`seo/seo-toolkit` — 20 skills)
 
 End-to-end SEO across technical, content, local, and analytics workflows.
 
@@ -260,6 +251,9 @@ End-to-end SEO across technical, content, local, and analytics workflows.
 | [`internal-linking-planner`](seo/seo-toolkit/skills/internal-linking-planner/) | Internal link plan from a sitemap or URL list — hub-and-spoke topology, authority scoring, prioritised link recommendations |
 | [`schema-markup-generator`](seo/seo-toolkit/skills/schema-markup-generator/) | Copy-paste JSON-LD schema for any page type — Article, Product, FAQPage, LocalBusiness, HowTo, and more |
 | [`redirect-map-builder`](seo/seo-toolkit/skills/redirect-map-builder/) | 301 redirect map between old and new sitemaps for site migrations — pattern matching, slug similarity scoring, confidence bands |
+| [`entity-disambiguation`](seo/seo-toolkit/skills/entity-disambiguation/) | Resolve entity ambiguity across pages and data sources — produce canonical records, merge decisions, and Schema.org sameAs mappings so search engines and AI assistants build one entity instead of fragments |
+| [`entity-relationship-mapper`](seo/seo-toolkit/skills/entity-relationship-mapper/) | Map a business domain to a Schema.org-typed entity graph with stable `@id` conventions, JSON-LD `@graph` output, and sameAs links — aligned with Google / Bing / ChatGPT / Perplexity consumption |
+| [`knowledge-graph-builder`](seo/seo-toolkit/skills/knowledge-graph-builder/) | Construct a knowledge graph specification (nodes, edges, Schema.org mapping) that powers JSON-LD markup, AI agent comprehension, and optional Neo4j or Supabase/PostgreSQL JSONB storage |
 
 ---
 
@@ -312,11 +306,10 @@ official-claude-plugins/
 ├── engineering/
 │   ├── software-development/      # 4 skills
 │   ├── devops/                    # 9 skills
-│   ├── database-design/           # 1 skill
+│   ├── database-design/           # 2 skills (business-data-model-designer + postgres-schema-audit)
 │   └── package-manager/           # 2 skills
 ├── data-science/
-│   ├── data-analysis/             # 5 skills
-│   └── knowledge-engineering/     # 4 skills
+│   └── data-analysis/             # 5 skills
 ├── economics/
 │   └── business-economics/        # 2 skills
 ├── utilities/
@@ -324,7 +317,7 @@ official-claude-plugins/
 │   ├── resource-manager/          # 4 skills + localhost dashboard
 │   └── utilities/                 # 1 skill (plan-completion-audit); generic catch-all plugin
 ├── seo/
-│   └── seo-toolkit/               # 17 skills
+│   └── seo-toolkit/               # 20 skills (17 SEO + 3 structured-data entity skills)
 ├── audits/                        # Time-stamped audit + judge reports
 │   └── 2026-05-20/
 │       ├── summary.md

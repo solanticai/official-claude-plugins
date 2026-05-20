@@ -5,6 +5,32 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-05-20
+
+### Changed
+- **BREAKING — `knowledge-engineering` plugin removed** (v1.0.3). Its four skills were re-homed to the plugins whose scope they actually match:
+  - `entity-disambiguation` → **`seo/seo-toolkit`** (skill is fundamentally about Schema.org `sameAs` mappings and search-engine entity graphs).
+  - `entity-relationship-mapper` → **`seo/seo-toolkit`** (produces JSON-LD `@graph` with stable `@id` conventions for Google / Bing / ChatGPT / Perplexity consumption).
+  - `knowledge-graph-builder` → **`seo/seo-toolkit`** (designs for search engines + AI systems as primary consumers; outputs Schema.org-typed nodes + JSON-LD).
+  - `business-data-model-designer` → **`engineering/database-design`** (pure Postgres/Supabase schema design — ERD, migrations, RLS, indexes, triggers; pairs naturally with `postgres-schema-audit`).
+- `seo-toolkit` bumped v1.0.0 → **v1.1.0** (20 skills now).
+- `database-design` bumped v1.1.1 → **v1.2.0** (2 skills now).
+- `.virustotal/knowledge-engineering.json` removed; per-skill VirusTotal entries re-attach to the new plugin envelopes on next scan.
+- Total plugin count: 14 → 13. The `data-science` category now contains only `data-analysis`.
+
+### Migration
+
+Users who had `knowledge-engineering` installed should switch to the new plugin homes:
+
+```bash
+/plugin uninstall knowledge-engineering@anthril-claude-plugins
+/plugin marketplace update anthril-claude-plugins
+/plugin install seo-toolkit@anthril-claude-plugins     # for entity / KG / Schema.org skills
+/plugin install database-design@anthril-claude-plugins # for business-data-model-designer
+```
+
+All four skill names and slash commands are unchanged — only the plugin envelope moved.
+
 ## [2.6.0] - 2026-05-20
 
 ### Changed

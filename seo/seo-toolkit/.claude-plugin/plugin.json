@@ -1,7 +1,7 @@
 {
   "name": "seo-toolkit",
-  "version": "1.0.0",
-  "description": "17 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, GSC reporting, and local SEO",
+  "version": "1.1.0",
+  "description": "20 skills for end-to-end SEO — keyword research + list dev + clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, GSC reporting, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder).",
   "author": {
     "name": "Anthril",
     "email": "john@anthril.com",
@@ -10,7 +10,7 @@
   "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/seo/seo-toolkit",
   "repository": "https://github.com/anthril/official-claude-plugins",
   "license": "MIT",
-  "keywords": ["seo", "serp", "gsc", "keyword-research", "keyword-clustering", "content", "audit", "schema", "core-web-vitals", "local-seo"],
+  "keywords": ["seo", "serp", "gsc", "keyword-research", "keyword-clustering", "content", "audit", "schema", "core-web-vitals", "local-seo", "structured-data", "json-ld", "knowledge-graph", "entity-disambiguation"],
   "skills": "./skills/",
   "hooks": "./hooks/hooks.json"
 }

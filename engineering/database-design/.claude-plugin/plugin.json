@@ -1,7 +1,7 @@
 {
   "name": "database-design",
-  "version": "1.1.1",
-  "description": "Postgres schema audit skill for Supabase projects OR any other Postgres 13+ database (RDS, Cloud SQL, Neon, Railway, self-hosted, local). Per-schema parallel sub-agent review of tables, columns, relationships, constraints, triggers, RPC functions, indexes, RLS policies, and array/JSONB design with prioritised migration suggestions. Connects via Supabase MCP when available and falls back to a locally-configured read-only psql connection otherwise.",
+  "version": "1.2.0",
+  "description": "Postgres schema design + audit for Supabase or any Postgres 13+ database. `business-data-model-designer` produces ERDs, SQL migrations, RLS policies, indexes, and triggers from an application description; `postgres-schema-audit` reviews an existing schema across ten categories with prioritised migration suggestions. Connects via Supabase MCP when available and falls back to a locally-configured read-only psql connection otherwise.",
   "author": {
     "name": "Anthril",
     "email": "john@anthril.com"

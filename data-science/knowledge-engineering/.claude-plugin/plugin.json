@@ -1,9 +1,0 @@
-{
-  "name": "knowledge-engineering",
-  "version": "1.0.3",
-  "description": "4 skills for entity disambiguation, relationship mapping, knowledge graph building, and business data modelling",
-  "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
-}

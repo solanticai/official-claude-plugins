@@ -16,14 +16,6 @@
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/data-science/data-analysis"
     },
     {
-      "name": "knowledge-engineering",
-      "version": "1.0.3",
-      "description": "4 skills for entity disambiguation, relationship mapping, knowledge graph building, and business data modelling",
-      "source": "./data-science/knowledge-engineering",
-      "category": "data-science",
-      "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/data-science/knowledge-engineering"
-    },
-    {
       "name": "business-economics",
       "version": "1.0.3",
       "description": "2 skills for unit economics calculation and market sizing (TAM/SAM/SOM) estimation",
@@ -81,8 +73,8 @@
     },
     {
       "name": "database-design",
-      "version": "1.1.1",
-      "description": "Postgres schema audit for Supabase or any Postgres 13+ database — per-schema parallel review of tables, columns, relationships, constraints, triggers, RPC functions, indexes, RLS policies, and array/JSONB design with prioritised migration suggestions",
+      "version": "1.2.0",
+      "description": "Postgres schema design + audit for Supabase or any Postgres 13+ database. `business-data-model-designer` produces ERDs, SQL migrations, RLS policies, indexes, and triggers from an application description; `postgres-schema-audit` reviews an existing schema across ten categories with prioritised migration suggestions.",
       "source": "./engineering/database-design",
       "category": "engineering",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/database-design"
@@ -105,8 +97,8 @@
     },
     {
       "name": "seo-toolkit",
-      "version": "1.0.0",
-      "description": "17 skills for end-to-end SEO — research, clustering/mapping, audits, content, reporting",
+      "version": "1.1.0",
+      "description": "20 skills for end-to-end SEO — research/clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, GSC reporting, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder).",
       "source": "./seo/seo-toolkit",
       "category": "seo",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/seo/seo-toolkit"
