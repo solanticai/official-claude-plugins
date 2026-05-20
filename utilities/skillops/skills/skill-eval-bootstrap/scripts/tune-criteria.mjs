@@ -20,7 +20,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, basename } from "node:path";
 
-const AUS_CRIT = "Australian English used throughout the narrative (colour, optimise, behaviour, organise)";
+const AUS_CRIT = "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass";
 
 function readSkill(skillDir) {
   const skillMdPath = join(skillDir, "SKILL.md");

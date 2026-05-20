@@ -77,13 +77,13 @@
       }
     },
     "judge": {
-      "pass": 27,
+      "pass": 29,
       "partial": 36,
-      "fail": 2,
+      "fail": 0,
       "skipped": 2,
       "by_verdict": {
         "anomaly-detection-rule-builder": "partial",
-        "application-audit": "fail",
+        "application-audit": "pass",
         "brand-guidelines": "pass",
         "brand-identity": "partial",
         "business-data-model-designer": "partial",
@@ -132,7 +132,7 @@
         "oauth-setup": "partial",
         "observability-audit": "pass",
         "plan-completion-audit": "pass",
-        "plan-orchestrator": "fail",
+        "plan-orchestrator": "pass",
         "postgres-schema-audit": "partial",
         "release-readiness-audit": "partial",
         "resource-dashboard-stop": "pass",
@@ -153,24 +153,6 @@
     }
   },
   "skills": [
-    {
-      "skill": "application-audit",
-      "activation_pass_rate": "5/5",
-      "activation_failures": [],
-      "judge_verdict": "fail",
-      "judge_notes": "The example artefact does not contain any of the canonical Australian English marker words (colour, optimise, behaviour, organise) in its narrative. The text uses largely neutral or technical vocabulary where these spellings would not natur",
-      "judge_criteria_met": 0,
-      "judge_criteria_total": 1
-    },
-    {
-      "skill": "plan-orchestrator",
-      "activation_pass_rate": "5/5",
-      "activation_failures": [],
-      "judge_verdict": "fail",
-      "judge_notes": "The artefact contains primarily technical narrative without many words that would distinguish Australian from US English. No US-specific spellings like 'color', 'optimize', 'behavior', or 'organize' appear in the narrative either, but neith",
-      "judge_criteria_met": 0,
-      "judge_criteria_total": 1
-    },
     {
       "skill": "anomaly-detection-rule-builder",
       "activation_pass_rate": "5/5",
@@ -496,6 +478,15 @@
       "judge_criteria_total": 3
     },
     {
+      "skill": "application-audit",
+      "activation_pass_rate": "5/5",
+      "activation_failures": [],
+      "judge_verdict": "pass",
+      "judge_notes": "The artefact's narrative contains none of the prohibited American spellings on the watchlist. Terms used (e.g., 'realtime', 'bundle', 'remediation', 'verification') are spelling-neutral, and neutral forms are explicitly accepted by the crit",
+      "judge_criteria_met": 1,
+      "judge_criteria_total": 1
+    },
+    {
       "skill": "brand-guidelines",
       "activation_pass_rate": "5/5",
       "activation_failures": [],
@@ -710,6 +701,15 @@
       "judge_notes": "All five activation cases match expectations and all four judge criteria are satisfied by the example artefact, which uses Australian spelling (Optimisation), cites concrete file:line evidence with severity labels, includes the full canonic",
       "judge_criteria_met": 4,
       "judge_criteria_total": 4
+    },
+    {
+      "skill": "plan-orchestrator",
+      "activation_pass_rate": "5/5",
+      "activation_failures": [],
+      "judge_verdict": "pass",
+      "judge_notes": "The criterion permits Australian or neutral forms. The artefact's narrative prose contains no flagged American spellings; technical identifiers and string literals (such as currency code 'USD') are excluded from the narrative scope. The exa",
+      "judge_criteria_met": 1,
+      "judge_criteria_total": 1
     },
     {
       "skill": "resource-dashboard-stop",

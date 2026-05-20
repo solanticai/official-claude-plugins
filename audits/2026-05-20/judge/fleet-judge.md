@@ -10,17 +10,15 @@ LLM-as-judge run across every skill in the marketplace. Each skill received one 
 - **Total skills judged:** 67 / 67
 - **Activation cases:** 335 / 335 pass (100.0%)
 - **Judge verdicts:**
-  - pass: 27
+  - pass: 29
   - partial: 36
-  - fail: 2
+  - fail: 0
   - skipped (no example artefact): 2
 
 ## Per-skill verdicts
 
 | Skill | Activation | Criteria met | Judge | Notes (truncated) |
 |---|---|---:|---|---|
-| application-audit | 5/5 | 0/1 | fail | The example artefact does not contain any of the canonical Australian English marker words (colour, optimise, behaviour, organise) in its narrative. The text uses largely neutral or technical vocabulary where these spellings would not natur |
-| plan-orchestrator | 5/5 | 0/1 | fail | The artefact contains primarily technical narrative without many words that would distinguish Australian from US English. No US-specific spellings like 'color', 'optimize', 'behavior', or 'organize' appear in the narrative either, but neith |
 | anomaly-detection-rule-builder | 5/5 | 2/3 | partial | The example artefact is a substantive, working anomaly-detection specification with concrete SQL, dynamic and absolute thresholds, severity tiers, notification routing, and an investigation playbook — clearly not a placeholder. Australian c |
 | brand-identity | 5/5 | 3/3 | partial | The example artefact aligns with the skill's described purpose: a foundational brand identity document covering mission, vision, values, voice, and tone. Australian English is used consistently (behaviour, anonymised, centre, AU-first). The |
 | business-data-model-designer | 5/5 | 2/3 | partial | The artefact demonstrates a competent data-model deliverable with ERD, SQL migrations, RLS policies, and Australian-English conventions (Sydney timezone, SMB framing). However, the visible portion lacks explicit design rationale and trade-o |
@@ -57,6 +55,7 @@ LLM-as-judge run across every skill in the marketplace. Each skill received one 
 | utm-builder | 5/5 | 3/3 | partial | The artefact cleanly delivers the UTM URL table with per-URL source/medium/content, references a CSV export for bulk distribution, validates against existing GA4 sources and flags new pairs (satisfying the anti-fragmentation promise in the  |
 | website-copy | 5/5 | 3/3 | partial | Artefact is a strong, voice-consistent multi-page website copy deck for Stillwater with explicit conversion goals, CTAs, sitemap, voice notes, and banned-word list. Australian English usage is consistent (optimise/optimised). The criterion  |
 | write-path-mapping | 5/5 | 2/3 | partial | The artefact demonstrates a thorough write-path map with header KPIs, executive summary, stack/persistence breakdown, and severity-tiered write path tables including CRITICAL/HIGH/MEDIUM risks with file:line evidence. Australian English is  |
+| application-audit | 5/5 | 1/1 | pass | The artefact's narrative contains none of the prohibited American spellings on the watchlist. Terms used (e.g., 'realtime', 'bundle', 'remediation', 'verification') are spelling-neutral, and neutral forms are explicitly accepted by the crit |
 | brand-guidelines | 5/5 | 2/2 | pass | The artefact is a comprehensive brand book for Crema, including versioning, audience, brand story, logo variants with clear-space and minimum-size rules, do's/don'ts, colour palette with HEX/OKLCH, and references to typography/imagery/voice |
 | cohort-analysis-builder | 5/5 | 3/3 | pass | The artefact is a comprehensive cohort analysis covering definition, SQL implementation across three logical steps, a retention heatmap and curve visualisation spec, interpretation with findings, prioritised recommendations, and Australian  |
 | color-palette | 5/5 | 3/3 | pass | Artefact satisfies the three criteria: Australian English is consistent ('colour', 'Colours'), colour values are presented in machine-readable code spans with structured tables, and the document contains the canonical sections expected of a |
@@ -81,6 +80,7 @@ LLM-as-judge run across every skill in the marketplace. Each skill received one 
 | meta-pixel-setup | 5/5 | 3/3 | pass | The example artefact is a fully populated Meta Pixel setup report for Koala & Co. Online with seven event tags mapped to GTM triggers and dataLayer-based eventIDs, an AEM priority ranking, a verification checklist confirming pixel firing an |
 | observability-audit | 5/5 | 3/3 | pass | The example artefact satisfies all three judge criteria: Australian English conventions are honoured (normalised), the canonical structural sections are present and well-formed, and the report references the concrete target 'acme-api' along |
 | plan-completion-audit | 5/5 | 4/4 | pass | All five activation cases match expectations and all four judge criteria are satisfied by the example artefact, which uses Australian spelling (Optimisation), cites concrete file:line evidence with severity labels, includes the full canonic |
+| plan-orchestrator | 5/5 | 1/1 | pass | The criterion permits Australian or neutral forms. The artefact's narrative prose contains no flagged American spellings; technical identifiers and string literals (such as currency code 'USD') are excluded from the narrative scope. The exa |
 | resource-dashboard-stop | 5/5 | 1/1 | pass | The artefact contains no spellings that violate Australian English conventions. No instances of 'color', 'optimize', 'behavior', or 'organize' are present. The narrative is concise and technical, and the spellings used are consistent with A |
 | target-audience | 5/5 | 3/3 | pass | The artefact is a concrete, working target-audience specification for Ledgerly with four segments, a designated ICP (Hand-Off Founder) with identifying signals and unit economics, and a fleshed-out persona. Australian English and AU-specifi |
 | youtube-campaign | 5/5 | 3/3 | pass | The artefact is a production-ready YouTube Ads campaign specification for Koala wool throws covering three funnel stages (awareness/consideration/action) with format, bidding, audience, asset, landing page, and budget per campaign. Video br |

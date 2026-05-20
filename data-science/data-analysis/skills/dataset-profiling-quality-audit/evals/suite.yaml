@@ -38,7 +38,7 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass"
       - "Report includes the canonical sections: \"Dataset Quality Audit — [Dataset Name]\""
       - "Artefact references the input path or target by name (no placeholder paths)"
     timeout_seconds: 240

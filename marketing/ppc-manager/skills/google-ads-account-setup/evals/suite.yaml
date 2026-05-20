@@ -38,7 +38,7 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass"
       - "Report includes the canonical sections: \"Audit findings\", \"Conversion actions\""
     timeout_seconds: 240
   - id: edge-empty-input

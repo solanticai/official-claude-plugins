@@ -38,7 +38,7 @@ test_cases:
       - kind: file_created
         path_glob: "*.md"
     judge_criteria:
-      - "Australian English used throughout the narrative (colour, optimise, behaviour, organise)"
+      - "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass"
       - "Findings cite file:line evidence and are categorised by severity"
       - "Report includes the canonical sections: \"Phase Results\", \"Prioritised Action List\""
       - "Artefact references the input path or target by name (no placeholder paths)"

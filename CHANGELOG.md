@@ -20,7 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fleet judge results
 
 - **Activation:** 335/335 pass across all skills (100%). The Agent-based classifier confirms the bootstrapped activation cases work as intended.
-- **Functional judge:** 27 pass · 36 partial · 2 fail · 2 skipped (no example artefact). The 2 fails are both judge-criterion artefacts of strictness (no AusE marker words present in technical narrative); the 2 skipped are the two skills added in this branch (`skill-eval-harness`, `skill-eval-bootstrap`), neither of which has an `examples/` directory yet.
+- **Functional judge:** 29 pass · 36 partial · 0 fail · 2 skipped (no example artefact). The 2 skipped are the skills added in this branch (`skill-eval-harness`, `skill-eval-bootstrap`); neither has an `examples/` directory yet.
+
+### Criterion phrasing fix
+
+Initial judge run produced 2 false-negative fails (`application-audit`, `plan-orchestrator`) — both artefacts use technical vocabulary that exposes neither AusE-distinctive nor US-distinctive spellings, so the judge could not verify the original "Australian English used throughout the narrative (colour, optimise, behaviour, organise)" criterion was met. The criterion was inverted to "No American spellings present in the narrative (color, optimize, behavior, organize, center, defense, license as a verb, analyze) — Australian or neutral forms both pass". Patched across all 65 suites that carry the criterion; `tune-criteria.mjs` updated for future bootstraps. Re-judged the 2 affected skills — both flipped to pass.
 
 ## [2.3.0] - 2026-05-20
 
