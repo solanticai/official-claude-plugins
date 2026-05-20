@@ -49,8 +49,8 @@
     },
     {
       "name": "skillops",
-      "version": "1.2.0",
-      "description": "Operate on Claude Code skills — scaffold new skills with skill-creator and audit existing skills with skill-evaluator (scored report across 10 quality dimensions: discovery, scope, conciseness, IA, content, tooling, testing, standards, activation/behaviour, anti-patterns)",
+      "version": "1.3.0",
+      "description": "Operate on Claude Code skills — scaffold (skill-creator), audit against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap).",
       "source": "./utilities/skillops",
       "category": "utilities",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/skillops"

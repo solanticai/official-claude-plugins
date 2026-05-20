@@ -1,0 +1,67 @@
+# Eval suite for {{skill_name}}
+# Lives at {{category}}/{{plugin}}/skills/{{skill}}/evals/suite.yaml
+# Required mix: ≥ 3 activation-positive, ≥ 2 activation-negative, ≥ 2 edge-case.
+
+skill: {{skill_name}}
+description: {{one-line summary of what these tests verify}}
+
+test_cases:
+  # ----- Activation: positive -----
+  - id: activate-positive-1
+    kind: activation
+    description: should fire on its canonical use case
+    user_input: "{{example user query that should trigger the skill}}"
+    expected_activation: true
+
+  - id: activate-positive-2
+    kind: activation
+    description: should fire on a paraphrase of the canonical case
+    user_input: "{{paraphrased trigger}}"
+    expected_activation: true
+
+  - id: activate-positive-3
+    kind: activation
+    description: should fire when a relevant file is open
+    user_input: "{{trigger that references a file the skill auto-activates on}}"
+    expected_activation: true
+
+  # ----- Activation: negative -----
+  - id: activate-negative-1
+    kind: activation
+    description: should NOT fire on unrelated query
+    user_input: "{{off-topic query}}"
+    expected_activation: false
+
+  - id: activate-negative-2
+    kind: activation
+    description: should NOT fire on a query that mentions one keyword but is not in scope
+    user_input: "{{borderline query that names a related concept}}"
+    expected_activation: false
+
+  # ----- Functional -----
+  - id: functional-golden
+    kind: functional
+    description: produces the canonical artefact for a known-good input
+    user_input: "{{golden input}}"
+    expected_outputs:
+      - kind: file_created
+        path_glob: "{{output filename pattern}}"
+      - kind: contains
+        text: "{{string that must appear in the output}}"
+    judge_criteria:
+      - "Output uses Australian English"
+      - "{{skill-specific quality criterion}}"
+    timeout_seconds: 180
+
+  # ----- Edge cases -----
+  - id: edge-empty-input
+    kind: edge-case
+    description: handles empty input gracefully
+    user_input: ""
+    expected_error: "{{error code or regex the skill should emit}}"
+
+  - id: edge-malformed-input
+    kind: edge-case
+    description: handles malformed input gracefully
+    user_input: "{{malformed input}}"
+    expected_error: "{{error code or regex}}"
