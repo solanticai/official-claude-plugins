@@ -14,7 +14,9 @@
 #   message=<human-readable hint>
 #   candidates=<comma-separated list, when applicable>
 #
-# Always exits 0 — the calling SKILL inspects `error=`.
+# Exit code:
+#   0 — success (target_dir/suite_path/skill_name emitted)
+#   1 — error (error=/message= emitted; calling SKILL inspects them)
 
 set -u
 
@@ -23,7 +25,7 @@ ARG="${1:-}"
 if [ -z "$ARG" ]; then
   echo "error=empty-argument"
   echo "message=Pass a skill path (e.g. 'utilities/skillops/skills/skill-creator') or a bare skill name."
-  exit 0
+  exit 1
 fi
 
 # Already an absolute or repo-relative path with a suite.yaml present?
@@ -32,7 +34,7 @@ if [ -f "$ARG/evals/suite.yaml" ]; then
   echo "target_dir=$ABS"
   echo "suite_path=$ABS/evals/suite.yaml"
   echo "skill_name=$(basename "$ABS")"
-  exit 0
+  exit 1
 fi
 
 # Repo-relative skill dir without suite.
@@ -40,7 +42,7 @@ if [ -d "$ARG" ] && [ -f "$ARG/SKILL.md" ]; then
   ABS=$(cd "$ARG" && pwd)
   echo "error=no-suite"
   echo "message=Skill found at $ABS but evals/suite.yaml is missing. Run skill-eval-bootstrap to scaffold one."
-  exit 0
+  exit 1
 fi
 
 # Plugin/skill pair like "skillops/skill-creator".
@@ -53,11 +55,11 @@ if [[ "$ARG" == */* && "$ARG" != *.yaml ]]; then
       echo "target_dir=$ABS"
       echo "suite_path=$ABS/evals/suite.yaml"
       echo "skill_name=$(basename "$ABS")"
-    else
-      echo "error=no-suite"
-      echo "message=Skill found at $ABS but evals/suite.yaml is missing."
+      exit 0
     fi
-    exit 0
+    echo "error=no-suite"
+    echo "message=Skill found at $ABS but evals/suite.yaml is missing."
+    exit 1
   fi
 fi
 
@@ -70,19 +72,19 @@ if [ "$count" = "1" ]; then
     echo "target_dir=$ABS"
     echo "suite_path=$ABS/evals/suite.yaml"
     echo "skill_name=$(basename "$ABS")"
-  else
-    echo "error=no-suite"
-    echo "message=Skill found at $ABS but evals/suite.yaml is missing."
+    exit 0
   fi
-  exit 0
+  echo "error=no-suite"
+  echo "message=Skill found at $ABS but evals/suite.yaml is missing."
+  exit 1
 fi
 if [ "$count" -gt 1 ]; then
   echo "error=ambiguous-skill-name"
   echo "message=Multiple skills match '$ARG'. Disambiguate with plugin/skill form."
   echo "candidates=$(echo "$matches" | paste -sd ',' -)"
-  exit 0
+  exit 1
 fi
 
 echo "error=target-not-found"
 echo "message=No skill matched '$ARG'. Try a path or run with no args to discover."
-exit 0
+exit 1

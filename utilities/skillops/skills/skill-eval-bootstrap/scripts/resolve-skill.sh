@@ -20,7 +20,7 @@ ARG="${ARG%% --force*}"   # strip a trailing --force flag if present
 if [ -z "$ARG" ]; then
   echo "error=empty-argument"
   echo "message=Pass a skill path or bare skill name."
-  exit 0
+  exit 1
 fi
 
 # Direct path?
@@ -56,9 +56,9 @@ if [ "$count" -gt 1 ]; then
   echo "error=ambiguous-skill-name"
   echo "message=Multiple skills match '$ARG'."
   echo "candidates=$(echo "$matches" | paste -sd ',' -)"
-  exit 0
+  exit 1
 fi
 
 echo "error=target-not-found"
 echo "message=No skill matched '$ARG'."
-exit 0
+exit 1

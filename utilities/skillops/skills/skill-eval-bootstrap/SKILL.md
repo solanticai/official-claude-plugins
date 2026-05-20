@@ -2,7 +2,7 @@
 name: skill-eval-bootstrap
 description: Scaffold a starter evals/suite.yaml for a Claude Code skill. Reads description, examples, and edge-case table to seed activation, functional, and edge-case tests that satisfy the harness's required test-category mix.
 argument-hint: [skill-path-or-name]
-allowed-tools: Read Write Glob Grep Bash(bash:scripts/*.sh) Agent
+allowed-tools: Read Write Glob Grep Bash(bash:scripts/*.sh)
 effort: medium
 ---
 
