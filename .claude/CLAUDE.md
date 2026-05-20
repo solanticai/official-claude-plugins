@@ -8,7 +8,7 @@
 
 ## Skill Structure
 
-Every skill lives under `plugins/<plugin-name>/skills/<skill-name>/` and must contain:
+Every skill lives under `<category>/<plugin-name>/skills/<skill-name>/` (where `<category>` is one of `lifestyle`, `smb`, `marketing`, `engineering`, `data-science`, `economics`, `utilities`) and must contain:
 
 ```
 <skill-name>/
@@ -86,7 +86,7 @@ What this phase produces.
 
 ## Plugin Structure
 
-Each plugin lives under `plugins/<plugin-name>/` and must contain:
+Each plugin lives under `<category>/<plugin-name>/` and must contain:
 
 ```
 <plugin-name>/
@@ -114,7 +114,7 @@ Each plugin lives under `plugins/<plugin-name>/` and must contain:
     "email": "john@anthril.com",
     "url": "https://github.com/anthril"
   },
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/plugins/plugin-name",
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/<category>/plugin-name",
   "repository": "https://github.com/anthril/official-claude-plugins",
   "license": "MIT",
   "keywords": ["relevant", "keywords"],
@@ -132,13 +132,13 @@ When adding a new plugin, add an entry to `.claude-plugin/marketplace.json`:
   "name": "plugin-name",
   "version": "1.0.0",
   "description": "Short description",
-  "source": "plugin-name",
+  "source": "./<category>/plugin-name",
   "category": "category-name",
-  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/plugins/plugin-name"
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/<category>/plugin-name"
 }
 ```
 
-Categories: `data-analysis`, `knowledge-engineering`, `business-operations`, `developer-tools`, `marketing`
+Categories: `lifestyle`, `smb`, `marketing`, `engineering`, `data-science`, `economics`, `utilities`
 
 ## Hooks
 

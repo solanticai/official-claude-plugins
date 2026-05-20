@@ -5,6 +5,24 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-05-20
+
+### Changed
+- **BREAKING — repository restructure.** Plugins moved out of `plugins/<name>/` into top-level category directories: `lifestyle/`, `smb/`, `marketing/`, `engineering/`, `data-science/`, `economics/`, `utilities/`. Every `source` path in `.claude-plugin/marketplace.json` was rewritten accordingly, and every `category` field updated to the new 7-bucket taxonomy.
+  - `smb/brand-manager`
+  - `marketing/ppc-manager`
+  - `engineering/{software-development,devops,database-design,package-manager}`
+  - `data-science/{data-analysis,knowledge-engineering}`
+  - `economics/business-economics`
+  - `utilities/{skillops,resource-manager,plan-completion-audit}`
+- Plugin manifests, hooks, README references, and audit scripts updated to walk the new layout.
+
+### Added
+- `lifestyle/` placeholder category for future personal-productivity plugins.
+
+### Migration
+Users with previously installed plugins should run `/plugin marketplace update anthril` followed by `/plugin update` to pick up the new `source` paths.
+
 ## [1.6.0] - 2026-04-25
 
 ### Added

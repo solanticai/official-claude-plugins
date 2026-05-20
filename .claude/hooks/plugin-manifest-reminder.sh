@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # PostToolUse hook for Write|Edit.
 #
-# When any file inside plugins/<name>/ is modified (skills, hooks, settings,
+# When any file inside <category>/<name>/ is modified (skills, hooks, settings,
 # scripts, docs — anything that changes plugin behaviour), require BOTH:
-#   1. plugins/<name>/.claude-plugin/plugin.json (version bump)
+#   1. <category>/<name>/.claude-plugin/plugin.json (version bump)
 #   2. .claude-plugin/marketplace.json (matching version bump + description
 #      refresh if skills changed)
 # to also have unstaged changes before Claude is allowed to finish the turn.
@@ -35,13 +35,13 @@ fi
 # Normalise Windows backslashes so path matching works in Git Bash.
 NORMALISED=$(printf '%s' "$FILE_PATH" | tr '\\' '/')
 
-# Only fire for files inside plugins/<name>/. Skip the plugin manifests and
+# Only fire for files inside <category>/<name>/. Skip the plugin manifests and
 # the marketplace catalogue themselves — those are the files we want Claude
 # to update, not what triggers the reminder.
 case "$NORMALISED" in
-  */plugins/*/.claude-plugin/plugin.json) exit 0 ;;
   */.claude-plugin/marketplace.json) exit 0 ;;
-  */plugins/*) ;;
+  */lifestyle/*/.claude-plugin/plugin.json|*/smb/*/.claude-plugin/plugin.json|*/marketing/*/.claude-plugin/plugin.json|*/engineering/*/.claude-plugin/plugin.json|*/data-science/*/.claude-plugin/plugin.json|*/economics/*/.claude-plugin/plugin.json|*/utilities/*/.claude-plugin/plugin.json) exit 0 ;;
+  */lifestyle/*|*/smb/*|*/marketing/*|*/engineering/*|*/data-science/*|*/economics/*|*/utilities/*) ;;
   *) exit 0 ;;
 esac
 
@@ -63,17 +63,20 @@ if [ ! -f "$REPO_ROOT/.claude-plugin/marketplace.json" ]; then
   exit 0
 fi
 
-# Extract the plugin name from the path: .../plugins/<name>/...
+# Extract the category and plugin name from the path:
+#   .../<category>/<plugin>/...
+PLUGIN_CATEGORY=$(printf '%s' "$NORMALISED" \
+  | sed -nE 's@.*/(lifestyle|smb|marketing|engineering|data-science|economics|utilities)/([^/]+)/.*@\1@p')
 PLUGIN_NAME=$(printf '%s' "$NORMALISED" \
-  | sed -nE 's@.*/plugins/([^/]+)/.*@\1@p')
+  | sed -nE 's@.*/(lifestyle|smb|marketing|engineering|data-science|economics|utilities)/([^/]+)/.*@\2@p')
 
-if [ -z "${PLUGIN_NAME:-}" ]; then
+if [ -z "${PLUGIN_NAME:-}" ] || [ -z "${PLUGIN_CATEGORY:-}" ]; then
   exit 0
 fi
 
-PLUGIN_MANIFEST="plugins/${PLUGIN_NAME}/.claude-plugin/plugin.json"
+PLUGIN_MANIFEST="${PLUGIN_CATEGORY}/${PLUGIN_NAME}/.claude-plugin/plugin.json"
 
-# Sanity-check that this is actually a plugin folder (not e.g. plugins/README.md).
+# Sanity-check that this is actually a plugin folder (not e.g. a category README).
 if [ ! -f "$REPO_ROOT/$PLUGIN_MANIFEST" ]; then
   exit 0
 fi

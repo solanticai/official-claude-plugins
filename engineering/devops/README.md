@@ -38,7 +38,7 @@ Modes are composable: `--live --apply` means inspect real state, then offer to p
 ## Installation
 
 ```bash
-claude --plugin-dir ./plugins/devops
+claude --plugin-dir ./engineering/devops
 ```
 
 After Claude Code starts, run `/reload-plugins` to discover the skills.

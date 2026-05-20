@@ -36,7 +36,7 @@ jobs:
       - name: Check every plugin.json is valid JSON
         run: |
           set -euo pipefail
-          for f in plugins/*/.claude-plugin/plugin.json; do
+          for f in {lifestyle,smb,marketing,engineering,data-science,economics,utilities}/*/.claude-plugin/plugin.json; do
             echo "parsing $f"
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))"
           done

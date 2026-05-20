@@ -7,7 +7,13 @@ on:
   push:
     branches: [main]
     paths:
-      - 'plugins/**'
+      - 'lifestyle/**'
+      - 'smb/**'
+      - 'marketing/**'
+      - 'engineering/**'
+      - 'data-science/**'
+      - 'economics/**'
+      - 'utilities/**'
       - 'scripts/virustotal-audit.mjs'
       - '.github/workflows/virustotal-audit.yml'
       - '!**/VIRUSTOTAL.md'
@@ -40,7 +46,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add SECURITY.md plugins/*/VIRUSTOTAL.md .virustotal/
+          git add SECURITY.md {lifestyle,smb,marketing,engineering,data-science,economics,utilities}/*/VIRUSTOTAL.md .virustotal/
           if git diff --cached --quiet; then
             echo "No VirusTotal report changes."
             exit 0

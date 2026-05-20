@@ -6,7 +6,7 @@
  * VirusTotal's public API v3 and renders human- and machine-readable reports.
  *
  * Strategy: tarball-per-plugin + hash-first dedup.
- *   1. `tar czf /tmp/<name>.tar.gz plugins/<name>` — one archive per plugin.
+ *   1. `tar czf /tmp/<name>.tar.gz <category>/<name>` — one archive per plugin.
  *   2. Compute local SHA-256.
  *   3. GET /files/{sha256} — if known, reuse prior scan (1 request).
  *   4. If 404, POST /files + poll /analyses/{id} until completed (2–4 requests).
@@ -14,7 +14,7 @@
  *
  * Outputs:
  *   - .virustotal/<plugin>.json    — raw normalised payload per plugin
- *   - plugins/<plugin>/VIRUSTOTAL.md — per-plugin markdown summary
+ *   - <category>/<plugin>/VIRUSTOTAL.md — per-plugin markdown summary
  *   - SECURITY.md                   — repo-wide policy + summary table (table only is auto-updated)
  *
  * Auth: reads process.env.VT_API_KEY. The GitHub Actions workflow maps this
@@ -99,9 +99,11 @@ async function pollAnalysis(analysisId) {
 
 // ---------- tarball + hash ----------
 
-function makeTarball(pluginName) {
+function makeTarball(pluginName, sourcePath) {
   const tarPath = `/tmp/anthril-plugin-${pluginName}.tar.gz`;
-  execFileSync("tar", ["czf", tarPath, "-C", repoRoot, `plugins/${pluginName}`], {
+  // sourcePath is the marketplace `source` like "./engineering/devops"; strip leading "./".
+  const rel = sourcePath.replace(/^\.\//, "");
+  execFileSync("tar", ["czf", tarPath, "-C", repoRoot, rel], {
     stdio: ["ignore", "ignore", "inherit"],
   });
   return tarPath;
@@ -114,7 +116,7 @@ async function sha256File(path) {
 
 // ---------- normalise VT response ----------
 
-function normalise(data, { pluginName, sha256, sizeBytes, scanSource }) {
+function normalise(data, { pluginName, sourcePath, sha256, sizeBytes, scanSource }) {
   const attrs = data?.attributes ?? {};
   const stats = attrs.last_analysis_stats ?? { harmless: 0, malicious: 0, suspicious: 0, undetected: 0, timeout: 0 };
   const totalEngines = Object.values(stats).reduce((a, b) => a + (b || 0), 0);
@@ -123,7 +125,7 @@ function normalise(data, { pluginName, sha256, sizeBytes, scanSource }) {
     scanned_at: nowIso(),
     scan_source: scanSource, // "hash-lookup" | "upload"
     tarball: {
-      path: `plugins/${pluginName}`,
+      path: sourcePath.replace(/^\.\//, ""),
       sha256,
       size_bytes: sizeBytes,
     },
@@ -191,7 +193,7 @@ function renderSummaryTable(allReports) {
       const dateStr = r.report.last_analysis_date
         ? new Date(r.report.last_analysis_date * 1000).toISOString().slice(0, 10)
         : r.report.scanned_at.slice(0, 10);
-      return `| ${r.pluginName} | ${flagged} / ${d.total_engines} | ${dateStr} | [detail](plugins/${r.pluginName}/VIRUSTOTAL.md) |`;
+      return `| ${r.pluginName} | ${flagged} / ${d.total_engines} | ${dateStr} | [detail](${r.report.tarball.path}/VIRUSTOTAL.md) |`;
     });
   return [
     `## Latest scan — ${today()}`,
@@ -224,8 +226,8 @@ async function updateSecurityMd(summaryBlock) {
 
 // ---------- main ----------
 
-async function scanPlugin(pluginName) {
-  const tarballPath = makeTarball(pluginName);
+async function scanPlugin(pluginName, sourcePath) {
+  const tarballPath = makeTarball(pluginName, sourcePath);
   const sizeBytes = (await stat(tarballPath)).size;
   const sha256 = await sha256File(tarballPath);
 
@@ -244,7 +246,7 @@ async function scanPlugin(pluginName) {
     if (!data) throw new Error(`post-upload hash lookup still returned null for ${sha256}`);
   }
 
-  return normalise(data, { pluginName, sha256, sizeBytes, scanSource });
+  return normalise(data, { pluginName, sourcePath, sha256, sizeBytes, scanSource });
 }
 
 async function main() {
@@ -252,23 +254,23 @@ async function main() {
     await readFile(join(repoRoot, ".claude-plugin", "marketplace.json"), "utf8"),
   );
   const plugins = marketplace.plugins
-    .map((p) => p.name)
-    .filter((n) => typeof n === "string");
+    .filter((p) => typeof p.name === "string" && typeof p.source === "string")
+    .map((p) => ({ name: p.name, source: p.source }));
 
   await mkdir(join(repoRoot, ".virustotal"), { recursive: true });
 
   const allReports = [];
-  for (const pluginName of plugins) {
+  for (const { name: pluginName, source: sourcePath } of plugins) {
     console.log(`→ scanning ${pluginName}`);
     try {
-      const report = await scanPlugin(pluginName);
+      const report = await scanPlugin(pluginName, sourcePath);
       if (!report) continue;
       await writeFile(
         join(repoRoot, ".virustotal", `${pluginName}.json`),
         `${JSON.stringify(report, null, 2)}\n`,
       );
       await writeFile(
-        join(repoRoot, "plugins", pluginName, "VIRUSTOTAL.md"),
+        join(repoRoot, sourcePath.replace(/^\.\//, ""), "VIRUSTOTAL.md"),
         renderPerPluginMd(pluginName, report),
       );
       allReports.push({ pluginName, report });

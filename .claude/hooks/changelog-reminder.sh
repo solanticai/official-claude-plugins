@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # PostToolUse hook for Write|Edit.
 #
-# When a plugin manifest (plugins/<name>/.claude-plugin/plugin.json) or the
+# When a plugin manifest (<category>/<name>/.claude-plugin/plugin.json) or the
 # marketplace catalogue (.claude-plugin/marketplace.json) has been modified
 # in the working tree, require CHANGELOG.md to also have unstaged changes
 # before Claude is allowed to finish the turn.
@@ -59,7 +59,15 @@ fi
 
 cd "$REPO_ROOT"
 
-MANIFEST_DIRTY=$(git diff --name-only HEAD -- ':(glob)plugins/**/plugin.json' '.claude-plugin/marketplace.json' 2>/dev/null || true)
+MANIFEST_DIRTY=$(git diff --name-only HEAD -- \
+  ':(glob)lifestyle/**/plugin.json' \
+  ':(glob)smb/**/plugin.json' \
+  ':(glob)marketing/**/plugin.json' \
+  ':(glob)engineering/**/plugin.json' \
+  ':(glob)data-science/**/plugin.json' \
+  ':(glob)economics/**/plugin.json' \
+  ':(glob)utilities/**/plugin.json' \
+  '.claude-plugin/marketplace.json' 2>/dev/null || true)
 if [ -z "$MANIFEST_DIRTY" ]; then
   exit 0
 fi
