@@ -305,6 +305,10 @@ The report must include:
 - The Phase 1 completion summary (X of Y tasks complete, Z%) must appear prominently at the top of the report
 - A prioritised action list at the end, with NOT STARTED items listed first
 
+After the report is written, surface the next-step hint to the user:
+
+> *To begin executing the action list, run `/utilities:audit-resolve` (or invoke the `[[audit-resolver]]` skill directly). It will parse this report, triage every finding, get your confirmation, then apply fixes batch-by-batch with verifier checks.*
+
 ## Important Principles
 
 - **Be thorough.** Read actual code and run actual commands. Don't scan file names and guess.

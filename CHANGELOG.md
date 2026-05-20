@@ -5,6 +5,123 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.0] - 2026-05-21
+
+### Added — audit-resolver
+
+Closes the audit → fix loop. Pairs with the existing `plan-completion-audit` skill: after an audit produces a report, `audit-resolver` reads it, plans the fixes, executes them with safety gates, and produces a durable ledger of what changed.
+
+- **New skill:** `utilities/utilities/skills/audit-resolver/` — 7-phase workflow (discovery → triage → confirmation gate → pre-flight → batched execute → optional re-audit → ledger). Reads any `plan-completion-audit` report under `audits/`, parses every finding into a structured ledger, classifies each (AUTO / SUB-SKILL / PLAN-FIRST / HUMAN-INPUT / DEFER), and applies fixes batch-by-batch with verifier checks (`tsc --noEmit`, `npm test`, `python tests/...`, `node scripts/check-versions.mjs` — auto-detected per stack via `scripts/verify-stack.sh`).
+- **New command:** `utilities/utilities/commands/audit-resolve.md` — convenient slash invocation `/utilities:audit-resolve [report-path] [flags]`. Thin wrapper that dispatches to the skill.
+- **Supporting artefacts:**
+  - `templates/output-template.md` — resolution-ledger structure
+  - `examples/example-output.md` — dog-food: ledger of running audit-resolver against this repo's own 2.8.1 sweep
+  - `reference.md` — finding-category → handling-strategy lookup; verifier matrix per stack; sub-skill dispatch map
+  - `scripts/parse-audit-report.sh` — extract findings from markdown report (TSV out)
+  - `scripts/verify-stack.sh` — detect stack via file presence; run appropriate verifier
+- **Cross-reference added** to `plan-completion-audit` SKILL.md — every audit report now ends with the `/utilities:audit-resolve` next-step hint.
+
+### Flags supported
+
+```
+--dry-run                                  # action plan + diff preview, no execution
+--severity=critical[,warning,suggestion]   # default: all three
+--phase=N[,N,...]                          # restrict to specific audit phases
+--reaudit                                  # re-run plan-completion-audit at the end + diff verdicts
+--no-confirm                               # skip per-batch confirmation (HUMAN-INPUT still pauses)
+--ledger=<path>                            # override ledger location
+```
+
+### Safety guardrails (deliberate)
+
+- **Never commits, pushes, resets, or creates branches.** User owns version control.
+- **Always verifies after every batch.** Halts on verifier failure — never auto-continues past a broken state.
+- **Ledger is the resume state** (append-only markdown); mid-run interruptions can be resumed by re-invoking.
+- **Confirmation gates** via `AskUserQuestion` at Phase 3 (plan approval) and per HUMAN-INPUT finding.
+- **Deliberately omitted from `allowed-tools`:** `git commit`, `git push`, `git reset`, `rm`. The skill writes its own ledger / subplan files; never modifies VCS or deletes user files.
+
+### Changed
+
+- **`utilities/utilities`** bumped **v2.1.1 → v2.2.0** (minor — new feature, no breaking changes).
+
+### Verification
+
+- `node scripts/check-versions.mjs` exits 0 — all 19 plugins remain in sync.
+- `python tests/scripts/test_smoke.py` — 12/12 still pass.
+- New scripts (`parse-audit-report.sh`, `verify-stack.sh`) pass `bash -n`.
+
+## [2.8.1] - 2026-05-21
+
+### Changed — post-release cleanup sweep
+
+This patch release rolls up the P1 + P2 + P3 findings from the 2.8.0 skill-evaluator pass (avg 104.7/115). All changes are non-breaking; user-visible skill behaviour is unchanged.
+
+**Patch-bumped:**
+
+- `lifestyle/personal-productivity` v1.0.0 → **v1.0.1**
+- `lifestyle/health-wellness` v1.0.0 → **v1.0.1**
+- `lifestyle/personal-finance` v1.0.0 → **v1.0.1**
+- `lifestyle/home-life-logistics` v1.0.0 → **v1.0.1**
+- `data-science/experimentation` v1.0.0 → **v1.0.1**
+- `economics/strategic-economics` v1.0.0 → **v1.0.1**
+- `economics/business-economics` v1.1.0 → **v1.1.1**
+- `engineering/database-design` v1.3.0 → **v1.3.1**
+- `utilities/utilities` v2.1.0 → **v2.1.1**
+
+### Fixed
+
+- **P1 — Dangling `reference.md` references** in 3 SKILL.md bodies (`deep-focus-day`, `adulting-checklist`, `forecasting-model-spec`) — the skills had no companion `reference.md` (per plan) but the SKILL.md text still said "see reference.md". Body text now reads cleanly.
+- **P2.1 — `AskUserQuestion` tool missing from `allowed-tools`** on every new skill that uses Phase 1 intake via `AskUserQuestion` (38 skills patched). Previously the skills *described* using the tool but didn't *whitelist* it.
+- **P2.2 — Plugin-level script paths standardised** to `${CLAUDE_PLUGIN_ROOT}/scripts/X` across 8 affected `allowed-tools` lines (`macro-calc.py`, `retirement-projection.py`, `debt-payoff-calc.py`, `power-calc.py`, `cvp-calc.py`, `schema-introspect.sh`, `git-history-digest.sh`, `link-check.py`). Previously written as `scripts/X` which resolves to skill-local rather than plugin-root.
+- **P2.3 — Disclaimer text inlined** into all 10 health/finance output templates + matching examples (5 health-wellness + 5 personal-finance). Previously templates referenced `commands/*-disclaimer.md` which doesn't auto-expand at runtime; users would see a one-line disclaimer instead of the full ASIC / TGA / clinician-referral block.
+
+### Added
+
+- **P3.1 — Second contrasting example** (`example-output-2.md`) for 10 skills:
+  - `move-more-plan` — novice + bodyweight + 3 sessions/wk
+  - `sleep-tune-up` — apnoea-suspected red-flag referral stop
+  - `smart-supplement-stack` — pregnancy + polypharmacy referral path
+  - `money-map` — sole-trader irregular income (profit-first)
+  - `rainy-day-plan` — sole-trader tradesperson scenario
+  - `debt-knockout-plan` — HECS-HELP-only edge case
+  - `savings-game-plan` — FIRE-leaning 55% savings rate scenario
+  - `competitive-dynamics-analyser` — two-sided marketplace (AU food delivery)
+  - `supabase-schema-bootstrap` — minimal SaaS with full RLS bundle inlined
+  - `repo-snapshot` — non-anthril repo (typical Next.js + Supabase B2B SaaS)
+- **P3.2 — Python smoke-test harness** at `tests/scripts/test_smoke.py` (12 tests, pure stdlib, ~0.6s runtime). Covers all 6 plugin-level Python scripts shipped in 2.8.0.
+- **P3.4 — `paths` glob for auto-activation** added to frontmatter of 6 skills (`sunday-reset`, `debt-knockout-plan`, `rainy-day-plan`, `competitive-dynamics-analyser`, `moat-strength-audit`, `thoughtful-gifts-plan`).
+
+### Changed
+
+- **P3.3 — Phase heading depth** promoted from `###` to `##` in 4 SKILL.md files (`sleep-tune-up`, `daily-wellness-stack`, `thoughtful-gifts-plan`, `repo-snapshot`) for convention parity with the rest of the repo.
+
+### Verification
+
+- `node scripts/check-versions.mjs` exits 0 — all 19 plugins in sync.
+- `python tests/scripts/test_smoke.py` — 12/12 tests pass (~0.6s).
+- All disclaimer blocks now contain the full ASIC / TGA / clinician-referral text inline; no remaining `commands/*-disclaimer.md` reference dependency at runtime.
+
+## [2.8.0] - 2026-05-20
+
+### Added — new plugins
+
+- **`lifestyle/personal-productivity`** (new plugin, new `lifestyle` category) — 4 skills: `habit-stacker`, `sunday-reset`, `deep-focus-day`, `energy-detective`. Plus `commands/lifestyle-onboard.md` interactive wizard, `hooks/scripts/suggest-related.sh`, and reference materials for habit-stacker + energy-detective.
+- **`lifestyle/health-wellness`** (new plugin) — 5 skills: `week-of-meals`, `move-more-plan`, `sleep-tune-up`, `smart-supplement-stack`, `daily-wellness-stack`. Plus `commands/health-disclaimer.md`, `scripts/macro-calc.py` (Mifflin-St Jeor TDEE + macro split), reference materials for week-of-meals + move-more-plan + smart-supplement-stack. Includes mandatory disclaimer pattern (general info only, not medical advice).
+- **`lifestyle/personal-finance`** (new plugin) — 5 skills: `money-map`, `debt-knockout-plan`, `savings-game-plan`, `future-me-projection`, `rainy-day-plan`. Plus `commands/finance-disclaimer.md`, `agents/projection-analyst.md` (opus / effort high — sequence-of-returns risk, AU super rules), `scripts/retirement-projection.py` + `scripts/debt-payoff-calc.py`, reference materials for money-map + future-me-projection + rainy-day-plan. AU super / FHSS / Centrelink / ASIC context throughout.
+- **`lifestyle/home-life-logistics`** (new plugin) — 4 skills: `trip-day-by-day`, `home-tlc-calendar`, `adulting-checklist`, `thoughtful-gifts-plan`. State-by-state AU compliance for home maintenance; AU FY-aligned quarterly admin sweep.
+- **`data-science/experimentation`** (new plugin) — 4 skills: `ab-test-designer`, `experiment-readout-builder`, `forecasting-model-spec`, `causal-impact-analyser`. Plus `agents/stats-reviewer.md` (opus / effort max — p-hacking + SRM + 12-pitfall peer review), `scripts/power-calc.py` (two-proportion z-test). Reference materials cover sample-size formulas, randomisation-unit decision tree, and causal-inference method-selection flowchart.
+- **`economics/strategic-economics`** (new plugin) — 3 skills: `competitive-dynamics-analyser`, `elasticity-estimator`, `moat-strength-audit`. Plus `agents/red-team-strategist.md` (opus / effort max) for challenging optimistic moat / dynamics conclusions.
+
+### Changed — extended plugins
+
+- **`economics/business-economics`** bumped v1.0.3 → **v1.1.0**. Added 3 skills: `pricing-architecture-designer`, `cost-structure-builder`, `break-even-scenario-modeller`. Added `scripts/cvp-calc.py` (CVP + break-even + sensitivity). Updated `hooks/scripts/suggest-related.sh` to include new skills.
+- **`engineering/database-design`** bumped v1.1.1 → **v1.2.0**. Added 5 skills: `erd-generator`, `rls-policy-designer`, `migration-plan-builder`, `index-strategy-planner`, `supabase-schema-bootstrap`. Added `hooks/` (new), `agents/db-reviewer.md`, `commands/db-bootstrap.md`, `scripts/schema-introspect.sh` (Supabase MCP wrapper).
+- **`utilities/utilities`** bumped v2.0.0 → **v2.1.0**. Added 5 skills: `changelog-generator`, `pr-description-writer`, `env-var-auditor`, `doc-link-validator`, `repo-snapshot`. Added `scripts/git-history-digest.sh` and `scripts/link-check.py` (stdlib only).
+
+### Conventions
+
+All new skills follow the canonical structure (SKILL.md + LICENSE.txt + templates/output-template.md + examples/example-output.md, with reference.md where dense lookup material applies). Australian English throughout; AUD + metric units in lifestyle skills; AU super / Centrelink / ASIC / TGA context where relevant. Each plugin ships standard Stop hook `suggest-related.sh` and (where applicable) a setup `commands/` directory.
+
 ## [2.7.0] - 2026-05-20
 
 ### Changed

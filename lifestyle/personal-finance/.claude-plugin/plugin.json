@@ -1,0 +1,16 @@
+{
+  "name": "personal-finance",
+  "version": "1.0.1",
+  "description": "5 lifestyle skills for AU personal budgeting, debt payoff, savings rate, retirement projection, and emergency runbooks — AU tax/super defaults, scenario-driven",
+  "author": {
+    "name": "Anthril",
+    "email": "john@anthril.com",
+    "url": "https://github.com/anthril"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/lifestyle/personal-finance",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": ["lifestyle", "personal-finance", "budget", "debt", "savings", "retirement", "FIRE", "AU"],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
+}

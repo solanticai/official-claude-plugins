@@ -2,7 +2,7 @@
 
 A curated library of Claude Code plugins organised into eight customer-facing categories — **Lifestyle**, **SMB**, **Marketing**, **Engineering**, **Data Science**, **Economics**, **Utilities**, and **SEO** — packaged as a Claude Code marketplace with standalone plugins.
 
-**13 plugins · 89 production-ready skills · Australian English throughout · evidence-backed markdown outputs.**
+**19 plugins · 128 production-ready skills · Australian English throughout · evidence-backed markdown outputs.**
 
 Maintained by [@Anthril](https://github.com/anthril).
 
@@ -23,11 +23,17 @@ Maintained by [@Anthril](https://github.com/anthril).
 /plugin install database-design@anthril-claude-plugins
 /plugin install package-manager@anthril-claude-plugins
 /plugin install data-analysis@anthril-claude-plugins
+/plugin install experimentation@anthril-claude-plugins
 /plugin install business-economics@anthril-claude-plugins
+/plugin install strategic-economics@anthril-claude-plugins
 /plugin install skill-ops@anthril-claude-plugins
 /plugin install resource-manager@anthril-claude-plugins
 /plugin install utilities@anthril-claude-plugins
 /plugin install seo-toolkit@anthril-claude-plugins
+/plugin install personal-productivity@anthril-claude-plugins
+/plugin install health-wellness@anthril-claude-plugins
+/plugin install personal-finance@anthril-claude-plugins
+/plugin install home-life-logistics@anthril-claude-plugins
 ```
 
 ### Install a Single Skill
@@ -294,10 +300,14 @@ official-claude-plugins/
 │   ├── CLAUDE.md                  # Project instructions for contributors
 │   └── hooks/                     # Changelog + plugin-manifest reminders
 ├── .claude-plugin/
-│   └── marketplace.json           # Marketplace catalogue (14 plugins)
+│   └── marketplace.json           # Marketplace catalogue (19 plugins)
 ├── .github/
 │   └── workflows/                 # validate-marketplace, virustotal-audit, sponsors
-├── lifestyle/                     # (placeholder — no plugins yet)
+├── lifestyle/
+│   ├── personal-productivity/     # 4 skills (habit-stacker, sunday-reset, deep-focus-day, energy-detective)
+│   ├── health-wellness/           # 5 skills (week-of-meals, move-more-plan, sleep-tune-up, smart-supplement-stack, daily-wellness-stack)
+│   ├── personal-finance/          # 5 skills (money-map, debt-knockout-plan, savings-game-plan, future-me-projection, rainy-day-plan)
+│   └── home-life-logistics/       # 4 skills (trip-day-by-day, home-tlc-calendar, adulting-checklist, thoughtful-gifts-plan)
 ├── smb/
 │   ├── brand-manager/             # 9 skills
 │   └── business-operations/       # 5 skills
@@ -306,16 +316,18 @@ official-claude-plugins/
 ├── engineering/
 │   ├── software-development/      # 4 skills
 │   ├── devops/                    # 9 skills
-│   ├── database-design/           # 2 skills (business-data-model-designer + postgres-schema-audit)
+│   ├── database-design/           # 7 skills (postgres-schema-audit + business-data-model-designer + erd-generator + rls-policy-designer + migration-plan-builder + index-strategy-planner + supabase-schema-bootstrap)
 │   └── package-manager/           # 2 skills
 ├── data-science/
-│   └── data-analysis/             # 5 skills
+│   ├── data-analysis/             # 5 skills
+│   └── experimentation/           # 4 skills (ab-test-designer, experiment-readout-builder, forecasting-model-spec, causal-impact-analyser) + stats-reviewer agent
 ├── economics/
-│   └── business-economics/        # 2 skills
+│   ├── business-economics/        # 5 skills (market-sizing-tam-estimator, unit-economics-calculator, pricing-architecture-designer, cost-structure-builder, break-even-scenario-modeller)
+│   └── strategic-economics/       # 3 skills (competitive-dynamics-analyser, elasticity-estimator, moat-strength-audit) + red-team-strategist agent
 ├── utilities/
 │   ├── skill-ops/                 # 4 skills (skill-creator/evaluator/eval-harness/eval-bootstrap)
 │   ├── resource-manager/          # 4 skills + localhost dashboard
-│   └── utilities/                 # 1 skill (plan-completion-audit); generic catch-all plugin
+│   └── utilities/                 # 7 skills (plan-completion-audit + audit-resolver + 5 repo-ops helpers) + /utilities:audit-resolve command; generic catch-all plugin
 ├── seo/
 │   └── seo-toolkit/               # 20 skills (17 SEO + 3 structured-data entity skills)
 ├── audits/                        # Time-stamped audit + judge reports
