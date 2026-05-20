@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-11T15:17:19.095Z",
+  "scanned_at": "2026-05-20T14:52:17.229Z",
   "scan_source": "upload",
   "tarball": {
     "path": "utilities/utilities",
-    "sha256": "efca9b9b3d06e32d6479bc9d8a3269733572476c60e3a24f20a46b83a0ec99f6",
-    "size_bytes": 26973
+    "sha256": "7d885e7f0d7210aa61e1b5d2389b4360d40511d238d60af70b635cb062eb0ee6",
+    "size_bytes": 66019
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1778512537,
-  "gui_url": "https://www.virustotal.com/gui/file/064a9b08afa4840015d276a993a0ea0df770d95a429f83721f9907a114a7ab06",
+  "last_analysis_date": 1779288635,
+  "gui_url": "https://www.virustotal.com/gui/file/7d885e7f0d7210aa61e1b5d2389b4360d40511d238d60af70b635cb062eb0ee6",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -46,11 +46,6 @@
     },
     {
       "engine": "CAT-QuickHeal",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Skyhigh",
       "category": "undetected",
       "result": null
     },
@@ -86,6 +81,11 @@
     },
     {
       "engine": "CrowdStrike",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -175,6 +175,11 @@
       "result": null
     },
     {
+      "engine": "SentinelOne",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "CTX",
       "category": "undetected",
       "result": null
@@ -186,11 +191,6 @@
     },
     {
       "engine": "Ikarus",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "GData",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,7 +245,7 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
@@ -325,6 +325,11 @@
       "result": null
     },
     {
+      "engine": "Skyhigh",
+      "category": "failure",
+      "result": null
+    },
+    {
       "engine": "Avast-Mobile",
       "category": "type-unsupported",
       "result": null
@@ -376,11 +381,6 @@
     },
     {
       "engine": "Cylance",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
-      "engine": "SentinelOne",
       "category": "type-unsupported",
       "result": null
     },

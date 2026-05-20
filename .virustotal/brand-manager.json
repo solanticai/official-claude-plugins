@@ -1,24 +1,29 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-18T15:24:27.177Z",
+  "scanned_at": "2026-05-20T14:55:19.996Z",
   "scan_source": "upload",
   "tarball": {
-    "path": "plugins/brand-manager",
-    "sha256": "9d8c7da1f8e149ebb6edf41a82a0755bfabf41a9dda1c0dd2078103eff9580d3",
-    "size_bytes": 187449
+    "path": "smb/brand-manager",
+    "sha256": "543eae377a10e10052db2517d76c79a96c4e3f5f681f60d323b7d86ddb1059a0",
+    "size_bytes": 198218
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
-    "timeout": 1,
+    "undetected": 62,
+    "timeout": 0,
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779117745,
-  "gui_url": "https://www.virustotal.com/gui/file/9d8c7da1f8e149ebb6edf41a82a0755bfabf41a9dda1c0dd2078103eff9580d3",
+  "last_analysis_date": 1779288859,
+  "gui_url": "https://www.virustotal.com/gui/file/543eae377a10e10052db2517d76c79a96c4e3f5f681f60d323b7d86ddb1059a0",
   "engine_results": [
+    {
+      "engine": "Bkav",
+      "category": "undetected",
+      "result": null
+    },
     {
       "engine": "Lionic",
       "category": "undetected",
@@ -60,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -70,7 +75,7 @@
       "result": null
     },
     {
-      "engine": "K7AntiVirus",
+      "engine": "CrowdStrike",
       "category": "undetected",
       "result": null
     },
@@ -80,12 +85,7 @@
       "result": null
     },
     {
-      "engine": "CrowdStrike",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Arcabit",
+      "engine": "K7AntiVirus",
       "category": "undetected",
       "result": null
     },
@@ -165,7 +165,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -220,6 +220,11 @@
       "result": null
     },
     {
+      "engine": "Microsoft",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Gridinsoft",
       "category": "undetected",
       "result": null
@@ -230,7 +235,7 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -325,11 +330,6 @@
       "result": null
     },
     {
-      "engine": "Bkav",
-      "category": "timeout",
-      "result": null
-    },
-    {
       "engine": "Avast-Mobile",
       "category": "type-unsupported",
       "result": null
@@ -345,12 +345,12 @@
       "result": null
     },
     {
-      "engine": "Elastic",
+      "engine": "DeepInstinct",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "DeepInstinct",
+      "engine": "Elastic",
       "category": "type-unsupported",
       "result": null
     },
