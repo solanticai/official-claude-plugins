@@ -10,7 +10,7 @@
 
 ## Summary
 
-**Score: {{total_score}} / 100 — Grade {{grade}}**
+**Score: {{total_score}} / 115 — Grade {{grade}}**
 
 {{one_sentence_verdict}}
 
@@ -26,6 +26,8 @@
 | 6 | Tool & Security | {{d6.score}} | 10 | {{d6.grade}} |
 | 7 | Testing & Examples | {{d7.score}} | 7 | {{d7.grade}} |
 | 8 | Standards Compliance | {{d8.score}} | 3 | {{d8.grade}} |
+| 9 | Activation & Behavioural Quality | {{d9.score}} | 10 | {{d9.grade}} |
+| 10 | Anti-patterns | {{d10.score}} | 5 | {{d10.grade}} |
 
 ---
 
@@ -102,6 +104,22 @@
 ### Dimension 8 — Standards Compliance ({{d8.score}}/3)
 
 {{#each d8.findings}}
+- **[{{severity}}] {{id}} · {{title}}** — `{{file}}:{{line}}`
+  - Evidence: `{{evidence}}`
+  - Fix: {{fix}}
+{{/each}}
+
+### Dimension 9 — Activation & Behavioural Quality ({{d9.score}}/10)
+
+{{#each d9.findings}}
+- **[{{severity}}] {{id}} · {{title}}** — `{{file}}:{{line}}`
+  - Evidence: `{{evidence}}`
+  - Fix: {{fix}}
+{{/each}}
+
+### Dimension 10 — Anti-patterns ({{d10.score}}/5)
+
+{{#each d10.findings}}
 - **[{{severity}}] {{id}} · {{title}}** — `{{file}}:{{line}}`
   - Evidence: `{{evidence}}`
   - Fix: {{fix}}

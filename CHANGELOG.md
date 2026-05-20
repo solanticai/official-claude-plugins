@@ -5,6 +5,15 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-05-20
+
+### Added
+- **skillops** plugin v1.2.0 — extended `skill-evaluator` with two new rubric dimensions:
+  - **Dimension 9 — Activation & Behavioural Quality** (10 pts): five checkpoints (C36–C40) covering activation-trigger boundedness, self-containment, side-effect discipline, instruction-following clarity, and example realism. Encodes the canonical five evaluation questions (does the skill fire for the right queries, work in isolation, leave other skills alone, get followed accurately, produce useful results).
+  - **Dimension 10 — Anti-patterns** (5 pts): five checkpoints (C41–C45) covering option-overload, script error-handling, hook-schema compliance (per code.claude.com/docs/en/hooks), skills-architecture compliance (per platform.claude.com/docs/en/agents-and-tools/agent-skills), and `allowed-tools` minimality.
+- `scripts/check-antipatterns.sh` — emits C41–C45 findings as a JSON array; covers AskUserQuestion option counts, `set -e` enforcement, hook absolute-path / missing-matcher / missing-timeout detection, SKILL.md size cap, and unused-tool detection.
+- Findings-schema and output-template updated for 10 dimensions; total score raised from 100 → 115 (85 deterministic + 30 qualitative). Grade boundaries scaled: A ≥ 104, B 86–103, C 69–85, D 52–68, F < 52.
+
 ## [2.0.0] - 2026-05-20
 
 ### Changed

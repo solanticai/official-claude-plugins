@@ -115,6 +115,30 @@ Six checkpoints worth 0.5 pt each:
 | D8.5 | No time-bound statements ("before August 2025", etc.) | 0.5 |
 | D8.6 | File and directory names are kebab-case | 0.5 |
 
+### Dimension 9 — Activation & Behavioural Quality (weight 10 = 10 det)
+
+Five checkpoints worth 2 pts each. Fully deterministic. Encodes the five end-user evaluation questions: does the skill fire for the right queries, work in isolation, leave other skills alone, get followed accurately, and produce useful results.
+
+| ID | Checkpoint | Pts |
+|---|---|---:|
+| D9.1 | Activation triggers are bounded — `description` front-loads concrete triggers; if `paths` is set, no glob is broader than two directory levels (e.g. `**/*` is rejected) | 2 |
+| D9.2 | Skill is self-contained — no implicit `[[link]]` to another skill, no "run X first" preamble; documented dependencies are explicit | 2 |
+| D9.3 | No global side-effects — hooks (if present) declare a `matcher`, use `${CLAUDE_PLUGIN_ROOT}`, do not write outside the plugin's own directory unless flagged in the body | 2 |
+| D9.4 | Phases are imperative and numbered; outputs are specified per phase; no ambiguous "consider"/"may"/"perhaps" in step text inside `## Steps` blocks | 2 |
+| D9.5 | Examples present and realistic — at least one `examples/*.md`, no `TBD`/`TODO`/lorem-ipsum, and the example's structure matches the declared Output Format | 2 |
+
+### Dimension 10 — Anti-patterns (weight 5 = 5 det)
+
+Five checkpoints worth 1 pt each. Fully deterministic. Catches common authorship anti-patterns.
+
+| ID | Checkpoint | Pts |
+|---|---|---:|
+| D10.1 | Skill does not offer too many options — no `AskUserQuestion` block with more than 3 options; no step text with more than two `or`-chained alternatives | 1 |
+| D10.2 | Scripts handle errors locally — every `scripts/*.sh` has `set -e` (or equivalent strict mode) and exits non-zero on failure paths; no `echo "error:"; exit 0` pattern | 1 |
+| D10.3 | Hooks are spec-compliant — `hooks/hooks.json` (if present) validates against [code.claude.com/docs/en/hooks](https://code.claude.com/docs/en/hooks): valid event name, `matcher` for tool hooks, `timeout` set, `${CLAUDE_PLUGIN_ROOT}` (never absolute paths) | 1 |
+| D10.4 | Skills architecture compliant — frontmatter schema and directory layout match [platform.claude.com/docs/en/agents-and-tools/agent-skills/overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#the-skills-architecture): SKILL.md ≤ 500 lines, reference material extracted | 1 |
+| D10.5 | `allowed-tools` is tight — every tool listed is referenced at least once in SKILL.md body or `scripts/`; no granted-but-unused tools | 1 |
+
 ### Grade mapping
 
 Applied to the total score AND to each per-dimension score (scaled to the dimension's weight):
@@ -172,6 +196,16 @@ Severities: `fail` (hard failure, deducts full checkpoint value), `warn` (half d
 | **C33** | 8 | info | `LICENSE.txt` missing | Copy the LICENSE.txt from a sibling skill. |
 | **C34** | 8 | warn | `parse-frontmatter.sh` returns a non-zero exit code | Fix YAML syntax — check indentation, colons, quoted strings. |
 | **C35** | 6 | warn | Scripts reference `yq`, `jq`, `psql`, `gh`, or `node` and neither SKILL.md nor a `scripts/README.md` mentions the dependency | Document the runtime dependency in SKILL.md or add a `scripts/README.md`. |
+| **C36** | 9 | warn | `fm.description` lacks a leading action verb OR `fm.paths` contains a glob broader than two directory levels (e.g. `**/*`, `**/*.md`) | Front-load the description with concrete triggers; narrow `paths` to specific file patterns. |
+| **C37** | 9 | warn | SKILL.md body contains `[[name]]` references to other skills, or a "run X first" / "after running Y" instruction without explicit fallback | Make the skill self-contained or document the dependency in a `## Prerequisites` section. |
+| **C38** | 9 | warn | `hooks/hooks.json` declares a tool hook (`PreToolUse`/`PostToolUse`) without `matcher`, OR a hook script writes outside `${CLAUDE_PLUGIN_ROOT}` / cwd without an explicit `## Side Effects` note in SKILL.md | Scope tool hooks with a `matcher`; document any out-of-plugin writes. |
+| **C39** | 9 | warn | A `## Steps` ordered list contains text matching `/\b(maybe\|perhaps\|consider\|might\|could)\b/i` | Rewrite steps as imperative instructions; move soft guidance into a separate `## Notes` block. |
+| **C40** | 9 | fail | `examples/` has no `.md` OR example content matches `/lorem ipsum\|foo bar baz\|TBD\|TODO\|placeholder/i` OR the example does not produce the artefact described in SKILL.md's Output Format | Add a realistic example whose shape matches the declared Output Format. |
+| **C41** | 10 | warn | Skill body contains an `AskUserQuestion` block with > 3 options, OR > 2 occurrences of ` or ` within a single numbered step | Trim option lists to ≤ 3; collapse redundant alternatives. |
+| **C42** | 10 | fail | Any `scripts/*.sh` lacks `set -e` (or stricter), OR contains the pattern `echo "error[^"]*"\s*[;&]+\s*exit\s+0` | Add `set -euo pipefail`; ensure failure paths exit non-zero. |
+| **C43** | 10 | fail | `hooks/hooks.json` exists and any hook entry uses an absolute path, lacks `timeout`, declares a `PreToolUse`/`PostToolUse` event without `matcher`, or references an event name outside the documented set (`PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `Stop`, `SubagentStop`, `Notification`, `PreCompact`, `SessionStart`, `SessionEnd`) | Fix the hook to match the schema at https://code.claude.com/docs/en/hooks. |
+| **C44** | 10 | warn | SKILL.md > 500 lines, OR `reference.md` absent when SKILL.md > 350 lines, OR file layout does not include `SKILL.md` + `templates/` + `examples/` per https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview#the-skills-architecture | Bring layout and SKILL.md size into compliance. |
+| **C45** | 10 | warn | A token in `allowed-tools` is not referenced anywhere in SKILL.md body or under `scripts/` (excluding the frontmatter itself) | Remove unused tools from `allowed-tools`; principle of least privilege. |
 
 ---
 

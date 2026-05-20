@@ -2,7 +2,7 @@
 name: skill-evaluator
 description: Audit a Claude Code skill across 8 quality dimensions (metadata, scope, conciseness, architecture, content, tools, testing, standards). Produces a scored markdown report with file:line evidence, prioritised fixes, and JSON sidecar.
 argument-hint: [skill-path-or-name]
-allowed-tools: Read Grep Glob Bash(bash:scripts/*.sh) Bash(jq:*) Bash(awk:*) Bash(wc:*) Agent Write
+allowed-tools: Read Grep Glob Bash(bash:scripts/*.sh) Bash(jq:*) Bash(awk:*) Bash(wc:*) Bash(test:*) Agent Write
 effort: high
 ---
 
@@ -93,7 +93,7 @@ Deterministic shape checks. Every finding has an ID from the catalogue (`referen
 ## Phase 3: Quality Heuristics
 
 ### Objective
-Run the full 35-check catalogue (`reference.md` §2) using `Grep` and inline inspection.
+Run the full 45-check catalogue (`reference.md` §2) using `Grep` and inline inspection.
 
 ### Steps
 1. For each check in the catalogue, apply the test:
@@ -104,6 +104,8 @@ Run the full 35-check catalogue (`reference.md` §2) using `Grep` and inline ins
    - **Security checks (C25–C27)** — `Grep` against every file under `target_dir`. C27 is a hard fail — if a secret-like literal hits, stop and report immediately; do not write the finding file yet.
    - **Testing checks (C28–C30)** — `Grep` against `examples/*.md` for C30 (lorem ipsum / TBD / placeholder markers).
    - **Standards checks (C31–C35)** — run `bash scripts/check-aus-english.sh "$target_dir"` for C31; regex scans for C32, C21, C22.
+   - **Activation & behavioural checks (C36–C40)** — inspect `description` front-loading and `paths` globs (C36); grep SKILL.md for `[[`, "run X first" (C37); validate `hooks/hooks.json` shape and side-effects against the body (C38); grep `## Steps` blocks for soft-modal verbs (C39); inspect `examples/` against the Output Format declared in SKILL.md (C40).
+   - **Anti-pattern checks (C41–C45)** — run `bash scripts/check-antipatterns.sh "$target_dir"` which validates: `AskUserQuestion` option counts (C41), `set -e` and exit codes in `scripts/*.sh` (C42), hook schema compliance (C43), skills-architecture compliance (C44), and `allowed-tools` usage cross-reference (C45). The script exits 0 even on findings; it prints a JSON array on stdout that the evaluator merges into `heuristic_findings[]`.
 2. For every hit, record `{id, dimension, severity, title, file, line, evidence, fix, source: "heuristic"}`. Use the fix-template string from `reference.md` §2, populated with specifics.
 3. De-duplicate against Phase 2 findings by `(id, file, line)`.
 
@@ -166,7 +168,7 @@ Markdown report file, JSON sidecar, chat summary. The audited skill directory is
 
 ## Scoring Rubric
 
-Total 100 points = 70 deterministic + 30 qualitative-capped.
+Total 115 points = 85 deterministic + 30 qualitative-capped.
 
 | # | Dimension | Weight | Det. pts | Qual. cap |
 |---|---|---:|---:|---:|
@@ -178,9 +180,13 @@ Total 100 points = 70 deterministic + 30 qualitative-capped.
 | 6 | Tool & Security | 10 | 10 | 0 |
 | 7 | Testing & Examples | 7 | 3 | 4 |
 | 8 | Standards Compliance | 3 | 3 | 0 |
-| — | **Total** | **100** | **70** | **30** |
+| 9 | Activation & Behavioural Quality | 10 | 10 | 0 |
+| 10 | Anti-patterns | 5 | 5 | 0 |
+| — | **Total** | **115** | **85** | **30** |
 
-Per-dimension checkpoint breakdown and the full 35-check catalogue with regex patterns, severity levels, and fix templates live in `reference.md` §1 and §2.
+Per-dimension checkpoint breakdown and the full 45-check catalogue with regex patterns, severity levels, and fix templates live in `reference.md` §1 and §2.
+
+Grade boundaries scale with the new total — A ≥ 104, B 86-103, C 69-85, D 52-68, F < 52.
 
 ---
 
@@ -253,3 +259,4 @@ Lightweight helpers under `scripts/`. Each is self-documenting; see the header c
 - `check-aus-english.sh` — grep American spellings outside fenced code blocks
 - `list-skill-files.sh` — enumerate files with size and line count
 - `referenced-paths.sh` — extract local file references from SKILL.md
+- `check-antipatterns.sh` — emits C41–C45 findings as a JSON array on stdout (option-count, error-handling, hook-schema, skills-architecture, allowed-tools usage)
