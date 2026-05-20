@@ -2,7 +2,7 @@
 name: release-readiness-audit
 description: Pre-production go/no-go gate. Given a branch or diff, assesses migration safety, rollback path, config drift, runbook coverage, monitoring coverage, and deploy strategy fit. Static, live, and runtime (canary smoke) modes.
 argument-hint: [--base main]
-allowed-tools: Read Grep Glob Write Edit Bash(bash:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(bash:*)
 effort: high
 ---
 
@@ -50,7 +50,7 @@ Catalogue (from `diff-scope.sh`):
 
 For every migration file in the diff:
 
-- **Destructive DDL?** `DROP TABLE`, `DROP COLUMN`, `ALTER COLUMN TYPE`, `RENAME` on non-empty tables, `NOT NULL` additions without default, `CHECK` additions that existing rows would violate → CRITICAL.
+- **Destructive DDL?** `DROP TABLE`, `DROP COLUMN`, `ALTER COLUMN TYPE`, `RENAME` on non-empty tables, `NOT NULL` additions without default, `CHECK` additions that existing rows would violate â†’ CRITICAL.
 - **Backfill plan?** Does a backfill script or separate step exist for new NOT NULL columns?
 - **Lock risk?** `ALTER TABLE` without `CONCURRENTLY`? Long-running migration on a large table?
 - **Index creation?** `CREATE INDEX CONCURRENTLY` vs plain `CREATE INDEX`?
@@ -84,11 +84,11 @@ Emit one rollback entry per material change into `rollback-procedure.md`.
 
 Shape the recommendation based on change type:
 
-- **Backwards-incompatible API change** → expand/contract via two deploys; feature-flag consumers
-- **DB destructive migration** → canary the migration (one replica first, then promote)
-- **High-blast-radius change (auth, payments)** → canary with slow ramp + instant rollback gate
-- **Additive-only code change** → rolling deploy OK
-- **Dependency upgrade with shared deps** → blue-green recommended
+- **Backwards-incompatible API change** â†’ expand/contract via two deploys; feature-flag consumers
+- **DB destructive migration** â†’ canary the migration (one replica first, then promote)
+- **High-blast-radius change (auth, payments)** â†’ canary with slow ramp + instant rollback gate
+- **Additive-only code change** â†’ rolling deploy OK
+- **Dependency upgrade with shared deps** â†’ blue-green recommended
 
 Compare against what CI currently does; flag mismatches.
 
@@ -97,12 +97,12 @@ Compare against what CI currently does; flag mismatches.
 If `--runtime` and a canary target is configured:
 1. Deploy the change to a canary pod / preview environment.
 2. Run the skill's built-in smoke test battery:
-   - `GET /healthz` → 200
-   - `GET /` → 200 with body non-empty
-   - `GET /api/version` → matches expected new version
+   - `GET /healthz` â†’ 200
+   - `GET /` â†’ 200 with body non-empty
+   - `GET /api/version` â†’ matches expected new version
    - Trace-ID propagation check
 3. Record pre/post metrics (error rate, p95 latency) from an observability endpoint (Prometheus or DD).
-4. If the new error rate > 2× baseline OR p95 latency > 1.5× baseline → NO-GO.
+4. If the new error rate > 2Ã— baseline OR p95 latency > 1.5Ã— baseline â†’ NO-GO.
 5. Attach results to `canary-smoke-results.md`.
 
 ### Phase 8: Reporting
@@ -110,10 +110,10 @@ If `--runtime` and a canary target is configured:
 Render `release-readiness-audit.md` and `rollback-procedure.md` from templates.
 
 Verdict decision:
-- Any CRITICAL finding → **NO-GO**
-- Any HIGH finding without documented mitigation → **NO-GO**
-- All HIGH findings mitigated, MEDIUM findings documented → **GO WITH CAVEATS**
-- All findings ≤ MEDIUM, runbook + alerts cover new paths → **GO**
+- Any CRITICAL finding â†’ **NO-GO**
+- Any HIGH finding without documented mitigation â†’ **NO-GO**
+- All HIGH findings mitigated, MEDIUM findings documented â†’ **GO WITH CAVEATS**
+- All findings â‰¤ MEDIUM, runbook + alerts cover new paths â†’ **GO**
 
 ---
 

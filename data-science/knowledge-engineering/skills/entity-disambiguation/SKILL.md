@@ -2,7 +2,7 @@
 name: entity-disambiguation
 description: Resolve entity ambiguity across data sources — produce canonical records, merge decisions, and sameAs link mappings for structured data
 argument-hint: [entity-list-or-data-sources]
-allowed-tools: Read Grep Glob Write Edit Bash(python:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(python:*)
 effort: high
 ---
 
@@ -13,7 +13,7 @@ effort: high
 - **Category:** Structured Data & Entity Modelling
 - **Output:** Entity resolution report
 - **Complexity:** Medium
-- **Estimated Completion:** 10–15 minutes (interactive)
+- **Estimated Completion:** 10”“15 minutes (interactive)
 
 ---
 
@@ -85,12 +85,12 @@ For each pair of potentially matching entities, score across signals:
 | **Same domain/URL** | Very High | Same website domain | +45 |
 | **Consistent description** | Medium | Semantically similar descriptions | +15 |
 | **Contextual alignment** | Medium | Appearing in contexts that suggest sameness | +15 |
-| **Contradictory signals** | Negative | Different addresses, different ABNs, conflicting types | −30 each |
+| **Contradictory signals** | Negative | Different addresses, different ABNs, conflicting types | âˆ’30 each |
 
 **Confidence thresholds:**
-- **≥80: High confidence match** — Treat as same entity. Merge.
-- **50–79: Probable match** — Likely same entity. Flag for human confirmation.
-- **20–49: Uncertain** — Needs investigation. Do not merge automatically.
+- **â‰¥80: High confidence match** — Treat as same entity. Merge.
+- **50”“79: Probable match** — Likely same entity. Flag for human confirmation.
+- **20”“49: Uncertain** — Needs investigation. Do not merge automatically.
 - **<20: Different entities** — Treat as distinct.
 
 #### 2B. Common Disambiguation Patterns
@@ -162,7 +162,7 @@ For each sameAs link recommended:
 
 | sameAs Target | Entity Type | Validates? | Notes |
 |---|---|---|---|
-| [URL] | [Type] | ✅ Active and correct / ⚠️ Active but needs update / ❌ Broken or wrong entity | [Details] |
+| [URL] | [Type] | âœ… Active and correct / âš ï¸ Active but needs update / âŒ Broken or wrong entity | [Details] |
 
 **sameAs quality rules:**
 1. The target URL must be about THIS entity, not a similarly-named one
@@ -225,7 +225,7 @@ flowchart TD
 
 1. **Never merge without evidence.** Two entities with the same name are not necessarily the same entity. Require at least two matching signals before recommending a merge.
 2. **Shared identifiers are the strongest signal.** Same ABN, same email, same phone number = same entity (barring data errors). Name similarity alone is the weakest signal.
-3. **sameAs is a strong claim.** It means "this entity is definitively the same as that entity." Only recommend sameAs when confidence is high (≥80). For probable matches, recommend investigation first.
+3. **sameAs is a strong claim.** It means "this entity is definitively the same as that entity." Only recommend sameAs when confidence is high (â‰¥80). For probable matches, recommend investigation first.
 4. **Canonical @id must be stable.** Once assigned, an entity's @id should not change. If the business rebrands or moves domains, implement redirects and maintain backward compatibility.
 5. **Document every decision.** Every merge and every split should have a stated reason. Future maintainers need to understand why two entities were considered the same (or different).
 6. **Australian identifiers are powerful.** ABN (Australian Business Number) is a reliable organisation identifier. If two entity records share an ABN, they're the same legal entity regardless of name variations.
@@ -239,4 +239,4 @@ flowchart TD
 - **Acquired/merged companies:** If Company A acquired Company B, model both with a historical relationship. Company B may still have its own entity with sameAs links to its former profiles.
 - **Person with common name:** If disambiguation evidence is insufficient, keep as separate entities and note "unresolved — may be same person." Merging without evidence creates worse problems than keeping separate.
 - **Entity referenced only in text (no structured record):** If an entity is mentioned in blog content but has no profile or structured record, create a minimal entity with the information available and flag as "needs enrichment."
-- **Cross-language entity references:** "Melbourne" and "メルボルン" are the same city. Use the English name as canonical with alternateName for other language variants.
+- **Cross-language entity references:** "Melbourne" and "ãƒ¡ãƒ«ãƒœãƒ«ãƒ³" are the same city. Use the English name as canonical with alternateName for other language variants.

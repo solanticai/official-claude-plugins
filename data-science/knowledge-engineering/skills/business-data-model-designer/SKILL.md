@@ -2,7 +2,7 @@
 name: business-data-model-designer
 description: Design complete Supabase/PostgreSQL data models with ERD, SQL migrations, RLS policies, indexes, and triggers for business applications
 argument-hint: [application-description]
-allowed-tools: Read Grep Glob Write Edit Bash(python:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(python:*)
 effort: high
 paths: "**/supabase/migrations/**, **/schema.sql"
 ---
@@ -14,7 +14,7 @@ paths: "**/supabase/migrations/**, **/schema.sql"
 - **Category:** Cross-Cutting
 - **Output:** ERD + SQL migrations
 - **Complexity:** High
-- **Estimated Completion:** 20–30 minutes (interactive)
+- **Estimated Completion:** 20”“30 minutes (interactive)
 
 ---
 
@@ -95,7 +95,7 @@ Apply at least Third Normal Form (3NF):
 |---|---|---|
 | **1NF: Atomic values** | No arrays or multi-value fields where a join table is more appropriate | Storing "tag1,tag2,tag3" in a text column instead of a tags junction table |
 | **2NF: No partial dependencies** | Every non-key column depends on the full primary key | Storing client_name in a projects table (depends on client_id, not project_id) |
-| **3NF: No transitive dependencies** | Non-key columns don't depend on other non-key columns | Storing both city and country when city → country |
+| **3NF: No transitive dependencies** | Non-key columns don't depend on other non-key columns | Storing both city and country when city â†’ country |
 
 **Pragmatic exceptions:**
 - JSONB columns for genuinely flexible/schema-less data (metadata, settings, API responses)
@@ -106,10 +106,10 @@ Apply at least Third Normal Form (3NF):
 
 | Relationship | Implementation | Example |
 |---|---|---|
-| **One-to-many** | Foreign key on the "many" side | projects.client_id → clients.id |
+| **One-to-many** | Foreign key on the "many" side | projects.client_id â†’ clients.id |
 | **Many-to-many** | Junction table with composite unique constraint | project_tags (project_id, tag_id) |
-| **One-to-one** | Foreign key with UNIQUE constraint, or same table | user_profiles.user_id → auth.users.id (UNIQUE) |
-| **Self-referencing** | Foreign key to same table | categories.parent_id → categories.id |
+| **One-to-one** | Foreign key with UNIQUE constraint, or same table | user_profiles.user_id â†’ auth.users.id (UNIQUE) |
+| **Self-referencing** | Foreign key to same table | categories.parent_id â†’ categories.id |
 | **Polymorphic** | Separate foreign keys or a generic entity_type + entity_id pattern | comments on projects AND tasks: entity_type + entity_id |
 
 #### 2D. Entity-Relationship Diagram
@@ -117,26 +117,26 @@ Apply at least Third Normal Form (3NF):
 Produce a text-based ERD:
 
 ```
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│   clients     │     │   projects    │     │   tasks       │
-├───────────────┤     ├───────────────┤     ├───────────────┤
-│ id (PK)       │──┐  │ id (PK)       │──┐  │ id (PK)       │
-│ name          │  │  │ client_id (FK)│◀─┘  │ project_id(FK)│◀─┘
-│ email         │  │  │ name          │     │ title         │
-│ org_id (FK)   │  │  │ status        │     │ status        │
-│ created_at    │  │  │ created_at    │     │ assigned_to   │
-└───────────────┘  │  └───────────────┘     │ created_at    │
-                   │                         └───────────────┘
-                   │
-                   ▼
-┌───────────────┐
-│ organisations │
-├───────────────┤
-│ id (PK)       │
-│ name          │
-│ slug          │
-│ created_at    │
-└───────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   clients     â”‚     â”‚   projects    â”‚     â”‚   tasks       â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤     â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤     â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ id (PK)       â”‚â”€â”€â”  â”‚ id (PK)       â”‚â”€â”€â”  â”‚ id (PK)       â”‚
+â”‚ name          â”‚  â”‚  â”‚ client_id (FK)â”‚â—€â”€â”˜  â”‚ project_id(FK)â”‚â—€â”€â”˜
+â”‚ email         â”‚  â”‚  â”‚ name          â”‚     â”‚ title         â”‚
+â”‚ org_id (FK)   â”‚  â”‚  â”‚ status        â”‚     â”‚ status        â”‚
+â”‚ created_at    â”‚  â”‚  â”‚ created_at    â”‚     â”‚ assigned_to   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜     â”‚ created_at    â”‚
+                   â”‚                         â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                   â”‚
+                   â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ organisations â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ id (PK)       â”‚
+â”‚ name          â”‚
+â”‚ slug          â”‚
+â”‚ created_at    â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
@@ -185,7 +185,7 @@ Apply one of four canonical RLS patterns depending on access requirements:
 3. **Owner-based** — `user_id = auth.uid()` for personal data
 4. **Public read, authenticated write** — `status = 'published'` for SELECT, `auth.uid() IS NOT NULL` for INSERT
 
-See `reference.md` §1 (Common RLS Policy Patterns) for full SQL templates of each pattern, including helper-function variants and combined policies.
+See `reference.md` Â§1 (Common RLS Policy Patterns) for full SQL templates of each pattern, including helper-function variants and combined policies.
 
 #### 3C. Helper Functions
 

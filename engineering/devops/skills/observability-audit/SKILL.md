@@ -2,7 +2,7 @@
 name: observability-audit
 description: Score observability across the four pillars — logs, metrics, traces, and alerts/dashboards — with per-service coverage heatmap. Cross-cutting synthesis. Static, live (Prometheus/Grafana/OTel/Datadog), and runtime (synthetic alert) modes.
 argument-hint: [repo-path]
-allowed-tools: Read Grep Glob Write Edit Bash(bash:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(bash:*)
 effort: high
 ---
 
@@ -15,7 +15,7 @@ Run this skill when the user mentions:
 - Metrics coverage, tracing coverage, alert quality, dashboard review
 - OpenTelemetry, Prometheus, Grafana, Datadog, New Relic
 
-Scores four pillars 0–5: logs (structured, correlation IDs, PII scrubbing, level discipline), metrics (RED/USE coverage, cardinality discipline, histogram buckets), traces (service-boundary spans, attribute conventions, sampling), and alerts/dashboards (paging vs non-paging, runbook links, symptom-based alerts, golden-signal dashboards, SLO burn-rate panels). Cross-cutting — does not spawn parallel sub-agents.
+Scores four pillars 0”“5: logs (structured, correlation IDs, PII scrubbing, level discipline), metrics (RED/USE coverage, cardinality discipline, histogram buckets), traces (service-boundary spans, attribute conventions, sampling), and alerts/dashboards (paging vs non-paging, runbook links, symptom-based alerts, golden-signal dashboards, SLO burn-rate panels). Cross-cutting — does not spawn parallel sub-agents.
 
 ## Before You Start
 
@@ -35,7 +35,7 @@ Tracing surface: !`bash "${CLAUDE_PLUGIN_ROOT}/skills/observability-audit/script
 
 Dashboards & alerts: !`bash "${CLAUDE_PLUGIN_ROOT}/skills/observability-audit/scripts/find-dashboards.sh"`
 
-Live mode env: !`if [ -n "$PROM_URL" ]; then echo prom-ready; else echo prom-unset; fi` · !`if [ -n "$GRAFANA_URL" ]; then echo grafana-ready; else echo grafana-unset; fi`
+Live mode env: !`if [ -n "$PROM_URL" ]; then echo prom-ready; else echo prom-unset; fi` Â· !`if [ -n "$GRAFANA_URL" ]; then echo grafana-ready; else echo grafana-unset; fi`
 
 ---
 
@@ -53,9 +53,9 @@ Catalogue:
 
 ### Phase 2: Per-Pillar Scoring
 
-For each pillar, score 0–5 using `reference.md` §1 and emit findings.
+For each pillar, score 0”“5 using `reference.md` Â§1 and emit findings.
 
-#### Logs (0–5)
+#### Logs (0”“5)
 - Structured format (JSON) throughout
 - Correlation ID / trace ID propagated into every log line
 - Log level discipline (INFO for normal, WARN/ERROR appropriately)
@@ -63,21 +63,21 @@ For each pillar, score 0–5 using `reference.md` §1 and emit findings.
 - Retention + rotation policy sane
 - Search / query tooling in place (Loki / Axiom / Datadog / CloudWatch Insights)
 
-#### Metrics (0–5)
+#### Metrics (0”“5)
 - RED metrics (Rate, Errors, Duration) per service endpoint
 - USE metrics (Utilisation, Saturation, Errors) for host/container resources
 - Cardinality discipline (no high-cardinality labels like `user_id`, `request_id` as labels)
 - Histogram buckets sensible (not default 10-bucket on a 200ms service)
 - Business-domain metrics (not just infra)
 
-#### Traces (0–5)
+#### Traces (0”“5)
 - Spans at every service boundary (HTTP in, HTTP out, DB query)
 - Consistent attribute conventions (OTel semantic conventions)
 - Trace context propagation across async boundaries (queues, workers)
 - Sampling strategy explicit (head-based vs tail-based, rate chosen)
-- Exemplars link metrics → traces
+- Exemplars link metrics â†’ traces
 
-#### Alerts & Dashboards (0–5)
+#### Alerts & Dashboards (0”“5)
 - Paging alerts separate from non-paging (e.g., warning-only)
 - Runbook link in every paging alert
 - Symptom-based alerts (user-facing outage) not cause-based (CPU at 80%)
@@ -88,7 +88,7 @@ For each pillar, score 0–5 using `reference.md` §1 and emit findings.
 ### Phase 3: Cross-Pillar Gap Analysis
 
 - Which services have all four pillars? Which have none?
-- Heatmap: services × pillars.
+- Heatmap: services Ã— pillars.
 - Identify the **weakest link** — typically traces or SLO-based alerts.
 
 ### Phase 4: Live Mode (opt-in)
@@ -103,25 +103,25 @@ If `--live`:
 
 If `--runtime` and non-prod confirmed:
 - Fire a synthetic alert: push a metric that violates a known threshold or send a crafted log line that matches a log-based alert.
-- Trace its path: alert rule fires → Alertmanager / Datadog routes → notification channel (Slack / PagerDuty sandbox) → user receives it.
+- Trace its path: alert rule fires â†’ Alertmanager / Datadog routes â†’ notification channel (Slack / PagerDuty sandbox) â†’ user receives it.
 - Record latency at each hop. Confirm runbook link resolves to a non-404 page.
 - Write `synthetic-alert-trace.md` with the hop-by-hop trace.
 
 ### Phase 6: Reporting
 
-Write `observability-audit.md` + `observability-audit.json` (+ `synthetic-alert-trace.md` in runtime mode). Report includes per-pillar scores, service × pillar heatmap, gap list, prioritised action list.
+Write `observability-audit.md` + `observability-audit.json` (+ `synthetic-alert-trace.md` in runtime mode). Report includes per-pillar scores, service Ã— pillar heatmap, gap list, prioritised action list.
 
 ---
 
 ## Scoring
 
-Pillar weights equal: logs 25, metrics 25, traces 25, alerts/dashboards 25. Each pillar scored 0–5 → aggregate = (sum / 20) × 100.
+Pillar weights equal: logs 25, metrics 25, traces 25, alerts/dashboards 25. Each pillar scored 0”“5 â†’ aggregate = (sum / 20) Ã— 100.
 
 | Total | Verdict |
 |---|---|
 | 90+ | Observability mature |
-| 70–89 | Observability good; gaps exist |
-| 50–69 | Observability patchy; significant uplift needed |
+| 70”“89 | Observability good; gaps exist |
+| 50”“69 | Observability patchy; significant uplift needed |
 | <50 | Observability blind — urgent |
 
 ---

@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "data-analysis",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "5 skills for data profiling, quality auditing, pipeline design, cohort analysis, and anomaly detection",
       "source": "./data-science/data-analysis",
       "category": "data-science",
@@ -17,7 +17,7 @@
     },
     {
       "name": "knowledge-engineering",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "4 skills for entity disambiguation, relationship mapping, knowledge graph building, and business data modelling",
       "source": "./data-science/knowledge-engineering",
       "category": "data-science",
@@ -25,7 +25,7 @@
     },
     {
       "name": "business-economics",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "2 skills for unit economics calculation and market sizing (TAM/SAM/SOM) estimation",
       "source": "./economics/business-economics",
       "category": "economics",
@@ -33,7 +33,7 @@
     },
     {
       "name": "package-manager",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "Audit npm package publishing quality and CLI terminal UX — publishing/security/build checks plus help-text, error-message, and output-formatting review",
       "source": "./engineering/package-manager",
       "category": "engineering",
@@ -41,7 +41,7 @@
     },
     {
       "name": "plan-completion-audit",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "Full-stack audit of project plans versus actual implementation with Supabase schema verification",
       "source": "./utilities/plan-completion-audit",
       "category": "utilities",
@@ -57,7 +57,7 @@
     },
     {
       "name": "brand-manager",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "9 skills for end-to-end brand creation — identity, guidelines, audience, competitors, logo briefs, colour, design tokens, legal disclaimers, and website copy",
       "source": "./smb/brand-manager",
       "category": "smb",
@@ -89,7 +89,7 @@
     },
     {
       "name": "devops",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "9 DevOps and SRE skills for audit, remediation, and runtime testing — plain-language needs assessment, CI/CD, Terraform IaC, Docker, Kubernetes, observability, release readiness, DevSecOps supply chain, and SRE reliability. Static-file audit by default; opt-in --live, --apply, --runtime modes",
       "source": "./engineering/devops",
       "category": "engineering",

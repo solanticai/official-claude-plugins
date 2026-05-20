@@ -2,7 +2,7 @@
 name: knowledge-graph-builder
 description: Construct knowledge graph specifications from business entities and relationships for Neo4j, JSON-LD, or Supabase/PostgreSQL JSONB implementation
 argument-hint: [business-entities-and-relationships]
-allowed-tools: Read Grep Glob Write Edit Bash(python:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(python:*)
 effort: high
 ---
 
@@ -13,7 +13,7 @@ effort: high
 - **Category:** Structured Data & Entity Modelling
 - **Output:** Knowledge graph spec
 - **Complexity:** High
-- **Estimated Completion:** 20–30 minutes (interactive)
+- **Estimated Completion:** 20”“30 minutes (interactive)
 
 ---
 
@@ -98,26 +98,26 @@ Model hierarchies using appropriate patterns:
 
 | Hierarchy Type | Pattern | Schema.org | Example |
 |---|---|---|---|
-| **Organisational** | Organization → subOrganization | subOrganization / parentOrganization | Company → Division → Team |
-| **Categorical** | ItemList → ListItem | itemListElement | Service Categories → Services |
-| **Geographic** | Place → containedInPlace | containedInPlace / containsPlace | Country → State → City → Office |
-| **Topical** | Concept → broader/narrower | — (use custom or SKOS) | AI → Machine Learning → NLP |
-| **Content** | WebSite → WebPage → Article | isPartOf / hasPart | Site → Section → Post |
+| **Organisational** | Organization â†’ subOrganization | subOrganization / parentOrganization | Company â†’ Division â†’ Team |
+| **Categorical** | ItemList â†’ ListItem | itemListElement | Service Categories â†’ Services |
+| **Geographic** | Place â†’ containedInPlace | containedInPlace / containsPlace | Country â†’ State â†’ City â†’ Office |
+| **Topical** | Concept â†’ broader/narrower | — (use custom or SKOS) | AI â†’ Machine Learning â†’ NLP |
+| **Content** | WebSite â†’ WebPage â†’ Article | isPartOf / hasPart | Site â†’ Section â†’ Post |
 
 #### 2D. Graph Visualisation
 
 Produce a text-based graph schema:
 
 ```
-[Organization]──provides──▶[Service]
-      │                        │
-      │employee                │serviceOutput
-      ▼                        ▼
-  [Person]──authors──▶[Article]──about──▶[Topic]
-      │                   │
-      │worksFor            │mainEntityOfPage
-      ▼                   ▼
-[Organization]        [WebPage]──isPartOf──▶[WebSite]
+[Organization]â”€â”€providesâ”€â”€â–¶[Service]
+      â”‚                        â”‚
+      â”‚employee                â”‚serviceOutput
+      â–¼                        â–¼
+  [Person]â”€â”€authorsâ”€â”€â–¶[Article]â”€â”€aboutâ”€â”€â–¶[Topic]
+      â”‚                   â”‚
+      â”‚worksFor            â”‚mainEntityOfPage
+      â–¼                   â–¼
+[Organization]        [WebPage]â”€â”€isPartOfâ”€â”€â–¶[WebSite]
 ```
 
 ---
@@ -268,11 +268,11 @@ flowchart TD
     classDef entity fill:#e1f5fe,stroke:#01579b
     classDef relationship fill:#fff3e0,stroke:#e65100
 
-    Consultant["👤 Consultant"]:::entity
-    Client["🏢 Client"]:::entity
-    Project["📋 Project"]:::entity
-    Skill["🔧 Skill"]:::entity
-    Industry["🏭 Industry"]:::entity
+    Consultant["ðŸ‘¤ Consultant"]:::entity
+    Client["ðŸ¢ Client"]:::entity
+    Project["ðŸ“‹ Project"]:::entity
+    Skill["ðŸ”§ Skill"]:::entity
+    Industry["ðŸ­ Industry"]:::entity
 
     Consultant -->|WORKS_ON| Project
     Consultant -->|HAS_SKILL| Skill
@@ -299,7 +299,7 @@ Replace placeholder nodes and edges with the actual graph schema. Use styled cla
 
 ### Edge Cases
 
-- **Very small businesses (solo operator):** The graph may have only 3–5 entities: one Person, one Organization, 2–3 Services. This is fine — a small, well-connected graph is still valuable for structured data output.
+- **Very small businesses (solo operator):** The graph may have only 3”“5 entities: one Person, one Organization, 2”“3 Services. This is fine — a small, well-connected graph is still valuable for structured data output.
 - **Large product catalogues:** Use template-based entity generation rather than hand-modelling each product. Define the Product entity class once, with standardised properties and relationships, then populate from data.
 - **Domains with no obvious Schema.org mapping:** Some specialised domains (e.g., industrial processes, niche services) don't have direct Schema.org types. Use the closest parent type and extend with additionalType or JSONB properties. Document the mapping gap.
 - **Multi-language / multi-region:** Create one entity with multi-language properties (name, description in each language) rather than duplicate entities per language. Use inLanguage to flag language-specific content entities.

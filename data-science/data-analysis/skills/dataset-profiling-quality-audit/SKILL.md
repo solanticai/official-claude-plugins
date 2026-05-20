@@ -2,7 +2,7 @@
 name: dataset-profiling-quality-audit
 description: Profile datasets and audit data quality across six dimensions, producing prioritised cleaning recommendations
 argument-hint: [dataset-description-or-file-path]
-allowed-tools: Read Grep Glob Write Edit Bash Agent
+allowed-tools: Read Grep Glob Write Edit Bash
 effort: high
 ---
 
@@ -13,7 +13,7 @@ effort: high
 - **Category:** Data Analysis & Intelligence
 - **Output:** Data quality report
 - **Complexity:** Medium
-- **Estimated Completion:** 10–20 minutes (interactive)
+- **Estimated Completion:** 10”“20 minutes (interactive)
 
 ---
 
@@ -56,7 +56,7 @@ Collect information about the dataset. Work with whatever the user provides — 
    - SQL CREATE TABLE statement
    - CSV/spreadsheet column headers
    - Data dictionary
-   - Sample rows (5–10 rows)
+   - Sample rows (5”“10 rows)
    - Plain-language field descriptions
 3. **Source system** — Where does this data come from? (e.g., database export, API, manual entry, scraping, third-party tool)
 4. **Volume** — Approximate row count and date range covered
@@ -66,7 +66,7 @@ Collect information about the dataset. Work with whatever the user provides — 
 #### Optional Inputs (improve analysis if provided)
 - Sample data (CSV, JSON, or pasted rows)
 - Related datasets this joins to
-- Business rules or constraints (e.g., "order_total should always equal quantity × unit_price")
+- Business rules or constraints (e.g., "order_total should always equal quantity Ã— unit_price")
 - Historical context (e.g., "We switched CRM in March 2024 so data before that is structured differently")
 - Sensitivity level (contains PII, financial data, health data)
 
@@ -131,9 +131,9 @@ For each field, calculate and report:
 | **MNAR** (Missing Not At Random) | Missingness related to the missing value itself | Suspected when high-value or sensitive data disproportionately missing (e.g., high earners skip income question) | Cannot be fully corrected; document bias; sensitivity analysis required |
 
 **Severity thresholds:**
-- 🟢 <5% missing — acceptable for most uses
-- 🟡 5–20% missing — investigate pattern; imputation may be needed
-- 🔴 >20% missing — field reliability compromised; assess whether usable
+- ðŸŸ¢ <5% missing — acceptable for most uses
+- ðŸŸ¡ 5”“20% missing — investigate pattern; imputation may be needed
+- ðŸ”´ >20% missing — field reliability compromised; assess whether usable
 
 **Business-context checks:**
 - Fields that should never be null (e.g., primary keys, transaction amounts, created_at timestamps)
@@ -147,9 +147,9 @@ Check whether values conform to expected formats and ranges:
 | Check Type | Examples | Method |
 |---|---|---|
 | **Format validation** | Email addresses match pattern; phone numbers have correct digit count; postcodes match country format; URLs are valid | Regex patterns |
-| **Range validation** | Ages between 0–120; prices non-negative; percentages 0–100; dates not in the future (for historical data) | Min/max bounds checking |
+| **Range validation** | Ages between 0”“120; prices non-negative; percentages 0”“100; dates not in the future (for historical data) | Min/max bounds checking |
 | **Domain validation** | Status fields contain only expected values; country codes are ISO-valid; currency codes recognised | Enumeration checking |
-| **Cross-field validation** | `end_date >= start_date`; `total = quantity × unit_price`; `state` matches `postcode` region | Business rule verification |
+| **Cross-field validation** | `end_date >= start_date`; `total = quantity Ã— unit_price`; `state` matches `postcode` region | Business rule verification |
 | **Temporal validation** | Dates are parseable; timestamps have consistent timezone handling; no impossible dates (Feb 30) | Date parsing with strict mode |
 
 #### 3C. Consistency
@@ -190,7 +190,7 @@ Apply multiple detection methods and compare results:
 
 | Method | Formula | Best For | Limitation |
 |---|---|---|---|
-| **IQR method** | Outlier if value < Q1 − 1.5×IQR or > Q3 + 1.5×IQR | General purpose; robust to skew | Assumes roughly symmetric distribution |
+| **IQR method** | Outlier if value < Q1 âˆ’ 1.5Ã—IQR or > Q3 + 1.5Ã—IQR | General purpose; robust to skew | Assumes roughly symmetric distribution |
 | **Z-score** | Outlier if \|z\| > 3 (or 2.5 for stricter) | Normally distributed data | Sensitive to existing outliers shifting mean/std |
 | **Modified Z-score** | Uses median and MAD instead of mean and std | Robust alternative to z-score | Less well-known; requires MAD calculation |
 | **Percentile-based** | Flag values below 1st or above 99th percentile | Any distribution | Arbitrary threshold |
@@ -224,18 +224,18 @@ Overall Quality Score: [X/100]
 
 | Dimension     | Score | Status | Key Finding |
 |--------------|-------|--------|-------------|
-| Completeness | X/100 | 🟢🟡🔴  | [One-line summary] |
-| Validity     | X/100 | 🟢🟡🔴  | [One-line summary] |
-| Consistency  | X/100 | 🟢🟡🔴  | [One-line summary] |
-| Uniqueness   | X/100 | 🟢🟡🔴  | [One-line summary] |
-| Timeliness   | X/100 | 🟢🟡🔴  | [One-line summary] |
-| Accuracy     | X/100 | 🟢🟡🔴  | [One-line summary] |
+| Completeness | X/100 | ðŸŸ¢ðŸŸ¡ðŸ”´  | [One-line summary] |
+| Validity     | X/100 | ðŸŸ¢ðŸŸ¡ðŸ”´  | [One-line summary] |
+| Consistency  | X/100 | ðŸŸ¢ðŸŸ¡ðŸ”´  | [One-line summary] |
+| Uniqueness   | X/100 | ðŸŸ¢ðŸŸ¡ðŸ”´  | [One-line summary] |
+| Timeliness   | X/100 | ðŸŸ¢ðŸŸ¡ðŸ”´  | [One-line summary] |
+| Accuracy     | X/100 | ðŸŸ¢ðŸŸ¡ðŸ”´  | [One-line summary] |
 
-Fitness for intended use: ✅ Ready / ⚠️ Usable with caveats / ❌ Not ready
+Fitness for intended use: âœ… Ready / âš ï¸ Usable with caveats / âŒ Not ready
 ```
 
 **Scoring methodology:**
-- Each dimension scored 0–100 based on % of fields/records passing checks
+- Each dimension scored 0”“100 based on % of fields/records passing checks
 - Overall score = weighted average (weights adjusted by intended use — e.g., completeness weighted higher for ML training data; consistency weighted higher for reporting)
 - Fitness assessment considers whether the specific issues found would affect the stated intended use
 
@@ -428,7 +428,7 @@ Replace placeholder values with actual column names and percentages from the pro
 
 - **Unstructured or semi-structured data (JSON, nested):** Assess the top-level structure, then profile nested fields separately. Flag inconsistent nesting depth, missing keys within nested objects, and mixed types within arrays.
 
-- **Very large datasets (>1M rows):** Recommend sampling strategy for profiling (random sample of 10K–50K rows with stratification by key dimensions). Note which checks require full-table scans vs sampling.
+- **Very large datasets (>1M rows):** Recommend sampling strategy for profiling (random sample of 10K”“50K rows with stratification by key dimensions). Note which checks require full-table scans vs sampling.
 
 - **Real-time / streaming data:** Shift recommendations toward validation rules at ingestion rather than batch cleaning. Design checks that can run on each record as it arrives.
 

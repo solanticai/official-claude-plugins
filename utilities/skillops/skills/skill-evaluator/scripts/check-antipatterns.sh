@@ -158,6 +158,14 @@ if [ -n "$SKILL_MD" ]; then
     # Strip leading whitespace.
     raw="${raw## }"
     # Tokenise on whitespace, drop arg-scoped parenthetical suffixes.
+    # If the skill itself is launched as a subagent (via `agent:` frontmatter
+    # or `context: fork`), Agent in allowed-tools is justified by the runtime
+    # invocation pattern — exempt it from the unused-tool check.
+    agent_field_present=0
+    if awk 'NR<=20 && /^(agent|context)[[:space:]]*:/ { print; exit }' "$SKILL_MD" | grep -q .; then
+      agent_field_present=1
+    fi
+
     for tok in $raw; do
       base="${tok%%(*}"
       # Only check special / explicit-by-name tools. CRUD tools (Read, Write,
@@ -167,6 +175,10 @@ if [ -n "$SKILL_MD" ]; then
         Agent|WebFetch|WebSearch|TaskCreate|TaskUpdate|TaskList|NotebookEdit) ;;
         *) continue ;;
       esac
+      # Skip Agent when the skill runs in a forked/subagent context.
+      if [ "$base" = "Agent" ] && [ "$agent_field_present" = "1" ]; then
+        continue
+      fi
       if ! awk -v t="$base" 'NR>20 && $0 ~ ("\\<" t "\\>") { found=1; exit } END { exit !found }' "$SKILL_MD" \
          && ! grep -rqE "\\b$base\\b" "$TARGET/scripts" 2>/dev/null; then
         add_finding "C45" "warn" "SKILL.md" "$ln" "Tool '$base' is in allowed-tools but never used." "Remove unused tool from allowed-tools."

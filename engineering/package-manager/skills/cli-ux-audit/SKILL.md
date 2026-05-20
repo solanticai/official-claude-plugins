@@ -2,7 +2,7 @@
 name: cli-ux-audit
 description: Audit any CLI tool for terminal user experience — help text, command structure, error messages, output formatting, discoverability, and accessibility — produces a scored report with actionable fixes
 argument-hint: [cli-binary-or-package-path]
-allowed-tools: Read, Grep, Glob, Write, Edit, Bash(command:*), Bash(./scripts/*:*), Bash(man:*), Bash(which:*), Agent
+allowed-tools: Read, Grep, Glob, Write, Edit, Bash(command:*), Bash(./scripts/*:*), Bash(man:*), Bash(which:*),
 effort: high
 ---
 
@@ -59,7 +59,7 @@ Refer to the help-output checklist in `${CLAUDE_PLUGIN_ROOT}/skills/cli-ux-audit
 3. **Output goes to stdout.** Help content is on stdout, not stderr (check by redirecting `2>/dev/null` — help text should still appear).
 4. **Structural completeness.** Help output contains: a one-line synopsis, a short description, an options block, a commands/subcommands block (if multi-command), and — critically — an **examples block**. Missing examples is a common CRITICAL finding.
 5. **Per-option descriptions.** Every flag has a description, not just a name. Mandatory vs optional flags visibly distinguished.
-6. **Readable width.** Lines wrap at ≤ 80 characters by default. Run `COLUMNS=40 <cli> --help` and confirm the output still wraps sensibly.
+6. **Readable width.** Lines wrap at â‰¤ 80 characters by default. Run `COLUMNS=40 <cli> --help` and confirm the output still wraps sensibly.
 7. **Defaults shown.** Flag defaults are displayed inline (e.g. `--timeout <ms> (default: 5000)`).
 8. **Version line.** `--version` emits the version number and — ideally — the commit hash or build date. Exits with code 0.
 9. **Man pages.** For system-level CLIs, a man page is shipped or generated (`man <cli>` works).
@@ -71,14 +71,14 @@ Refer to the help-output checklist in `${CLAUDE_PLUGIN_ROOT}/skills/cli-ux-audit
 **Objective:** Verify the command tree is consistent, discoverable, and parses input predictably.
 
 1. **Naming consistency.** Subcommands follow a consistent grammar (all verb-noun or all noun-verb, not mixed).
-2. **Short aliases.** Common flags have short forms (`--verbose` ↔ `-v`, `--output` ↔ `-o`). No collisions between subcommands and their flags.
+2. **Short aliases.** Common flags have short forms (`--verbose` â†” `-v`, `--output` â†” `-o`). No collisions between subcommands and their flags.
 3. **Negatable booleans.** Boolean flags support `--no-<name>` or pair with an opposite flag.
 4. **Required-arg validation.** Missing required arguments produce a clear usage error **before** any side effects (not halfway through execution).
 5. **Unknown-flag rejection.** `cli --bogus` fails with a message; bonus points if it suggests a close match.
 6. **Flag order independence.** `cli --flag cmd` and `cli cmd --flag` both work, unless positional ambiguity makes that unsafe.
 7. **Positional separator.** `--` correctly stops flag parsing (`cli -- --this-is-not-a-flag`).
 8. **Confirmation on destructive actions.** Irreversible subcommands (delete, rm, drop, reset) require interactive confirmation or an explicit `--yes` / `--force`.
-9. **Subcommand tree depth.** Tree is shallow (≤ 3 levels). Deep trees hurt discoverability.
+9. **Subcommand tree depth.** Tree is shallow (â‰¤ 3 levels). Deep trees hurt discoverability.
 10. **Mutually exclusive flags.** Documented and enforced (e.g. `--json` vs `--yaml`).
 
 ---
@@ -110,7 +110,7 @@ Probe deliberately broken invocations and record stdout, stderr, and exit code. 
 4. **Pipe-safe defaults.** `cli ... | cat` strips colour automatically (detects non-TTY stdout).
 5. **Structured output mode.** `--json` or `--format=json` emits clean JSON (one object or NDJSON), suitable for `jq`.
 6. **Progress to stderr.** Progress bars, status updates, and spinners write to stderr or overwrite a single line. They never interleave with structured stdout.
-7. **Icons degrade.** Unicode icons (✓, ✗, ⚠) have ASCII fallback via `--ascii` or auto-detection on non-UTF-8 terminals.
+7. **Icons degrade.** Unicode icons (âœ“, âœ—, âš ) have ASCII fallback via `--ascii` or auto-detection on non-UTF-8 terminals.
 
 ---
 
@@ -147,7 +147,7 @@ Probe deliberately broken invocations and record stdout, stderr, and exit code. 
 
 **Objective:** Verify output is usable by people with visual impairments, colour-vision deficiencies, screen readers, and non-English locales.
 
-1. **Colour is not the only signal.** Every coloured status also has a text or symbol cue (✓ / FAIL / [WARN]). Colour-blind users must still be able to read status.
+1. **Colour is not the only signal.** Every coloured status also has a text or symbol cue (âœ“ / FAIL / [WARN]). Colour-blind users must still be able to read status.
 2. **Safe palette.** Avoid red-only vs green-only contrasts. Prefer red+symbol vs green+symbol. See reference.md for a CVD-safe palette.
 3. **Screen-reader friendly.** Critical information is in text, not ASCII art, banners, or box-drawing characters.
 4. **Locale awareness.** Timestamps, numbers, and currency follow `LANG`/`LC_ALL` where relevant — or explicitly use ISO 8601 / fixed formats.

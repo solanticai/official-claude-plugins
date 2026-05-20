@@ -2,7 +2,7 @@
 name: entity-relationship-mapper
 description: Map business domains to entity-relationship models with Schema.org types, JSON-LD @graph output, consistent @id structures, and sameAs connections
 argument-hint: [domain-or-business-description]
-allowed-tools: Read Grep Glob Write Edit Bash(python:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(python:*)
 effort: high
 ---
 
@@ -12,8 +12,8 @@ effort: high
 - **Skill ID:** entity-relationship-mapper
 - **Category:** Structured Data & Entity Modelling
 - **Output:** ERD + JSON-LD @graph
-- **Complexity:** Medium–High
-- **Estimated Completion:** 15–25 minutes (interactive)
+- **Complexity:** Medium”“High
+- **Estimated Completion:** 15”“25 minutes (interactive)
 
 ---
 
@@ -169,42 +169,42 @@ The full entity definition lives in one place (its canonical page). Every other 
 Produce a visual relationship map:
 
 ```
-                    ┌──────────────┐
-                    │  WebSite     │
-                    │  #website    │
-                    └──────┬───────┘
-                           │ publisher
-                           ▼
-┌──────────┐      ┌──────────────┐      ┌──────────────┐
-│ Person   │◀────▶│ Organization │◀────▶│ LocalBusiness│
-│ #person  │ emp  │ #organization│parent│ #location    │
-└──────────┘      └──────┬───────┘      └──────────────┘
-     │ author            │ provider            │ geo
-     ▼                   ▼                     ▼
-┌──────────┐      ┌──────────────┐      ┌──────────────┐
-│ Article  │      │   Service    │      │ GeoCoord     │
-│ #article │      │   #service   │      │              │
-└──────────┘      └──────────────┘      └──────────────┘
+                    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                    â”‚  WebSite     â”‚
+                    â”‚  #website    â”‚
+                    â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜
+                           â”‚ publisher
+                           â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Person   â”‚â—€â”€â”€â”€â”€â–¶â”‚ Organization â”‚â—€â”€â”€â”€â”€â–¶â”‚ LocalBusinessâ”‚
+â”‚ #person  â”‚ emp  â”‚ #organizationâ”‚parentâ”‚ #location    â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â””â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”˜      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+     â”‚ author            â”‚ provider            â”‚ geo
+     â–¼                   â–¼                     â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Article  â”‚      â”‚   Service    â”‚      â”‚ GeoCoord     â”‚
+â”‚ #article â”‚      â”‚   #service   â”‚      â”‚              â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜      â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 #### 4B. Relationship Property Reference
 
-| Relationship | From → To | Property (forward) | Property (inverse) |
+| Relationship | From â†’ To | Property (forward) | Property (inverse) |
 |---|---|---|---|
-| Business operates website | Organization → WebSite | — | publisher |
-| Person works for business | Person → Organization | worksFor | employee / member |
-| Person founded business | Person → Organization | — | founder |
-| Business provides service | Organization → Service | — | provider |
-| Business offers product | Organization → Product | — | manufacturer / brand |
-| Business has location | Organization → LocalBusiness | — | parentOrganization |
-| Person authored content | Person → Article | — | author |
-| Business published content | Organization → Article | — | publisher |
-| Content is on page | Article → WebPage | — | mainEntity |
-| Page is part of site | WebPage → WebSite | isPartOf | — |
-| Service has offer | Service → Offer | offers | — |
-| Location has address | LocalBusiness → PostalAddress | address | — |
-| Location has geo | LocalBusiness → GeoCoordinates | geo | — |
-| Entity same as external | Entity → URL | sameAs | — |
+| Business operates website | Organization â†’ WebSite | — | publisher |
+| Person works for business | Person â†’ Organization | worksFor | employee / member |
+| Person founded business | Person â†’ Organization | — | founder |
+| Business provides service | Organization â†’ Service | — | provider |
+| Business offers product | Organization â†’ Product | — | manufacturer / brand |
+| Business has location | Organization â†’ LocalBusiness | — | parentOrganization |
+| Person authored content | Person â†’ Article | — | author |
+| Business published content | Organization â†’ Article | — | publisher |
+| Content is on page | Article â†’ WebPage | — | mainEntity |
+| Page is part of site | WebPage â†’ WebSite | isPartOf | — |
+| Service has offer | Service â†’ Offer | offers | — |
+| Location has address | LocalBusiness â†’ PostalAddress | address | — |
+| Location has geo | LocalBusiness â†’ GeoCoordinates | geo | — |
+| Entity same as external | Entity â†’ URL | sameAs | — |
 
 #### 4C. sameAs Link Mapping
 
@@ -392,7 +392,7 @@ Replace placeholder entities with the actual Schema.org types identified in the 
 
 1. **Entity-first, not page-first.** Define entities independently of pages. An Organization exists as an entity — it happens to be described most fully on the homepage. A Person exists as an entity — they're described on the About page. The entity is primary; the page is a container.
 2. **One @id per entity, used everywhere.** The Organization's @id is defined once and referenced by @id from every page that mentions it. Never redefine an entity's properties on a different page — reference only.
-3. **@id ≠ url.** @id is a graph identifier (internal plumbing). url is the human-facing web address. They may share the same base URL but serve different purposes. @id uses hash fragments; url does not.
+3. **@id â‰  url.** @id is a graph identifier (internal plumbing). url is the human-facing web address. They may share the same base URL but serve different purposes. @id uses hash fragments; url does not.
 4. **Always use @graph for multi-entity pages.** Never put multiple <script type="application/ld+json"> blocks on a page when a single @graph block properly connects them.
 5. **sameAs links must be authoritative and bidirectional where possible.** Link to profiles you control (LinkedIn, Facebook, Google Business) — not to random mentions. sameAs tells machines "this entity is the same as that entity."
 6. **knowsAbout for topical authority.** Use the Organization's knowsAbout property to declare subject-matter expertise. This feeds LLM and AI agent understanding of what the business is authoritative about.

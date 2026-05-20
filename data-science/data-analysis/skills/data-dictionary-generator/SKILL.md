@@ -2,7 +2,7 @@
 name: data-dictionary-generator
 description: Auto-generate comprehensive data dictionaries from database schemas, CSV files, or API responses with column definitions, relationships, and Mermaid ERD
 argument-hint: [schema-source-or-description]
-allowed-tools: Read Grep Glob Write Edit Bash Agent
+allowed-tools: Read Grep Glob Write Edit Bash
 effort: high
 paths: "**/*.sql, **/migrations/**, **/schema.*"
 ---

@@ -2,7 +2,7 @@
 name: plan-completion-audit
 description: Audit a project plan against the actual implementation — verifying code, types, security, and Supabase backend alignment.
 argument-hint: [path-to-project-root-or-plan-file]
-allowed-tools: Read Grep Glob Write Edit Bash(npx:*) Bash(npm:*) Bash(yarn:*) Bash(pnpm:*) Bash(supabase:*) Bash(grep:*) Bash(find:*) Bash(ls:*) Bash(cat:*) Bash(bash:*) Bash(timeout:*) Bash(python3:*) Bash(mypy:*) Bash(pyright:*) Bash(ruff:*) WebSearch WebFetch Agent
+allowed-tools: Read Grep Glob Write Edit Bash(npx:*) Bash(npm:*) Bash(yarn:*) Bash(pnpm:*) Bash(supabase:*) Bash(grep:*) Bash(find:*) Bash(ls:*) Bash(cat:*) Bash(bash:*) Bash(timeout:*) Bash(python3:*) Bash(mypy:*) Bash(pyright:*) Bash(ruff:*)
 effort: high
 ---
 
@@ -59,10 +59,10 @@ Execute every phase in order. Report findings per phase using the format in the 
 1. Read the full plan/requirements document.
 2. Build a numbered checklist of every discrete task, feature, or deliverable mentioned in the plan.
 3. For each item, search the codebase for its implementation. Assign one of these statuses:
-   - ✅ **COMPLETE** — Code exists, is functional, and matches the plan specification
-   - 🟡 **PARTIAL** — Code exists but is incomplete, stubbed out, or missing key functionality described in the plan
-   - ❌ **NOT STARTED** — No implementation found anywhere in the codebase
-   - ⚠️ **DEVIATES** — Implemented but differently than the plan specified (describe the deviation)
+   - âœ… **COMPLETE** — Code exists, is functional, and matches the plan specification
+   - ðŸŸ¡ **PARTIAL** — Code exists but is incomplete, stubbed out, or missing key functionality described in the plan
+   - âŒ **NOT STARTED** — No implementation found anywhere in the codebase
+   - âš ï¸ **DEVIATES** — Implemented but differently than the plan specified (describe the deviation)
    
    Read the actual code to determine status — do not just confirm a file or function name exists. A file with a placeholder return, an empty function body, or a TODO comment inside it is PARTIAL, not COMPLETE.
 4. Items marked NOT STARTED or PARTIAL are **CRITICAL** findings. List every one explicitly with a description of what is missing or incomplete.
@@ -255,57 +255,26 @@ Then verify:
 
 **Objective:** Verify all database tables, RPC functions, RLS policies, triggers, and indexes are correct, complete, and aligned with the application.
 
-This phase is critical. Read `${CLAUDE_PLUGIN_ROOT}/skills/plan-completion-audit/references/supabase-audit-guide.md` for the full checklist before starting.
+Read [`reference.md`](reference.md) (which routes to `references/supabase-audit-guide.md`) for the full checklist. The dense per-sub-phase content lives there to keep this SKILL.md scannable.
 
-**10a. Schema Inspection**
+Sub-phases — each detailed in the guide:
 
-Retrieve the current database schema. Use the first available method:
+- **10a. Schema Inspection** — column types/nullability, PK/FK, defaults, indexes, timestamps.
+- **10b. RPC Function Audit** — signature match, body correctness, `SECURITY DEFINER` vs `INVOKER`, `search_path`, API-schema exposure.
+- **10c. RLS Policy Audit** — RLS enabled per table, policies per CRUD verb, `auth.uid()` predicates, intentional service-role bypasses.
+- **10d. Triggers & Realtime** — trigger definitions, replication settings, frontend subscription alignment.
+- **10e. Storage & Edge Functions** — bucket RLS, MIME/size limits, deployed function endpoints.
+
+Schema retrieval — use the first method available:
 
 ```bash
-# Option 1: Supabase CLI
+# Option 1: Supabase CLI / MCP
 bash "${CLAUDE_PLUGIN_ROOT}/skills/plan-completion-audit/scripts/audit-supabase.sh"
 
-# Option 2: If CLI unavailable, inspect local migration files
+# Option 2: Inspect local migration files
 ls -la supabase/migrations/ 2>/dev/null
 cat supabase/migrations/*.sql 2>/dev/null
 ```
-
-For each table, verify:
-- Column names, types, and nullability match what the frontend expects
-- Primary keys and foreign keys are correctly defined
-- Default values are appropriate
-- Indexes exist for columns used in WHERE clauses and JOIN conditions
-- `created_at` / `updated_at` timestamps exist where expected
-
-**10b. RPC Function Audit**
-
-List all RPC functions and for each one:
-- Verify the function signature (params and return type) matches how the frontend calls it
-- Check the function body for SQL correctness
-- Confirm `SECURITY DEFINER` vs `SECURITY INVOKER` is set appropriately
-- Verify `search_path` is set to prevent search path injection
-- Check that functions called from the client are exposed via the API schema (public/exposed)
-
-**10c. RLS Policy Audit**
-
-For every table that stores user data:
-- RLS must be enabled (`ALTER TABLE ... ENABLE ROW LEVEL SECURITY`)
-- Policies must exist for SELECT, INSERT, UPDATE, DELETE as appropriate
-- Policies must reference `auth.uid()` or equivalent — no policies that return `true` for all users on sensitive tables
-- Service role bypasses are intentional and documented
-
-**10d. Triggers & Realtime**
-
-- Verify any database triggers are correctly defined and fire on the expected events
-- If the app uses Supabase Realtime, confirm the relevant tables have replication enabled
-- Check that realtime subscriptions in the frontend match the tables configured for replication
-
-**10e. Storage & Edge Functions**
-
-If applicable:
-- Storage buckets have appropriate RLS policies
-- File size limits and allowed MIME types are configured
-- Edge functions (if any) are deployed and their endpoints match frontend calls
 
 ---
 
@@ -313,26 +282,13 @@ If applicable:
 
 **Objective:** Confirm the frontend application and Supabase backend are in complete agreement — types, queries, RPC calls, and data flow.
 
-1. **Type alignment:** Compare Supabase-generated types (e.g., `database.types.ts` or output from `supabase gen types typescript`) against the types used in frontend code. Flag mismatches in:
-   - Table row types vs frontend interfaces
-   - RPC function param/return types vs frontend call sites
-   - Enum values in the database vs enum values in the frontend
+Detailed checklist in [`reference.md`](reference.md). Five things to verify:
 
-2. **Query audit:** For every Supabase client call in the frontend (`.from()`, `.rpc()`, `.select()`, `.insert()`, `.update()`, `.delete()`):
-   - The table or function exists in the database
-   - The columns referenced in `.select()` exist on the table
-   - The filter columns in `.eq()`, `.in()`, `.match()` etc. exist and are the correct type
-   - Insert/update payloads include all required (non-nullable, no-default) columns
-   - The query result is typed correctly in the consuming code
-
-3. **Auth flow alignment:** The frontend auth implementation (sign up, sign in, sign out, session refresh, password reset) aligns with the Supabase auth configuration. Check that:
-   - Auth providers configured in Supabase match what the frontend offers
-   - Protected routes check session state correctly
-   - Token refresh is handled (not relying on expired tokens)
-
-4. **Missing backend objects:** Search the frontend for any `.from('table_name')` or `.rpc('function_name')` calls that reference tables or functions that don't exist in the database.
-
-5. **Missing frontend consumers:** Check for database tables or RPC functions that were created as part of the plan but are never called from the frontend (possibly indicating incomplete integration).
+1. **Type alignment** — Supabase-generated types vs frontend interfaces, RPC signatures, and enum values.
+2. **Query audit** — every `.from()`, `.rpc()`, `.select()`, `.insert()`, `.update()`, `.delete()` references real tables/columns of the correct type, with all required payload fields.
+3. **Auth flow alignment** — providers, protected routes, token refresh handling.
+4. **Missing backend objects** — frontend calls that reference non-existent tables or RPC functions.
+5. **Missing frontend consumers** — tables/functions created by the plan but never called.
 
 ---
 

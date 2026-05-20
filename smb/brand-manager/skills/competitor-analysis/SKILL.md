@@ -2,7 +2,7 @@
 name: competitor-analysis
 description: Analyse competitor brands across positioning, visual identity, messaging, pricing, and audience — producing a differentiation map and white-space opportunity report
 argument-hint: [business-and-competitor-list]
-allowed-tools: Read Write Edit Grep Glob WebFetch WebSearch
+allowed-tools: Read Write Edit Grep Glob WebFetch
 effort: high
 context: fork
 agent: Explore
@@ -17,7 +17,7 @@ ultrathink
 - **Category:** Brand Strategy
 - **Output:** Competitor analysis report with positioning map and white-space opportunities
 - **Complexity:** High
-- **Estimated Completion:** 30–60 minutes (interactive, multi-source research)
+- **Estimated Completion:** 30”“60 minutes (interactive, multi-source research)
 
 ---
 
@@ -77,9 +77,9 @@ For each competitor, collect:
 - Why they're on this list
 
 Aim for:
-- 4–7 direct competitors
-- 2–4 indirect competitors
-- 2–3 aspirational competitors
+- 4”“7 direct competitors
+- 2”“4 indirect competitors
+- 2”“3 aspirational competitors
 
 If the user provides only direct competitors, ask for indirect and aspirational examples — they often contain the most interesting positioning insight.
 
@@ -141,13 +141,13 @@ This is the at-a-glance view. The matrix often reveals duplication: several bran
 
 ### Phase 4: Positioning Map
 
-Choose two dimensions that capture the most important strategic axes for this category. Plot each competitor on a 2×2 grid using a Mermaid quadrant chart.
+Choose two dimensions that capture the most important strategic axes for this category. Plot each competitor on a 2Ã—2 grid using a Mermaid quadrant chart.
 
 Common dimension pairs:
-- Price (low → high) × Specialisation (general → specialist)
-- Technical depth (beginner → expert) × Audience scope (consumer → enterprise)
-- Convention (traditional → disruptive) × Restraint (minimal → expressive)
-- Trust signal (institutional → indie) × Speed (slow → fast)
+- Price (low â†’ high) Ã— Specialisation (general â†’ specialist)
+- Technical depth (beginner â†’ expert) Ã— Audience scope (consumer â†’ enterprise)
+- Convention (traditional â†’ disruptive) Ã— Restraint (minimal â†’ expressive)
+- Trust signal (institutional â†’ indie) Ã— Speed (slow â†’ fast)
 
 Pick the dimension pair that surfaces the most insight. If no pair is obvious, generate two maps with different dimensions.
 
@@ -184,7 +184,7 @@ Then summarise across all competitors:
 
 ### Phase 6: White-Space Identification
 
-Identify 2–4 white-space opportunities. Each must be:
+Identify 2”“4 white-space opportunities. Each must be:
 
 1. **Specific** — a clear positioning statement, not a vague gap
 2. **Defensible** — the user's brand can credibly occupy this position
@@ -246,7 +246,7 @@ Compile the analysis using the template at `templates/output-template.md`. The o
 5. **Specific positions, not categories.** "Premium" is not a position. "The premium tool for solo female founders in Australia who hate spreadsheets" is a position.
 6. **Cite the evidence.** The evidence appendix must contain enough detail that another strategist can verify every claim.
 7. **Two dimensions per map.** Don't try to map seven dimensions on one chart. Pick the two most important and document the others in the matrix.
-8. **Brand ≠ product.** This skill is about brand positioning, not feature comparison. Do not produce a feature comparison table — produce a brand positioning analysis.
+8. **Brand â‰  product.** This skill is about brand positioning, not feature comparison. Do not produce a feature comparison table — produce a brand positioning analysis.
 9. **Australian English.** "Analyse", "specialise", "behaviour", "favour."
 10. **Acknowledge uncertainty.** When evidence is thin (private competitor, no public pricing), say so. Don't fabricate.
 
@@ -254,10 +254,10 @@ Compile the analysis using the template at `templates/output-template.md`. The o
 
 ## Edge Cases
 
-1. **User provides 0 competitors** ("we have no competitors") → Push back. Every business has competitors — direct, indirect, or "do nothing." Generate a competitor list from the category and ask the user to confirm.
-2. **Category has 50+ competitors** → Pick the 6–8 most influential by market share, brand recognition, or recent funding. Document the inclusion criteria.
-3. **Competitors are private with no visible pricing** → Use proxies — case studies, customer logos, funding stage, target customer size. Mark pricing as "estimated."
-4. **All competitors look identical** (highly commoditised category) → That's the finding. The white space is *being different at all* — invest in distinctive brand expression.
-5. **One competitor dominates the category** (e.g. category leader with 70% share) → Map them, then identify the niches they don't serve well. Don't try to compete head-on; find the underserved edge.
-6. **User's brand is much smaller than competitors** → Position must be specifically defensible for a smaller brand. Speed, focus, narrow audience, founder-led — not "we're cheaper" (cheaper is a race to the bottom).
-7. **User wants to match a competitor's position** → Push back. Matching = invisible. Find the opposite of the closest competitor.
+1. **User provides 0 competitors** ("we have no competitors") â†’ Push back. Every business has competitors — direct, indirect, or "do nothing." Generate a competitor list from the category and ask the user to confirm.
+2. **Category has 50+ competitors** â†’ Pick the 6”“8 most influential by market share, brand recognition, or recent funding. Document the inclusion criteria.
+3. **Competitors are private with no visible pricing** â†’ Use proxies — case studies, customer logos, funding stage, target customer size. Mark pricing as "estimated."
+4. **All competitors look identical** (highly commoditised category) â†’ That's the finding. The white space is *being different at all* — invest in distinctive brand expression.
+5. **One competitor dominates the category** (e.g. category leader with 70% share) â†’ Map them, then identify the niches they don't serve well. Don't try to compete head-on; find the underserved edge.
+6. **User's brand is much smaller than competitors** â†’ Position must be specifically defensible for a smaller brand. Speed, focus, narrow audience, founder-led — not "we're cheaper" (cheaper is a race to the bottom).
+7. **User wants to match a competitor's position** â†’ Push back. Matching = invisible. Find the opposite of the closest competitor.

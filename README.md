@@ -1,6 +1,6 @@
-﻿# Anthril Official Claude Plugins
+# Anthril Official Claude Plugins
 
-A curated library of Claude Code plugins for data analysis, entity modelling, business operations, brand management, marketing, developer tooling, database design, and DevOps â€” packaged as a Claude Code marketplace with standalone plugins.
+A curated library of Claude Code plugins for data analysis, entity modelling, business operations, brand management, marketing, developer tooling, database design, and DevOps — packaged as a Claude Code marketplace with standalone plugins.
 
 Maintained by [@Anthril](https://github.com/anthril).
 
@@ -51,7 +51,7 @@ claude --plugin-dir ./data-science/data-analysis
 
 ## Updating
 
-Claude Code does **not** auto-refresh marketplaces â€” it reads from a local cache (`~/.claude/plugins/marketplaces/<name>/`) that is only re-fetched on demand. If a `/plugin` view shows you on the latest version when a newer release exists, the cache is stale.
+Claude Code does **not** auto-refresh marketplaces — it reads from a local cache (`~/.claude/plugins/marketplaces/<name>/`) that is only re-fetched on demand. If a `/plugin` view shows you on the latest version when a newer release exists, the cache is stale.
 
 To pick up a new release:
 
@@ -75,18 +75,18 @@ See [`CHANGELOG.md`](CHANGELOG.md) for what is in each release before updating.
 
 | Skill | Description |
 |-------|-------------|
-| [`anomaly-detection-rule-builder`](data-science/data-analysis/skills/anomaly-detection-rule-builder/) | Build rule-based and statistical anomaly detection systems for business metrics â€” revenue drops, traffic spikes, churn increases, cost overruns |
+| [`anomaly-detection-rule-builder`](data-science/data-analysis/skills/anomaly-detection-rule-builder/) | Build rule-based and statistical anomaly detection systems for business metrics — revenue drops, traffic spikes, churn increases, cost overruns |
 | [`cohort-analysis-builder`](data-science/data-analysis/skills/cohort-analysis-builder/) | Design cohort analysis frameworks with SQL queries, visualisation specs, and interpretation guides for retention, revenue, and churn analysis |
 | [`data-pipeline-architecture`](data-science/data-analysis/skills/data-pipeline-architecture/) | Design ETL/ELT pipeline architectures with data flow diagrams, transformation specs, orchestration, and error handling for Supabase and BigQuery |
 | [`data-dictionary-generator`](data-science/data-analysis/skills/data-dictionary-generator/) | Auto-generate comprehensive data dictionaries from database schemas, CSV files, or API responses with column definitions and Mermaid ERD |
-| [`dataset-profiling-quality-audit`](data-science/data-analysis/skills/dataset-profiling-quality-audit/) | Profile datasets and audit data quality â€” assess completeness, validity, consistency, uniqueness, timeliness, and accuracy |
+| [`dataset-profiling-quality-audit`](data-science/data-analysis/skills/dataset-profiling-quality-audit/) | Profile datasets and audit data quality — assess completeness, validity, consistency, uniqueness, timeliness, and accuracy |
 
 ### Knowledge Engineering (`knowledge-engineering`)
 
 | Skill | Description |
 |-------|-------------|
 | [`business-data-model-designer`](data-science/knowledge-engineering/skills/business-data-model-designer/) | Design complete Supabase/PostgreSQL data models with ERD, SQL migrations, RLS policies, indexes, and triggers |
-| [`entity-disambiguation`](data-science/knowledge-engineering/skills/entity-disambiguation/) | Resolve entity ambiguity across data sources â€” produce canonical records, merge decisions, and sameAs link mappings |
+| [`entity-disambiguation`](data-science/knowledge-engineering/skills/entity-disambiguation/) | Resolve entity ambiguity across data sources — produce canonical records, merge decisions, and sameAs link mappings |
 | [`entity-relationship-mapper`](data-science/knowledge-engineering/skills/entity-relationship-mapper/) | Map business domains to entity-relationship models with Schema.org types, JSON-LD @graph output, and sameAs connections |
 | [`knowledge-graph-builder`](data-science/knowledge-engineering/skills/knowledge-graph-builder/) | Construct knowledge graph specifications for Neo4j, JSON-LD, or Supabase/PostgreSQL JSONB implementation |
 
@@ -101,21 +101,21 @@ See [`CHANGELOG.md`](CHANGELOG.md) for what is in each release before updating.
 
 | Skill | Description |
 |-------|-------------|
-| [`npm-package-audit`](engineering/package-manager/skills/npm-package-audit/) | Audit npm packages for publishing quality, cross-OS compatibility, type declarations, build config, security, and CI/CD â€” produces a scored report with actionable fixes |
-| [`cli-ux-audit`](engineering/package-manager/skills/cli-ux-audit/) | Audit any CLI tool for terminal UX â€” help text, command structure, error messages, output formatting, discoverability, and accessibility |
+| [`npm-package-audit`](engineering/package-manager/skills/npm-package-audit/) | Audit npm packages for publishing quality, cross-OS compatibility, type declarations, build config, security, and CI/CD — produces a scored report with actionable fixes |
+| [`cli-ux-audit`](engineering/package-manager/skills/cli-ux-audit/) | Audit any CLI tool for terminal UX — help text, command structure, error messages, output formatting, discoverability, and accessibility |
 
 ### Plan Completion Audit (`plan-completion-audit`)
 
 | Skill | Description |
 |-------|-------------|
-| [`plan-completion-audit`](utilities/plan-completion-audit/skills/plan-completion-audit/) | Full-stack audit of a project plan versus actual implementation â€” verifies plan vs code, types, bugs, security, Supabase schema, RLS, and frontend-backend alignment |
+| [`plan-completion-audit`](utilities/plan-completion-audit/skills/plan-completion-audit/) | Full-stack audit of a project plan versus actual implementation — verifies plan vs code, types, bugs, security, Supabase schema, RLS, and frontend-backend alignment |
 
 ### SkillOps (`skillops`)
 
 | Skill | Description |
 |-------|-------------|
 | [`skill-creator`](utilities/skillops/skills/skill-creator/) | Create new Claude Code skills with proper frontmatter, directory structure, templates, examples, and supporting files |
-| [`skill-evaluator`](utilities/skillops/skills/skill-evaluator/) | Audit an existing skill for quality across eight dimensions â€” metadata, scope, conciseness, architecture, content, tooling, testing, standards â€” with a scored markdown report and JSON sidecar |
+| [`skill-evaluator`](utilities/skillops/skills/skill-evaluator/) | Audit an existing skill for quality across eight dimensions — metadata, scope, conciseness, architecture, content, tooling, testing, standards — with a scored markdown report and JSON sidecar |
 
 ### Brand Manager (`brand-manager`)
 
@@ -135,7 +135,7 @@ See [`CHANGELOG.md`](CHANGELOG.md) for what is in each release before updating.
 
 | Skill | Description |
 |-------|-------------|
-| [`dead-code-audit`](engineering/software-development/skills/dead-code-audit/) | Detect dead code across 9 languages â€” JS/TS, Python, Go, Rust, Java, PHP, Ruby, C# â€” with actionable removal plan |
+| [`dead-code-audit`](engineering/software-development/skills/dead-code-audit/) | Detect dead code across 9 languages — JS/TS, Python, Go, Rust, Java, PHP, Ruby, C# — with actionable removal plan |
 | [`write-path-mapping`](engineering/software-development/skills/write-path-mapping/) | Map end-to-end write paths from UI to database with framework and database introspection |
 
 ### PPC Manager (`ppc-manager`)
@@ -151,14 +151,14 @@ See [`CHANGELOG.md`](CHANGELOG.md) for what is in each release before updating.
 | [`google-ads-account-setup`](marketing/ppc-manager/skills/google-ads-account-setup/) | Set up Google Ads account structure, billing, and conversion tracking |
 | [`google-search-campaign`](marketing/ppc-manager/skills/google-search-campaign/) | Build Google Search campaigns with ad groups, keywords, and ads |
 | [`google-pmax-campaign`](marketing/ppc-manager/skills/google-pmax-campaign/) | Build Google Performance Max campaigns with asset groups and signals |
-| [`google-ads-copy`](marketing/ppc-manager/skills/google-ads-copy/) | Write Google Ads copy â€” headlines, descriptions, and extensions |
+| [`google-ads-copy`](marketing/ppc-manager/skills/google-ads-copy/) | Write Google Ads copy — headlines, descriptions, and extensions |
 | [`display-ad-specs`](marketing/ppc-manager/skills/display-ad-specs/) | Generate display ad specifications and creative briefs |
 | [`meta-pixel-setup`](marketing/ppc-manager/skills/meta-pixel-setup/) | Set up Meta Pixel with base code and standard events |
 | [`meta-capi-setup`](marketing/ppc-manager/skills/meta-capi-setup/) | Configure Meta Conversions API for server-side tracking |
 | [`meta-events-mapping`](marketing/ppc-manager/skills/meta-events-mapping/) | Map business events to Meta standard and custom events |
 | [`meta-audience-builder`](marketing/ppc-manager/skills/meta-audience-builder/) | Build Meta custom and lookalike audiences |
 | [`meta-creative-brief`](marketing/ppc-manager/skills/meta-creative-brief/) | Write creative briefs for Meta ad campaigns |
-| [`meta-ads-copy`](marketing/ppc-manager/skills/meta-ads-copy/) | Write Meta ad copy â€” primary text, headlines, and descriptions |
+| [`meta-ads-copy`](marketing/ppc-manager/skills/meta-ads-copy/) | Write Meta ad copy — primary text, headlines, and descriptions |
 | [`keyword-research`](marketing/ppc-manager/skills/keyword-research/) | Conduct keyword research for PPC campaigns across Google and Meta |
 | [`campaign-audit`](marketing/ppc-manager/skills/campaign-audit/) | Cross-platform campaign audit using all four MCP servers |
 | [`utm-builder`](marketing/ppc-manager/skills/utm-builder/) | Build UTM parameter conventions and tracking URLs |
@@ -169,21 +169,21 @@ See [`CHANGELOG.md`](CHANGELOG.md) for what is in each release before updating.
 
 | Skill | Description |
 |-------|-------------|
-| [`postgres-schema-audit`](engineering/database-design/skills/postgres-schema-audit/) | Audit any Postgres 13+ schema (Supabase via MCP, or RDS/Cloud SQL/Neon/Railway/self-hosted via a read-only connection) â€” parallel per-schema sub-agents across ten audit categories, producing evidence-backed findings, an ER diagram, and draft migration SQL |
+| [`postgres-schema-audit`](engineering/database-design/skills/postgres-schema-audit/) | Audit any Postgres 13+ schema (Supabase via MCP, or RDS/Cloud SQL/Neon/Railway/self-hosted via a read-only connection) — parallel per-schema sub-agents across ten audit categories, producing evidence-backed findings, an ER diagram, and draft migration SQL |
 
 ### DevOps (`devops`)
 
 | Skill | Description |
 |-------|-------------|
-| [`devops-needs-assessment`](engineering/devops/skills/devops-needs-assessment/) | Plain-language DevOps triage for non-experts â€” scores nine dimensions and names the top three fixes |
-| [`cicd-pipeline-audit`](engineering/devops/skills/cicd-pipeline-audit/) | Audit CI/CD pipelines (GitHub Actions, GitLab CI, CircleCI, Azure Pipelines, Jenkins, Bitbucket) â€” one sub-agent per workflow |
-| [`iac-terraform-audit`](engineering/devops/skills/iac-terraform-audit/) | Audit Terraform, OpenTofu, Terragrunt, and Pulumi modules â€” one sub-agent per module |
-| [`container-audit`](engineering/devops/skills/container-audit/) | Audit Dockerfiles and docker-compose files â€” one sub-agent per Dockerfile |
+| [`devops-needs-assessment`](engineering/devops/skills/devops-needs-assessment/) | Plain-language DevOps triage for non-experts — scores nine dimensions and names the top three fixes |
+| [`cicd-pipeline-audit`](engineering/devops/skills/cicd-pipeline-audit/) | Audit CI/CD pipelines (GitHub Actions, GitLab CI, CircleCI, Azure Pipelines, Jenkins, Bitbucket) — one sub-agent per workflow |
+| [`iac-terraform-audit`](engineering/devops/skills/iac-terraform-audit/) | Audit Terraform, OpenTofu, Terragrunt, and Pulumi modules — one sub-agent per module |
+| [`container-audit`](engineering/devops/skills/container-audit/) | Audit Dockerfiles and docker-compose files — one sub-agent per Dockerfile |
 | [`kubernetes-manifest-audit`](engineering/devops/skills/kubernetes-manifest-audit/) | Audit Kubernetes manifests and Helm charts against CIS and NSA/CISA hardening guides |
-| [`observability-audit`](engineering/devops/skills/observability-audit/) | Score observability across the four pillars â€” logs, metrics, traces, alerts/dashboards |
-| [`release-readiness-audit`](engineering/devops/skills/release-readiness-audit/) | Pre-production go/no-go gate â€” migration safety, rollback, monitoring, deploy strategy |
-| [`devsecops-supply-chain-audit`](engineering/devops/skills/devsecops-supply-chain-audit/) | Audit supply chain across every ecosystem detected â€” pinning, vulnerabilities, secrets, SBOM, signing, branch protection |
-| [`sre-reliability-audit`](engineering/devops/skills/sre-reliability-audit/) | Assess Site Reliability maturity â€” SLOs, runbooks, on-call, postmortems, game days |
+| [`observability-audit`](engineering/devops/skills/observability-audit/) | Score observability across the four pillars — logs, metrics, traces, alerts/dashboards |
+| [`release-readiness-audit`](engineering/devops/skills/release-readiness-audit/) | Pre-production go/no-go gate — migration safety, rollback, monitoring, deploy strategy |
+| [`devsecops-supply-chain-audit`](engineering/devops/skills/devsecops-supply-chain-audit/) | Audit supply chain across every ecosystem detected — pinning, vulnerabilities, secrets, SBOM, signing, branch protection |
+| [`sre-reliability-audit`](engineering/devops/skills/sre-reliability-audit/) | Assess Site Reliability maturity — SLOs, runbooks, on-call, postmortems, game days |
 
 Every DevOps skill supports three operating modes: static (default), `--live` (uses `gh`, `kubectl`, `terraform`, cloud CLIs, scanners), and `--apply` (opt-in remediation with per-change confirmation). Runtime testing (`--runtime`) is available where applicable with production-name guards.
 
@@ -191,20 +191,20 @@ Every DevOps skill supports three operating modes: static (default), `--live` (u
 
 Every skill in this library includes:
 
-- **YAML frontmatter** â€” `name`, `description` (<250 chars), `argument-hint`, `allowed-tools`, `effort`
-- **`$ARGUMENTS`** â€” Accept user input directly (e.g., `/skill-name my business description`)
-- **`ultrathink`** â€” Extended thinking enabled for complex analytical skills
-- **Output templates** â€” Structured output format with section headers
-- **Example outputs** â€” Realistic completed examples with Australian business context
-- **Utility scripts** â€” Python/Bash helpers for common operations
+- **YAML frontmatter** — `name`, `description` (<250 chars), `argument-hint`, `allowed-tools`, `effort`
+- **`$ARGUMENTS`** — Accept user input directly (e.g., `/skill-name my business description`)
+- **`ultrathink`** — Extended thinking enabled for complex analytical skills
+- **Output templates** — Structured output format with section headers
+- **Example outputs** — Realistic completed examples with Australian business context
+- **Utility scripts** — Python/Bash helpers for common operations
 
 Select skills also include:
 
-- **`context: fork`** â€” Research-heavy skills run in isolated subagent context
-- **`paths`** â€” Auto-activation when working with matching file patterns
-- **`reference.md`** â€” Dense reference material (SQL templates, scoring rubrics, lookup tables) extracted to keep SKILL.md under 500 lines
-- **Dynamic context injection** â€” Shell commands that inject project state before the skill runs
-- **Parallel sub-agents** â€” Independent audit targets (schemas, workflows, modules, Dockerfiles, charts, ecosystems) are audited in parallel for large-repo throughput
+- **`context: fork`** — Research-heavy skills run in isolated subagent context
+- **`paths`** — Auto-activation when working with matching file patterns
+- **`reference.md`** — Dense reference material (SQL templates, scoring rubrics, lookup tables) extracted to keep SKILL.md under 500 lines
+- **Dynamic context injection** — Shell commands that inject project state before the skill runs
+- **Parallel sub-agents** — Independent audit targets (schemas, workflows, modules, Dockerfiles, charts, ecosystems) are audited in parallel for large-repo throughput
 
 ## Plugin Directory Structure
 
@@ -264,7 +264,7 @@ official-claude-plugins/
 Use the built-in skill creator:
 
 ```bash
-/skill-creator customer-churn-predictor â€” predict churn risk from behavioural signals
+/skill-creator customer-churn-predictor — predict churn risk from behavioural signals
 ```
 
 Or follow the conventions in [`.claude/CLAUDE.md`](.claude/CLAUDE.md) to create skills manually.

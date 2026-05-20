@@ -2,7 +2,7 @@
 name: npm-package-audit
 description: Audit npm packages for publishing quality, cross-OS compatibility, type declarations, build config, security, and CI/CD — produces a scored report with actionable fixes
 argument-hint: [package-path-or-name]
-allowed-tools: Read, Grep, Glob, Write, Edit, Bash(npm:*), Bash(node:*), Bash(jq:*), Bash(git:*), Bash(./scripts/*:*), Agent
+allowed-tools: Read, Grep, Glob, Write, Edit, Bash(npm:*), Bash(node:*), Bash(jq:*), Bash(git:*), Bash(./scripts/*:*),
 effort: high
 paths: "**/package.json"
 ---

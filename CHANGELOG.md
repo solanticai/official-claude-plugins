@@ -5,6 +5,16 @@ All notable changes to the Anthril Official Claude Plugins marketplace will be d
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-05-20
+
+### Changed
+- **Mechanical anti-pattern sweep across all 65 skills.** Stripped unused tool tokens (`Agent`, `WebFetch`, `WebSearch`) from `allowed-tools` frontmatter in 17 skills, applying the principle of least privilege per check C45. Affected plugins bumped to patch releases: `brand-manager` 1.0.2, `devops` 1.0.2, `package-manager` 1.1.2, `data-analysis` 1.0.3, `knowledge-engineering` 1.0.3, `business-economics` 1.0.3, `plan-completion-audit` 1.0.3.
+- **plan-completion-audit** v1.0.3 — extracted Phase 10 (Supabase) and Phase 11 (frontend↔backend) dense content into pointers; added a `reference.md` index. SKILL.md dropped from 361 → 317 lines to satisfy the skills-architecture cap (check C44). Existing `references/supabase-audit-guide.md` is now the canonical source for that material.
+- Refined `skill-evaluator`'s C45 detector to exempt skills launched via `agent:` / `context: fork` frontmatter, which legitimately need `Agent` in `allowed-tools` even when the body does not reference it by name.
+
+### Added
+- `audits/2026-05-20/summary.md` — first sweep using the upgraded 10-dimension rubric. Zero anti-pattern findings remain across the marketplace.
+
 ## [2.1.0] - 2026-05-20
 
 ### Added

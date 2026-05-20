@@ -2,7 +2,7 @@
 name: cohort-analysis-builder
 description: Design cohort analysis frameworks with SQL queries and visualisation specs for retention, revenue, and churn
 argument-hint: [dataset-or-business-context]
-allowed-tools: Read Grep Glob Write Edit Bash Agent
+allowed-tools: Read Grep Glob Write Edit Bash
 effort: high
 ---
 
@@ -12,14 +12,14 @@ effort: high
 - **Skill ID:** cohort-analysis-builder
 - **Category:** Data Analysis & Intelligence
 - **Output:** SQL + analysis framework
-- **Complexity:** Medium–High
-- **Estimated Completion:** 15–20 minutes (interactive)
+- **Complexity:** Medium”“High
+- **Estimated Completion:** 15”“20 minutes (interactive)
 
 ---
 
 ## Description
 
-Designs cohort analysis frameworks from user/customer data. Takes a business context and data schema as input, then outputs ready-to-run SQL (PostgreSQL/Supabase by default), visualisation specifications, and interpretation guidance. Supports time-based cohorts (signup month, first purchase), behaviour-based cohorts (feature usage, plan tier), and size-based cohorts (revenue bracket, order frequency). Covers retention cohorts, revenue cohorts, cumulative LTV cohorts, and churn cohorts. Produces the full analytical pipeline: cohort definition → activity mapping → period calculation → aggregation → visualisation spec → interpretation framework.
+Designs cohort analysis frameworks from user/customer data. Takes a business context and data schema as input, then outputs ready-to-run SQL (PostgreSQL/Supabase by default), visualisation specifications, and interpretation guidance. Supports time-based cohorts (signup month, first purchase), behaviour-based cohorts (feature usage, plan tier), and size-based cohorts (revenue bracket, order frequency). Covers retention cohorts, revenue cohorts, cumulative LTV cohorts, and churn cohorts. Produces the full analytical pipeline: cohort definition â†’ activity mapping â†’ period calculation â†’ aggregation â†’ visualisation spec â†’ interpretation framework.
 
 ---
 
@@ -211,7 +211,7 @@ Specification:
 - Rows: Cohort date (oldest at top)
 - Columns: Period number (0, 1, 2, ... N)
 - Values: Retention % (or revenue %)
-- Colour scale: Green (high) → Yellow (medium) → Red (low)
+- Colour scale: Green (high) â†’ Yellow (medium) â†’ Red (low)
 - Row header: Cohort date + cohort size
 - Tool: [Recommend based on user's stack — Looker Studio, Metabase, Excel, custom React]
 ```
@@ -251,7 +251,7 @@ Provide a structured guide for reading the output.
 | **Retention curve keeps declining** | No stable base; product/service isn't sticky | Product/service problem — investigate value delivery |
 | **Newer cohorts retain better** | Product or acquisition is improving over time | Keep doing what changed; identify the driver |
 | **Newer cohorts retain worse** | Regression — something degraded | Investigate: quality? targeting? onboarding change? |
-| **Large drop Month 0→1** | First-period churn is the biggest loss | Onboarding is the critical fix point |
+| **Large drop Month 0â†’1** | First-period churn is the biggest loss | Onboarding is the critical fix point |
 | **Seasonal cohort differences** | Cohorts from certain months perform differently | Account for seasonality in forecasts; adjust marketing timing |
 | **Revenue retention >100%** | Expansion revenue exceeds churn (net negative churn) | Excellent — this is the SaaS/service gold standard |
 | **Small cohorts with extreme values** | Statistical noise from low sample size | Don't make decisions from cohorts with <30 members |
@@ -260,11 +260,11 @@ Provide a structured guide for reading the output.
 
 | Business Type | Good Month-1 Retention | Good Month-6 Retention | Good Month-12 Retention |
 |---|---|---|---|
-| SaaS (SMB) | 80–90% | 60–70% | 45–55% |
-| SaaS (Enterprise) | 90–95% | 80–90% | 75–85% |
-| E-commerce (repeat purchase) | 20–30% | 10–15% | 8–12% |
-| Agency (retainer) | 90–95% | 80–90% | 70–80% |
-| Marketplace | 30–40% | 15–25% | 10–15% |
+| SaaS (SMB) | 80”“90% | 60”“70% | 45”“55% |
+| SaaS (Enterprise) | 90”“95% | 80”“90% | 75”“85% |
+| E-commerce (repeat purchase) | 20”“30% | 10”“15% | 8”“12% |
+| Agency (retainer) | 90”“95% | 80”“90% | 70”“80% |
+| Marketplace | 30”“40% | 15”“25% | 10”“15% |
 
 Note: These are indicative. The user's own cohort trends matter more than absolute benchmarks.
 

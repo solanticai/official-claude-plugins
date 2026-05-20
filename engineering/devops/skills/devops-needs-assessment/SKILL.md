@@ -1,8 +1,8 @@
 ---
 name: devops-needs-assessment
-description: Plain-language DevOps triage for non-experts. Given an app path or description, scores nine dimensions on a 0–3 scale and names the top three fixes. Jargon-free output with pointers into the other eight DevOps skills.
+description: Plain-language DevOps triage for non-experts. Given an app path or description, scores nine dimensions on a 0”“3 scale and names the top three fixes. Jargon-free output with pointers into the other eight DevOps skills.
 argument-hint: [application-path-or-description]
-allowed-tools: Read Grep Glob Write Edit Bash(bash:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(bash:*)
 effort: medium
 ---
 
@@ -47,7 +47,7 @@ Execute every phase in order.
 1. If `$ARGUMENTS` is a path, run the stack-detection script (already run in User Context above) and read the resulting fingerprint.
 2. If `$ARGUMENTS` is a description (no path), extract: language, framework, hosting platform, user count, deploy frequency, downtime history.
 3. **Ask the user plain-language questions** via `AskUserQuestion` to fill any gaps. Ask at most seven. Pick from the questionnaire at `templates/questionnaire.md`. Never ask about something already answered by the fingerprint. Examples:
-   - "Roughly how many people use this app right now?" (options: <100 / 100–10k / 10k–100k / 100k+)
+   - "Roughly how many people use this app right now?" (options: <100 / 100”“10k / 10k”“100k / 100k+)
    - "How do you deploy a change today?" (I push to main / I run a script / I click a button / someone else handles it)
    - "Have you ever had the app go down in a way users noticed?" (never / once or twice / regularly / every week)
    - "Where does it run?" (Vercel/Netlify/Heroku / A cloud VM / Kubernetes / I don't know)
@@ -76,9 +76,9 @@ Check for the following, via `Glob`/`Grep` if a path was given:
 
 ### Phase 3: Nine-Dimension Scoring
 
-**Objective:** Score each dimension 0–3. Always explain the score in one plain sentence.
+**Objective:** Score each dimension 0”“3. Always explain the score in one plain sentence.
 
-For each dimension, apply the rubric from `reference.md` §1. Scores:
+For each dimension, apply the rubric from `reference.md` Â§1. Scores:
 
 - **0 — Not needed yet.** The app isn't big enough or risky enough to care.
 - **1 — Would help.** You could ship without this, but you're leaving value on the table.
@@ -101,7 +101,7 @@ Dimensions:
 
 For every dimension, write:
 
-- **Score (0–3)** with the plain-language label
+- **Score (0”“3)** with the plain-language label
 - **One-sentence reason** citing either a file signal or a questionnaire answer
 - **What "good" looks like** for this project at its current stage
 
@@ -110,13 +110,13 @@ For every dimension, write:
 **Objective:** Cut through the nine dimensions and tell the user what to do next.
 
 1. Take dimensions scored 2 or 3.
-2. Rank by **(severity × leverage)** — leverage = how much downstream risk this single fix removes.
+2. Rank by **(severity Ã— leverage)** — leverage = how much downstream risk this single fix removes.
 3. Keep the top three. No more. Non-experts get overwhelmed by long lists.
 4. For each of the three, write:
    - **The action** in plain English ("Set up automatic tests that run every time you push code to GitHub.")
    - **Why it matters for YOUR app** (reference their specific context — framework, user count, hosting)
    - **Which skill in this plugin implements it** (`cicd-pipeline-audit`, `observability-audit`, etc.)
-   - **Rough time estimate** (½ day / 1–2 days / a week / multi-week) — label as rough
+   - **Rough time estimate** (Â½ day / 1”“2 days / a week / multi-week) — label as rough
 
 ### Phase 5: Reporting
 
@@ -124,12 +124,12 @@ For every dimension, write:
 
 Required sections in the report:
 
-1. **TL;DR verdict** — one paragraph. "Your app needs DevOps support: moderately / urgently / not yet. The three things to fix first are …"
+1. **TL;DR verdict** — one paragraph. "Your app needs DevOps support: moderately / urgently / not yet. The three things to fix first are ”¦"
 2. **What your app looks like right now** — captured context in plain English (no jargon dumps)
 3. **Nine-dimension heatmap** — a small mermaid chart or a simple table with colour-coded scores
 4. **Dimension-by-dimension breakdown** — per-dimension scoring with the plain-language reason
 5. **Top three actions** — with time estimates and skill pointers
-6. **When to revisit** — if you've scored 0–1 across the board, tell the user to re-run this in three months or after a notable growth event (10x users, first paying customer, first outage)
+6. **When to revisit** — if you've scored 0”“1 across the board, tell the user to re-run this in three months or after a notable growth event (10x users, first paying customer, first outage)
 7. **Glossary** — a short glossary of terms that appeared in the report
 
 Do NOT write a JSON sidecar — this skill is single-file output by design to stay approachable.
@@ -144,8 +144,8 @@ Aggregate verdict is set from the dimension scores:
 |---|---|
 | Any dimension scored 3 | **Urgent DevOps work required** |
 | Two or more dimensions scored 2 | **DevOps work needed soon** |
-| One dimension scored 2, rest ≤1 | **Targeted DevOps work recommended** |
-| All dimensions ≤1 | **DevOps work not needed yet — revisit in 3 months** |
+| One dimension scored 2, rest â‰¤1 | **Targeted DevOps work recommended** |
+| All dimensions â‰¤1 | **DevOps work not needed yet — revisit in 3 months** |
 
 Put the verdict in the TL;DR and at the top of the report header.
 
@@ -153,7 +153,7 @@ Put the verdict in the TL;DR and at the top of the report header.
 
 ## Important Principles
 
-- **No jargon without definition.** "SLO" → "a target for how often the app works — e.g., 99.9% of requests succeed". "IaC" → "writing your infrastructure setup as code rather than clicking through a cloud console".
+- **No jargon without definition.** "SLO" â†’ "a target for how often the app works — e.g., 99.9% of requests succeed". "IaC" â†’ "writing your infrastructure setup as code rather than clicking through a cloud console".
 - **Be honest when something doesn't apply.** If the user isn't on Kubernetes and isn't planning to be, score Kubernetes 0 and say "not applicable — you're on Vercel". Don't invent a need.
 - **Don't recommend everything at once.** Three actions, maximum. Pick the ones that unblock the most downstream value.
 - **Respect the user's stage.** A pre-launch hobby project does not need SLOs. A profitable SaaS with 10k users with no monitoring absolutely does.

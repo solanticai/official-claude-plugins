@@ -2,7 +2,7 @@
 name: sre-reliability-audit
 description: Assess Site Reliability maturity across five dimensions — SLOs/SLIs, runbooks, on-call, postmortems, game days — with per-dimension commentary and uplift path. Static, live (PagerDuty/Opsgenie), and runtime (game day) modes.
 argument-hint: [repo-path]
-allowed-tools: Read Grep Glob Write Edit Bash(bash:*) Agent
+allowed-tools: Read Grep Glob Write Edit Bash(bash:*)
 effort: medium
 ---
 
@@ -18,7 +18,7 @@ Run this skill when the user mentions:
 - Postmortem quality, blameless template
 - Game day, chaos engineering at the organisational level
 
-Narrative assessment — scores five dimensions 0–4 rather than emitting findings-with-IDs. SLOs and SLIs (defined, error budgets computed, burn-rate alerts, review cadence), runbook quality (one per paging alert, executable steps, freshness SLA), on-call readiness (rotation, escalation policy, handover template, fair schedule), postmortem culture (blameless template, action-item tracking, retrospective cadence), and game days (scoped chaos experiments, scheduled, learnings documented).
+Narrative assessment — scores five dimensions 0”“4 rather than emitting findings-with-IDs. SLOs and SLIs (defined, error budgets computed, burn-rate alerts, review cadence), runbook quality (one per paging alert, executable steps, freshness SLA), on-call readiness (rotation, escalation policy, handover template, fair schedule), postmortem culture (blameless template, action-item tracking, retrospective cadence), and game days (scoped chaos experiments, scheduled, learnings documented).
 
 ## Before You Start
 
@@ -53,37 +53,37 @@ Catalogue:
 
 ### Phase 2: Dimension Scoring (narrative)
 
-For each of five dimensions, produce a maturity-level narrative (0–4) and a short prose assessment.
+For each of five dimensions, produce a maturity-level narrative (0”“4) and a short prose assessment.
 
-#### D1. SLOs/SLIs (0–4)
+#### D1. SLOs/SLIs (0”“4)
 - **0** — No SLOs defined.
 - **1** — SLOs defined in a doc but no measurement.
 - **2** — SLOs defined and measured; error budget implicit.
 - **3** — 2 + multi-window multi-burn-rate alerts.
 - **4** — 3 + quarterly review cadence documented; budget-driven release policy.
 
-#### D2. Runbooks (0–4)
+#### D2. Runbooks (0”“4)
 - **0** — No runbooks.
 - **1** — A few runbooks exist but coverage is spotty.
 - **2** — Every paging alert has a linked runbook with executable steps.
 - **3** — 2 + freshness SLA (last-updated < 90 days); runbooks tested in game days.
 - **4** — 3 + runbooks generate tickets on drift; auto-linked from alerts.
 
-#### D3. On-call (0–4)
+#### D3. On-call (0”“4)
 - **0** — Whoever notices fixes it.
 - **1** — One person is oncall, informally.
 - **2** — Rotation documented; escalation policy; handover notes.
 - **3** — 2 + fair schedule; defined response time targets; compensation / time-in-lieu.
 - **4** — 3 + oncall sustainability metrics (pages per shift, false-positive rate) tracked and managed.
 
-#### D4. Postmortems (0–4)
+#### D4. Postmortems (0”“4)
 - **0** — No postmortems written.
 - **1** — Occasional postmortems; ad-hoc format.
 - **2** — Blameless template used; action items tracked in a tracker.
 - **3** — 2 + retrospective cadence; action items completed > 80%.
 - **4** — 3 + postmortem library surfaced to onboarding; recurring patterns escalated to platform-level.
 
-#### D5. Game days (0–4)
+#### D5. Game days (0”“4)
 - **0** — No game days.
 - **1** — Occasional ad-hoc chaos.
 - **2** — Scheduled game days (quarterly); scoped to one service.
@@ -121,13 +121,13 @@ Render `sre-reliability-audit.md` and `sre-reliability-audit.json`. Write `gamed
 
 ## Scoring
 
-Five dimensions × 0–4 scale. Maturity aggregate:
+Five dimensions Ã— 0”“4 scale. Maturity aggregate:
 
 | Avg score | Maturity tier |
 |---|---|
 | 3.5+ | Mature — maintain and iterate |
-| 2.5–3.4 | Effective — tighten runbook + postmortem loops |
-| 1.5–2.4 | Developing — focus on one dimension at a time |
+| 2.5”“3.4 | Effective — tighten runbook + postmortem loops |
+| 1.5”“2.4 | Developing — focus on one dimension at a time |
 | <1.5 | Nascent — start with SLOs and runbooks |
 
 ---

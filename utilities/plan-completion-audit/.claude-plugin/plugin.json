@@ -1,6 +1,6 @@
 {
   "name": "plan-completion-audit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Full-stack audit of project plans versus actual implementation with Supabase schema verification",
   "author": {
     "name": "Anthril",
