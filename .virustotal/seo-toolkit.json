@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T15:08:54.802Z",
+  "scanned_at": "2026-05-21T04:13:52.736Z",
   "scan_source": "upload",
   "tarball": {
     "path": "seo/seo-toolkit",
-    "sha256": "f9c0f5467290c053367a151f1fd07bcdc1a90b300bcaf3f57176dd453a80f91f",
-    "size_bytes": 294457
+    "sha256": "d84a861490b120181efaff257fde3d450114f19b85920cb17f36b7e809401ded",
+    "size_bytes": 298201
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
+    "undetected": 58,
     "timeout": 0,
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779289572,
-  "gui_url": "https://www.virustotal.com/gui/file/f9c0f5467290c053367a151f1fd07bcdc1a90b300bcaf3f57176dd453a80f91f",
+  "last_analysis_date": 1779336709,
+  "gui_url": "https://www.virustotal.com/gui/file/d84a861490b120181efaff257fde3d450114f19b85920cb17f36b7e809401ded",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -30,12 +30,7 @@
       "result": null
     },
     {
-      "engine": "MicroWorld-eScan",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "ClamAV",
+      "engine": "Cynet",
       "category": "undetected",
       "result": null
     },
@@ -70,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "CrowdStrike",
+      "engine": "K7AntiVirus",
       "category": "undetected",
       "result": null
     },
@@ -80,12 +75,12 @@
       "result": null
     },
     {
-      "engine": "K7AntiVirus",
+      "engine": "CrowdStrike",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "huorong",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -110,12 +105,7 @@
       "result": null
     },
     {
-      "engine": "Avast",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "Cynet",
+      "engine": "ClamAV",
       "category": "undetected",
       "result": null
     },
@@ -140,7 +130,7 @@
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "MicroWorld-eScan",
       "category": "undetected",
       "result": null
     },
@@ -185,12 +175,7 @@
       "result": null
     },
     {
-      "engine": "Ikarus",
-      "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "GData",
+      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -200,7 +185,7 @@
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +215,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +230,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -275,12 +260,17 @@
       "result": null
     },
     {
+      "engine": "Ikarus",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Zoner",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -310,11 +300,6 @@
       "result": null
     },
     {
-      "engine": "AVG",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Panda",
       "category": "undetected",
       "result": null
@@ -326,6 +311,21 @@
     },
     {
       "engine": "Skyhigh",
+      "category": "failure",
+      "result": null
+    },
+    {
+      "engine": "Avast",
+      "category": "failure",
+      "result": null
+    },
+    {
+      "engine": "AVG",
+      "category": "failure",
+      "result": null
+    },
+    {
+      "engine": "Rising",
       "category": "failure",
       "result": null
     },
@@ -355,6 +355,11 @@
       "result": null
     },
     {
+      "engine": "Webroot",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "APEX",
       "category": "type-unsupported",
       "result": null
@@ -365,17 +370,12 @@
       "result": null
     },
     {
-      "engine": "Trapmine",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Webroot",
+      "engine": "Trapmine",
       "category": "type-unsupported",
       "result": null
     },

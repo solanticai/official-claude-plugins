@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T14:53:58.869Z",
+  "scanned_at": "2026-05-21T03:58:35.349Z",
   "scan_source": "upload",
   "tarball": {
     "path": "utilities/skill-ops",
-    "sha256": "249ce6a94dddfa93f18dbde2450331deb1c5142d6e39fc7a58594970607605d7",
-    "size_bytes": 66027
+    "sha256": "0cd837418b4166622a51315cc08ad47722444b221d989a4397e748537979c483",
+    "size_bytes": 66688
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779288758,
-  "gui_url": "https://www.virustotal.com/gui/file/249ce6a94dddfa93f18dbde2450331deb1c5142d6e39fc7a58594970607605d7",
+  "last_analysis_date": 1779335814,
+  "gui_url": "https://www.virustotal.com/gui/file/0cd837418b4166622a51315cc08ad47722444b221d989a4397e748537979c483",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -165,7 +165,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -180,6 +180,11 @@
       "result": null
     },
     {
+      "engine": "SentinelOne",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "CMC",
       "category": "undetected",
       "result": null
@@ -190,7 +195,7 @@
       "result": null
     },
     {
-      "engine": "SentinelOne",
+      "engine": "Ikarus",
       "category": "undetected",
       "result": null
     },
@@ -275,11 +280,6 @@
       "result": null
     },
     {
-      "engine": "Ikarus",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Zoner",
       "category": "undetected",
       "result": null
@@ -345,12 +345,17 @@
       "result": null
     },
     {
+      "engine": "Elastic",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "DeepInstinct",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Elastic",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },
@@ -365,17 +370,12 @@
       "result": null
     },
     {
-      "engine": "Trapmine",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Webroot",
+      "engine": "Trapmine",
       "category": "type-unsupported",
       "result": null
     },

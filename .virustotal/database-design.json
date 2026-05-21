@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T15:01:25.917Z",
+  "scanned_at": "2026-05-21T04:06:44.285Z",
   "scan_source": "upload",
   "tarball": {
     "path": "engineering/database-design",
-    "sha256": "5ed813f620fa89124759ac3920a640c312a9ec08d2cfcbd3e7980948f98e8c4f",
-    "size_bytes": 118645
+    "sha256": "fd684256b46dc59c984c676af87c5cbd02d3b0656fb771793b4941857c8120ee",
+    "size_bytes": 119389
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779289205,
-  "gui_url": "https://www.virustotal.com/gui/file/5ed813f620fa89124759ac3920a640c312a9ec08d2cfcbd3e7980948f98e8c4f",
+  "last_analysis_date": 1779336323,
+  "gui_url": "https://www.virustotal.com/gui/file/fd684256b46dc59c984c676af87c5cbd02d3b0656fb771793b4941857c8120ee",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -90,6 +90,11 @@
       "result": null
     },
     {
+      "engine": "Arcabit",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "VirIT",
       "category": "undetected",
       "result": null
@@ -140,7 +145,7 @@
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
@@ -195,17 +200,12 @@
       "result": null
     },
     {
-      "engine": "GData",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -235,7 +235,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -250,12 +250,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -285,7 +285,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -355,11 +355,6 @@
       "result": null
     },
     {
-      "engine": "Webroot",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "APEX",
       "category": "type-unsupported",
       "result": null
@@ -370,12 +365,17 @@
       "result": null
     },
     {
+      "engine": "Trapmine",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Trapmine",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },

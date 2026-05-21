@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T14:48:32.752Z",
+  "scanned_at": "2026-05-21T03:51:09.228Z",
   "scan_source": "upload",
   "tarball": {
     "path": "economics/strategic-economics",
-    "sha256": "75fd13119c6c1448106aac33241c0af2e10b0eaf4ee3de3ed305278f71b071c5",
-    "size_bytes": 24107
+    "sha256": "1b39a4137030e2010255b63d2c6791ac1faf12a867db899c506ca5a6ea4b1671",
+    "size_bytes": 25061
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779288390,
-  "gui_url": "https://www.virustotal.com/gui/file/75fd13119c6c1448106aac33241c0af2e10b0eaf4ee3de3ed305278f71b071c5",
+  "last_analysis_date": 1779335388,
+  "gui_url": "https://www.virustotal.com/gui/file/1b39a4137030e2010255b63d2c6791ac1faf12a867db899c506ca5a6ea4b1671",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -140,7 +140,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },

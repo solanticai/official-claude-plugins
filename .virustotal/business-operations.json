@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T15:11:18.090Z",
+  "scanned_at": "2026-05-21T04:16:14.994Z",
   "scan_source": "upload",
   "tarball": {
     "path": "smb/business-operations",
-    "sha256": "d9811379ac9241c8df120573bfd63b4d79aeba3eb78a90a8881b27050179b5e8",
-    "size_bytes": 66048
+    "sha256": "ab6aeec753364d9db88e0e88e7485e65d7f35d7bd4d4aab37c6557c4fd94f381",
+    "size_bytes": 67537
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
-    "undetected": 61,
+    "undetected": 62,
     "timeout": 0,
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779289755,
-  "gui_url": "https://www.virustotal.com/gui/file/d9811379ac9241c8df120573bfd63b4d79aeba3eb78a90a8881b27050179b5e8",
+  "last_analysis_date": 1779336853,
+  "gui_url": "https://www.virustotal.com/gui/file/ab6aeec753364d9db88e0e88e7485e65d7f35d7bd4d4aab37c6557c4fd94f381",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -31,6 +31,11 @@
     },
     {
       "engine": "MicroWorld-eScan",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "ClamAV",
       "category": "undetected",
       "result": null
     },
@@ -140,7 +145,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -175,11 +180,6 @@
       "result": null
     },
     {
-      "engine": "SentinelOne",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "CMC",
       "category": "undetected",
       "result": null
@@ -190,7 +190,7 @@
       "result": null
     },
     {
-      "engine": "Ikarus",
+      "engine": "SentinelOne",
       "category": "undetected",
       "result": null
     },
@@ -200,7 +200,7 @@
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -250,7 +250,7 @@
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -275,12 +275,17 @@
       "result": null
     },
     {
+      "engine": "Ikarus",
+      "category": "undetected",
+      "result": null
+    },
+    {
       "engine": "Zoner",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
@@ -322,11 +327,6 @@
     {
       "engine": "alibabacloud",
       "category": "undetected",
-      "result": null
-    },
-    {
-      "engine": "ClamAV",
-      "category": "failure",
       "result": null
     },
     {

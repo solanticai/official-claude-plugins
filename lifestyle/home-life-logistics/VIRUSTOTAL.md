@@ -1,10 +1,10 @@
 # VirusTotal — home-life-logistics
 
-**Last scan:** 2026-05-20 · **Verdict:** clean
+**Last scan:** 2026-05-21 · **Verdict:** clean
 **Detections:** 0 malicious · 0 suspicious · 0 harmless · 61 undetected (of 75 engines)
 **Reputation:** 0
-**Tarball SHA-256:** `dfe8f1a060a6c10c9e1597cee0e26a7bc2a8ec5f8c64126eaa569d45d1b59e73`
-**Full report:** https://www.virustotal.com/gui/file/dfe8f1a060a6c10c9e1597cee0e26a7bc2a8ec5f8c64126eaa569d45d1b59e73
+**Tarball SHA-256:** `8ea45a7f7d715d5c82d4be4cd87c63ee3913a84bb75ed28993327d31c723e88b`
+**Full report:** https://www.virustotal.com/gui/file/8ea45a7f7d715d5c82d4be4cd87c63ee3913a84bb75ed28993327d31c723e88b
 
 ## Engine results
 

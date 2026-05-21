@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T15:23:30.151Z",
+  "scanned_at": "2026-05-21T04:29:07.393Z",
   "scan_source": "upload",
   "tarball": {
     "path": "lifestyle/home-life-logistics",
-    "sha256": "dfe8f1a060a6c10c9e1597cee0e26a7bc2a8ec5f8c64126eaa569d45d1b59e73",
-    "size_bytes": 19888
+    "sha256": "8ea45a7f7d715d5c82d4be4cd87c63ee3913a84bb75ed28993327d31c723e88b",
+    "size_bytes": 20244
   },
   "detections": {
     "malicious": 0,
@@ -16,8 +16,8 @@
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779290468,
-  "gui_url": "https://www.virustotal.com/gui/file/dfe8f1a060a6c10c9e1597cee0e26a7bc2a8ec5f8c64126eaa569d45d1b59e73",
+  "last_analysis_date": 1779337666,
+  "gui_url": "https://www.virustotal.com/gui/file/8ea45a7f7d715d5c82d4be4cd87c63ee3913a84bb75ed28993327d31c723e88b",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -65,7 +65,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -86,6 +86,11 @@
     },
     {
       "engine": "CrowdStrike",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -140,7 +145,7 @@
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
@@ -160,7 +165,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -190,17 +195,12 @@
       "result": null
     },
     {
-      "engine": "GData",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +245,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
