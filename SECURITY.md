@@ -33,18 +33,23 @@ If you discover a security issue in any plugin or in the marketplace tooling, pl
 For dependency vulnerabilities surfaced by VirusTotal scans (non-zero detections in the table below), review the linked VT report first — false positives are common for gzipped shell-heavy archives. Confirmed true positives are treated as P0 and the affected plugin is delisted from `marketplace.json` pending remediation.
 
 <!-- vt-summary:start -->
-## Latest scan — 2026-05-18
+## Latest scan — 2026-05-20
 
 | Plugin | Detections | Last scan | Report |
 |---|---:|---|---|
-| brand-manager | 0 / 74 | 2026-05-04 | [detail](smb/brand-manager/VIRUSTOTAL.md) |
-| business-economics | 0 / 74 | 2026-05-04 | [detail](economics/business-economics/VIRUSTOTAL.md) |
-| data-analysis | 0 / 74 | 2026-05-04 | [detail](data-science/data-analysis/VIRUSTOTAL.md) |
-| database-design | 0 / 74 | 2026-05-04 | [detail](engineering/database-design/VIRUSTOTAL.md) |
-| devops | 0 / 74 | 2026-05-04 | [detail](engineering/devops/VIRUSTOTAL.md) |
-| package-manager | 0 / 74 | 2026-05-04 | [detail](engineering/package-manager/VIRUSTOTAL.md) |
-| utilities | 0 / 74 | 2026-05-04 | [detail](utilities/utilities/VIRUSTOTAL.md) |
-| ppc-manager | 0 / 74 | 2026-05-04 | [detail](marketing/ppc-manager/VIRUSTOTAL.md) |
-| skill-ops | 0 / 74 | 2026-05-04 | [detail](utilities/skill-ops/VIRUSTOTAL.md) |
-| software-development | 0 / 74 | 2026-05-04 | [detail](engineering/software-development/VIRUSTOTAL.md) |
+| brand-manager | 0 / 75 | 2026-05-20 | [detail](smb/brand-manager/VIRUSTOTAL.md) |
+| business-operations | 0 / 75 | 2026-05-20 | [detail](smb/business-operations/VIRUSTOTAL.md) |
+| database-design | 0 / 75 | 2026-05-20 | [detail](engineering/database-design/VIRUSTOTAL.md) |
+| devops | 0 / 75 | 2026-05-20 | [detail](engineering/devops/VIRUSTOTAL.md) |
+| experimentation | 0 / 75 | 2026-05-20 | [detail](data-science/experimentation/VIRUSTOTAL.md) |
+| home-life-logistics | 0 / 75 | 2026-05-20 | [detail](lifestyle/home-life-logistics/VIRUSTOTAL.md) |
+| package-manager | 0 / 75 | 2026-05-20 | [detail](engineering/package-manager/VIRUSTOTAL.md) |
+| personal-finance | 0 / 75 | 2026-05-20 | [detail](lifestyle/personal-finance/VIRUSTOTAL.md) |
+| personal-productivity | 0 / 75 | 2026-05-20 | [detail](lifestyle/personal-productivity/VIRUSTOTAL.md) |
+| resource-manager | 0 / 75 | 2026-05-20 | [detail](utilities/resource-manager/VIRUSTOTAL.md) |
+| seo-toolkit | 0 / 75 | 2026-05-20 | [detail](seo/seo-toolkit/VIRUSTOTAL.md) |
+| skill-ops | 0 / 75 | 2026-05-20 | [detail](utilities/skill-ops/VIRUSTOTAL.md) |
+| software-development | 0 / 75 | 2026-05-20 | [detail](engineering/software-development/VIRUSTOTAL.md) |
+| strategic-economics | 0 / 75 | 2026-05-20 | [detail](economics/strategic-economics/VIRUSTOTAL.md) |
+| utilities | 0 / 75 | 2026-05-20 | [detail](utilities/utilities/VIRUSTOTAL.md) |
 <!-- vt-summary:end -->

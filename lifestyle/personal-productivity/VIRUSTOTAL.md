@@ -1,10 +1,10 @@
-# VirusTotal — utilities
+# VirusTotal — personal-productivity
 
 **Last scan:** 2026-05-20 · **Verdict:** clean
 **Detections:** 0 malicious · 0 suspicious · 0 harmless · 61 undetected (of 75 engines)
 **Reputation:** 0
-**Tarball SHA-256:** `7d885e7f0d7210aa61e1b5d2389b4360d40511d238d60af70b635cb062eb0ee6`
-**Full report:** https://www.virustotal.com/gui/file/7d885e7f0d7210aa61e1b5d2389b4360d40511d238d60af70b635cb062eb0ee6
+**Tarball SHA-256:** `f6884a40ac76d56c9b96473b5492be71ad4de411be790040cbfc20a70372263d`
+**Full report:** https://www.virustotal.com/gui/file/f6884a40ac76d56c9b96473b5492be71ad4de411be790040cbfc20a70372263d
 
 ## Engine results
 

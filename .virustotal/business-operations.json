@@ -1,23 +1,23 @@
 {
   "schema_version": "1.0",
-  "scanned_at": "2026-05-20T15:05:51.681Z",
+  "scanned_at": "2026-05-20T15:11:18.090Z",
   "scan_source": "upload",
   "tarball": {
-    "path": "utilities/resource-manager",
-    "sha256": "6accda317a55c1ea9f69509d038ae5afc71bb26c5dbf8f36936e3baf3aff946c",
-    "size_bytes": 26799
+    "path": "smb/business-operations",
+    "sha256": "d9811379ac9241c8df120573bfd63b4d79aeba3eb78a90a8881b27050179b5e8",
+    "size_bytes": 66048
   },
   "detections": {
     "malicious": 0,
     "suspicious": 0,
     "harmless": 0,
     "undetected": 61,
-    "timeout": 1,
+    "timeout": 0,
     "total_engines": 75
   },
   "reputation": 0,
-  "last_analysis_date": 1779289410,
-  "gui_url": "https://www.virustotal.com/gui/file/6accda317a55c1ea9f69509d038ae5afc71bb26c5dbf8f36936e3baf3aff946c",
+  "last_analysis_date": 1779289755,
+  "gui_url": "https://www.virustotal.com/gui/file/d9811379ac9241c8df120573bfd63b4d79aeba3eb78a90a8881b27050179b5e8",
   "engine_results": [
     {
       "engine": "Bkav",
@@ -60,7 +60,7 @@
       "result": null
     },
     {
-      "engine": "Zillya",
+      "engine": "VIPRE",
       "category": "undetected",
       "result": null
     },
@@ -85,7 +85,7 @@
       "result": null
     },
     {
-      "engine": "huorong",
+      "engine": "Arcabit",
       "category": "undetected",
       "result": null
     },
@@ -140,7 +140,7 @@
       "result": null
     },
     {
-      "engine": "Tencent",
+      "engine": "Rising",
       "category": "undetected",
       "result": null
     },
@@ -160,7 +160,7 @@
       "result": null
     },
     {
-      "engine": "VIPRE",
+      "engine": "Zillya",
       "category": "undetected",
       "result": null
     },
@@ -171,6 +171,11 @@
     },
     {
       "engine": "McAfeeD",
+      "category": "undetected",
+      "result": null
+    },
+    {
+      "engine": "SentinelOne",
       "category": "undetected",
       "result": null
     },
@@ -190,17 +195,12 @@
       "result": null
     },
     {
-      "engine": "GData",
-      "category": "undetected",
-      "result": null
-    },
-    {
       "engine": "Jiangmin",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Varist",
+      "engine": "Google",
       "category": "undetected",
       "result": null
     },
@@ -230,7 +230,7 @@
       "result": null
     },
     {
-      "engine": "Arcabit",
+      "engine": "Microsoft",
       "category": "undetected",
       "result": null
     },
@@ -245,12 +245,12 @@
       "result": null
     },
     {
-      "engine": "Microsoft",
+      "engine": "GData",
       "category": "undetected",
       "result": null
     },
     {
-      "engine": "Google",
+      "engine": "Varist",
       "category": "undetected",
       "result": null
     },
@@ -280,7 +280,7 @@
       "result": null
     },
     {
-      "engine": "Rising",
+      "engine": "Tencent",
       "category": "undetected",
       "result": null
     },
@@ -295,7 +295,7 @@
       "result": null
     },
     {
-      "engine": "SentinelOne",
+      "engine": "huorong",
       "category": "undetected",
       "result": null
     },
@@ -326,7 +326,7 @@
     },
     {
       "engine": "ClamAV",
-      "category": "timeout",
+      "category": "failure",
       "result": null
     },
     {
@@ -355,11 +355,6 @@
       "result": null
     },
     {
-      "engine": "Webroot",
-      "category": "type-unsupported",
-      "result": null
-    },
-    {
       "engine": "APEX",
       "category": "type-unsupported",
       "result": null
@@ -370,12 +365,17 @@
       "result": null
     },
     {
+      "engine": "Trapmine",
+      "category": "type-unsupported",
+      "result": null
+    },
+    {
       "engine": "Alibaba",
       "category": "type-unsupported",
       "result": null
     },
     {
-      "engine": "Trapmine",
+      "engine": "Webroot",
       "category": "type-unsupported",
       "result": null
     },

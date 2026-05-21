@@ -1,10 +1,10 @@
 # VirusTotal — database-design
 
-**Last scan:** 2026-05-18 · **Verdict:** clean
-**Detections:** 0 malicious · 0 suspicious · 0 harmless · 59 undetected (of 75 engines)
+**Last scan:** 2026-05-20 · **Verdict:** clean
+**Detections:** 0 malicious · 0 suspicious · 0 harmless · 62 undetected (of 75 engines)
 **Reputation:** 0
-**Tarball SHA-256:** `d29ec2a43ffe65aaecc22f46ae289ef623a8198f6c6804d541c1d7fc9e3ac7d8`
-**Full report:** https://www.virustotal.com/gui/file/d29ec2a43ffe65aaecc22f46ae289ef623a8198f6c6804d541c1d7fc9e3ac7d8
+**Tarball SHA-256:** `5ed813f620fa89124759ac3920a640c312a9ec08d2cfcbd3e7980948f98e8c4f`
+**Full report:** https://www.virustotal.com/gui/file/5ed813f620fa89124759ac3920a640c312a9ec08d2cfcbd3e7980948f98e8c4f
 
 ## Engine results
 
