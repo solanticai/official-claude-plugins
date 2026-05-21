@@ -1,0 +1,111 @@
+skill_path,output_type,output_filename,subfolder,notes
+data-science/data-analysis/skills/anomaly-detection-rule-builder,scaffolds,anomaly-detection-rules.md,,SQL + alert configs
+data-science/data-analysis/skills/cohort-analysis-builder,reports,cohort-analysis.md,,SQL + viz spec
+data-science/data-analysis/skills/data-dictionary-generator,reports,data-dictionary.md,,
+data-science/data-analysis/skills/data-pipeline-architecture,scaffolds,data-pipeline-architecture.md,,design + snippets
+data-science/data-analysis/skills/dataset-profiling-quality-audit,audits,dataset-profiling-quality-audit.md,,paired .json
+data-science/experimentation/skills/ab-test-designer,plans,ab-test-design.md,,
+data-science/experimentation/skills/causal-impact-analyser,reports,causal-impact-analysis.md,,
+data-science/experimentation/skills/experiment-readout-builder,reports,experiment-readout.md,,
+data-science/experimentation/skills/forecasting-model-spec,scaffolds,forecasting-model-spec.md,,
+economics/business-economics/skills/break-even-scenario-modeller,reports,break-even-analysis.md,,
+economics/business-economics/skills/cost-structure-builder,reports,cost-structure.md,,
+economics/business-economics/skills/market-sizing-tam-estimator,reports,market-sizing.md,,
+economics/business-economics/skills/pricing-architecture-designer,plans,pricing-architecture.md,,
+economics/business-economics/skills/unit-economics-calculator,reports,unit-economics.md,,scenarios sidecar
+economics/strategic-economics/skills/competitive-dynamics-analyser,reports,competitive-dynamics.md,,
+economics/strategic-economics/skills/elasticity-estimator,scaffolds,elasticity-method-spec.md,,
+economics/strategic-economics/skills/moat-strength-audit,audits,moat-strength-audit.md,,
+engineering/database-design/skills/business-data-model-designer,scaffolds,business-data-model.sql,business-data-model-designer/,SQL migration
+engineering/database-design/skills/erd-generator,reports,erd.md,,
+engineering/database-design/skills/index-strategy-planner,plans,index-strategy.md,,
+engineering/database-design/skills/migration-plan-builder,plans,migration-plan.md,,
+engineering/database-design/skills/postgres-schema-audit,audits,postgres-schema-audit,postgres-schema-audit/,multi: .md + .json + migrations.sql
+engineering/database-design/skills/rls-policy-designer,scaffolds,rls-policies.md,,
+engineering/database-design/skills/supabase-schema-bootstrap,scaffolds,schema-bootstrap.md,,
+engineering/devops/skills/cicd-pipeline-audit,audits,cicd-pipeline-audit,cicd-pipeline-audit/,multi
+engineering/devops/skills/container-audit,audits,container-audit,container-audit/,multi
+engineering/devops/skills/devops-needs-assessment,reports,devops-needs-assessment.md,,
+engineering/devops/skills/devsecops-supply-chain-audit,audits,devsecops-supply-chain-audit,devsecops-supply-chain-audit/,multi
+engineering/devops/skills/iac-terraform-audit,audits,iac-terraform-audit,iac-terraform-audit/,multi
+engineering/devops/skills/kubernetes-manifest-audit,audits,kubernetes-manifest-audit,kubernetes-manifest-audit/,multi: .md .json .yaml apply-log
+engineering/devops/skills/observability-audit,audits,observability-audit,observability-audit/,multi
+engineering/devops/skills/release-readiness-audit,audits,release-readiness-audit.md,,
+engineering/devops/skills/sre-reliability-audit,audits,sre-reliability-audit,sre-reliability-audit/,multi
+engineering/package-manager/skills/cli-ux-audit,audits,cli-ux-audit.md,,
+engineering/package-manager/skills/npm-package-audit,audits,npm-package-audit.md,,
+engineering/software-development/skills/application-audit,audits,REPORT.md,application-audit/<AUDIT_ID>/,already .anthril/-native
+engineering/software-development/skills/dead-code-audit,audits,dead-code-audit.md,,
+engineering/software-development/skills/plan-orchestrator,plans,N/A,,output goes through ExitPlanMode; no file write
+engineering/software-development/skills/write-path-mapping,reports,write-path-mapping,write-path-mapping/,multi: write-path-map.md + .json + risk-register.md
+marketing/ppc-manager/skills/campaign-audit,audits,campaign-audit.md,,
+marketing/ppc-manager/skills/display-ad-specs,briefs,display-ad-specs.md,,
+marketing/ppc-manager/skills/ga4-events,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/ga4-setup,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/google-ads-account-setup,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/google-ads-copy,briefs,google-ads-copy.md,,
+marketing/ppc-manager/skills/google-pmax-campaign,briefs,pmax-campaign-brief.md,,
+marketing/ppc-manager/skills/google-search-campaign,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/gtm-datalayer,scaffolds,datalayer-schema.md,,
+marketing/ppc-manager/skills/gtm-setup,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/gtm-tags,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/keyword-research,data,ppc-keywords.csv,,
+marketing/ppc-manager/skills/landing-page-copy,briefs,landing-page-copy.md,,
+marketing/ppc-manager/skills/meta-ads-copy,briefs,meta-ads-copy.md,,
+marketing/ppc-manager/skills/meta-audience-builder,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/meta-capi-setup,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/meta-creative-brief,briefs,meta-creative-brief.md,,
+marketing/ppc-manager/skills/meta-events-mapping,scaffolds,meta-events-mapping.md,,
+marketing/ppc-manager/skills/meta-pixel-setup,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/oauth-setup,,N/A,,MCP-only no file
+marketing/ppc-manager/skills/utm-builder,data,utm-parameters.md,,
+marketing/ppc-manager/skills/youtube-campaign,,N/A,,MCP-only no file
+seo/seo-toolkit/skills/backlink-audit,audits,backlink-audit,backlink-audit/,multi: report + disavow list
+seo/seo-toolkit/skills/broken-link-scanner,reports,broken-link-report.md,,
+seo/seo-toolkit/skills/competitor-seo-audit,audits,competitor-seo-audit.md,,
+seo/seo-toolkit/skills/content-brief-generator,briefs,content-brief.md,,
+seo/seo-toolkit/skills/content-gap-analysis,reports,content-gap-analysis,content-gap-analysis/,md + csv
+seo/seo-toolkit/skills/core-web-vitals-report,reports,core-web-vitals-report.md,,
+seo/seo-toolkit/skills/entity-disambiguation,reports,entity-disambiguation.md,,
+seo/seo-toolkit/skills/entity-relationship-mapper,data,entity-relationship-mapper,entity-relationship-mapper/,diagram + JSON-LD
+seo/seo-toolkit/skills/gsc-performance-report,reports,gsc-performance-report.md,,
+seo/seo-toolkit/skills/internal-linking-planner,plans,internal-linking-plan.md,,
+seo/seo-toolkit/skills/keyword-clustering-and-mapping,data,keyword-clustering-and-mapping,keyword-clustering-and-mapping/,multi: clustered_keywords.csv page_map.csv gap_report cannibalization
+seo/seo-toolkit/skills/keyword-list-developer,data,keyword-list.csv,,
+seo/seo-toolkit/skills/keyword-research,data,keyword-research.csv,,
+seo/seo-toolkit/skills/knowledge-graph-builder,scaffolds,knowledge-graph.md,,
+seo/seo-toolkit/skills/local-seo-audit,audits,local-seo-audit.md,,
+seo/seo-toolkit/skills/on-page-audit,audits,on-page-audit,on-page-audit/,scorecard + fix list
+seo/seo-toolkit/skills/redirect-map-builder,data,redirect-map,redirect-map-builder/,md + csv
+seo/seo-toolkit/skills/schema-markup-generator,scaffolds,schema-markup.md,,JSON-LD
+seo/seo-toolkit/skills/serp-analysis,reports,serp-analysis.md,,
+seo/seo-toolkit/skills/technical-seo-audit,audits,technical-seo-audit.md,,
+smb/brand-manager/skills/brand-guidelines,reports,brand-guidelines.md,,
+smb/brand-manager/skills/brand-identity,reports,brand-identity.md,,
+smb/brand-manager/skills/color-palette,data,color-palette,color-palette/,JSON + CSS
+smb/brand-manager/skills/competitor-analysis,reports,competitor-analysis.md,,
+smb/brand-manager/skills/design-tokens,data,design-tokens,design-tokens/,tokens.json tokens.css tailwind.css
+smb/brand-manager/skills/legal-disclaimers,reports,legal-disclaimers.md,,
+smb/brand-manager/skills/logo-brief,briefs,logo-brief.md,,
+smb/brand-manager/skills/target-audience,reports,target-audience.md,,
+smb/brand-manager/skills/website-copy,reports,website-copy.md,,
+smb/business-operations/skills/kpi-framework-generator,reports,kpi-framework.md,,
+smb/business-operations/skills/operational-bottleneck-detector,audits,bottleneck-analysis.md,,
+smb/business-operations/skills/pricing-strategy-analyser,reports,pricing-strategy.md,,
+smb/business-operations/skills/revenue-channel-mapper,reports,revenue-channel-canvas.md,,
+smb/business-operations/skills/stakeholder-brief-builder,briefs,stakeholder-brief.md,,
+utilities/resource-manager/skills/mcp-server-audit,audits,mcp-server-audit.md,,
+utilities/resource-manager/skills/resource-dashboard,reports,resource-dashboard.md,,
+utilities/resource-manager/skills/resource-dashboard-stop,,N/A,,stop signal no file
+utilities/resource-manager/skills/resource-snapshot,reports,resource-snapshot.md,,
+utilities/skill-ops/skills/skill-creator,scaffolds,N/A,,writes new skill directory; path is the new skill location not .anthril/
+utilities/skill-ops/skills/skill-eval-bootstrap,scaffolds,skill-eval-bootstrap.md,,
+utilities/skill-ops/skills/skill-eval-harness,reports,skill-eval-harness.md,,
+utilities/skill-ops/skills/skill-evaluator,audits,skill-evaluator,skill-evaluator/<skill>/,md + json
+utilities/utilities/skills/audit-resolver,audits,audit-resolver-ledger.md,audit-resolver/<date>/,already .anthril/-native
+utilities/utilities/skills/changelog-generator,reports,CHANGELOG.md,,special: writes CHANGELOG.md at project root (convention) not .anthril/
+utilities/utilities/skills/doc-link-validator,reports,doc-link-report.md,,
+utilities/utilities/skills/env-var-auditor,audits,env-var-audit.md,,
+utilities/utilities/skills/plan-completion-audit,audits,plan-audit-report,plan-completion-audit/,md + json
+utilities/utilities/skills/pr-description-writer,reports,pr-description.md,,
+utilities/utilities/skills/repo-snapshot,reports,repo-snapshot.md,,

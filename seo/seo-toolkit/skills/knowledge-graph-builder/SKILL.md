@@ -8,6 +8,14 @@ effort: high
 
 # Knowledge Graph Builder
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/`.
+> Run `mkdir -p .anthril/scaffolds` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/knowledge-graph.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Skill Metadata
 - **Skill ID:** knowledge-graph-builder
 - **Category:** Structured Data & Entity Modelling

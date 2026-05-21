@@ -2,7 +2,7 @@
 name: plan-orchestrator
 description: Turns a bullet list of tasks/issues/bugs into one ordered plan with full coverage verification. Fans out specialist sub-agents in parallel. Designed for Claude Code Plan Mode. Read-only — produces a plan, never edits.
 argument-hint: [bullet list of tasks, issues, notes, or bug reports — one per line, prefixed with * or - or numbered]
-allowed-tools: Read Grep Glob Bash Agent
+allowed-tools: Read Grep Glob Bash Agent EnterPlanMode ExitPlanMode
 effort: high
 ---
 
@@ -21,7 +21,9 @@ ultrathink
 
 ## Before You Start
 
-1. **Verify Plan Mode is on.** This skill is designed for Plan Mode. If the assistant is not in Plan Mode, continue but warn the user that the final output is a plan, not an executed change set.
+> **CRITICAL — Execute immediately, do not meta-plan.** This skill IS the plan generator. When invoked (whether or not Plan Mode is already active), do NOT run the harness's default Plan-Mode workflow (Phase 1 Explore subagents → Phase 2 Plan subagents → Phase 4 write plan file → Phase 5 ExitPlanMode). Skip all of that. Go directly to *this skill's* Phase 1 (Input Validation & Task Inventory) on your very first tool call. The orchestrator dispatches its own `*-investigator` sub-agents in Phase 3 — never spawn top-level `Explore` or `Plan` agents to "research the request first". The compiled plan emitted at the end of Phase 5 IS the deliverable; it becomes the argument to `ExitPlanMode` directly.
+
+1. **Enter Plan Mode if not already active.** Call `EnterPlanMode` as your first action so the read-only guarantee is enforced by the harness, not just by convention. If the session is already in Plan Mode, the call is a safe no-op — proceed regardless. Do not pause for user confirmation here; the user invoked the slash command knowing this skill produces a plan.
 2. **Locate the working target.** The orchestrator runs against the current working directory by default. If `$ARGUMENTS` contains a path on its own line (e.g. `target: ./apps/web`), use that as the target root. Otherwise, the cwd is the target.
 3. **Detect the stack.** Run `scripts/detect-stack.sh` to pre-populate domain hints (Next.js implies frontend domain, Supabase implies database domain, etc.). This is shared with each sub-agent.
 4. **Parse the input bullets.** Pipe `$ARGUMENTS` through `scripts/parse-bullets.py` to produce a JSON task list with one entry per bullet, each with a stable ID (`T1`, `T2`, ...) and the original text.
@@ -127,7 +129,7 @@ Wait for all sub-agents to return. If any agent fails, fall back to running the 
    - **Cross-cutting concerns** section — anything that affects multiple files or multiple domains.
    - **Suggested execution order** — a topologically reasonable sequence (db migrations first, then backend, then frontend, then docs/tests).
    - **Unresolved items** — anything still missing after Phase 4 sweepers.
-3. Present the compiled plan as the assistant's response. In Plan Mode, this becomes the argument to `ExitPlanMode`.
+3. Present the compiled plan as the assistant's response and pass it as the argument to `ExitPlanMode` directly. This is the skill's final action — the harness's own plan-mode workflow does NOT re-plan or re-summarise the output; the orchestrator's compiled plan IS the plan-file content the user reviews.
 
 ---
 

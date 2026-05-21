@@ -8,6 +8,14 @@ effort: medium
 
 # Index Strategy Planner
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/plans/`.
+> Run `mkdir -p .anthril/plans` before the first `Write` call.
+> Primary artefact: `.anthril/plans/index-strategy.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Reviews query patterns + table statistics + EXPLAIN ANALYZE outputs and recommends an index strategy. Covers B-tree, GIN, GiST, BRIN, partial, covering, and expression indexes. Each recommendation includes the SQL + write-amplification estimate.
@@ -90,7 +98,9 @@ Drop list with `DROP INDEX CONCURRENTLY` SQL.
 
 ### Phase 6: Output
 
-Save as `index-strategy.md`.
+Save as `.anthril/plans/index-strategy.md` .
+
+Create the output folder first: `mkdir -p .anthril/plans`.
 
 ---
 

@@ -9,6 +9,14 @@ effort: high
 # Pricing Strategy Analyser
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/pricing-strategy.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Recommends a complete pricing strategy for a product or service: selects the optimal pricing model (cost-plus, value-based, competitor-indexed, dynamic, freemium, tiered, or usage-based), constructs price tiers with personas and value drivers, models elasticity guard-rails, and produces a test plan to validate the strategy before full rollout.
@@ -211,7 +219,9 @@ Use the template at `templates/output-template.md`. The document includes:
 5. **Risks and Mitigations** — top 3 pricing risks
 6. **Next Steps** — numbered with dates and owners
 
-Save as `pricing-strategy.md`.
+Save as `.anthril/reports/pricing-strategy.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

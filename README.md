@@ -290,7 +290,7 @@ Every skill is audited against a 10-dimension rubric and exercised by a fleet-wi
 - **Audit** — `/skill-evaluator <path>` produces a scored markdown report + JSON sidecar across 10 dimensions (45 deterministic checks plus a qualitative review). See [`utilities/skill-ops/skills/skill-evaluator/`](utilities/skill-ops/skills/skill-evaluator/).
 - **Eval suites** — every skill has an `evals/suite.yaml` containing activation, functional, edge-case, and regression tests. Generated and tuned by `/skill-eval-bootstrap` and `tune-criteria.mjs`.
 - **Harness** — `/skill-eval-harness <skill> [--mode=fast]` runs the suite, dispatches the LLM-as-judge in a fresh subagent context, and emits a markdown run report plus an iteration-log row.
-- **Latest fleet run** — see [`audits/2026-05-20/judge/fleet-judge.md`](audits/2026-05-20/judge/fleet-judge.md) for the most recent fleet-wide judge verdicts.
+- **Latest fleet run** — see [`.anthril/audits/2026-05-20/judge/fleet-judge.md`](.anthril/audits/2026-05-20/judge/fleet-judge.md) for the most recent fleet-wide judge verdicts.
 
 ## Repository Structure
 
@@ -330,7 +330,7 @@ official-claude-plugins/
 │   └── utilities/                 # 7 skills (plan-completion-audit + audit-resolver + 5 repo-ops helpers) + /utilities:audit-resolve command; generic catch-all plugin
 ├── seo/
 │   └── seo-toolkit/               # 20 skills (17 SEO + 3 structured-data entity skills)
-├── audits/                        # Time-stamped audit + judge reports
+├── .anthril/audits/                        # Time-stamped audit + judge reports
 │   └── 2026-05-20/
 │       ├── summary.md
 │       ├── plan-completion-audit.md

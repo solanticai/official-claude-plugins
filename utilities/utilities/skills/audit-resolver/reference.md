@@ -123,7 +123,7 @@ Used when a finding maps to a sub-skill and `Agent` invocation is needed.
 
 ## Resumability
 
-The ledger at `audits/<date>/audit-resolver-ledger.md` **is the resume state**. On re-invocation against the same original audit report:
+The ledger at `.anthril/audits/<date>/audit-resolver-ledger.md` **is the resume state**. On re-invocation against the same original audit report:
 
 1. Read the existing ledger
 2. Skip any finding ID already listed in the Execution Log with outcome "✓ closed"

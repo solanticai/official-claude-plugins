@@ -10,6 +10,14 @@ effort: high
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/content-gap-analysis/`.
+> Run `mkdir -p .anthril/reports/content-gap-analysis` before the first `Write` call.
+> Primary artefact: `.anthril/reports/content-gap-analysis/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Discovers the keyword universe your competitors have captured that you have not. Pulls ranked-keyword sets per domain, computes the set difference, clusters gap keywords into topical groups, and scores each cluster by opportunity (volume × difficulty inverse × position gap). Outputs a prioritised content roadmap with per-cluster angle recommendations.

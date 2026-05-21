@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Closes the audit → fix loop. Pairs with the existing `plan-completion-audit` skill: after an audit produces a report, `audit-resolver` reads it, plans the fixes, executes them with safety gates, and produces a durable ledger of what changed.
 
-- **New skill:** `utilities/utilities/skills/audit-resolver/` — 7-phase workflow (discovery → triage → confirmation gate → pre-flight → batched execute → optional re-audit → ledger). Reads any `plan-completion-audit` report under `audits/`, parses every finding into a structured ledger, classifies each (AUTO / SUB-SKILL / PLAN-FIRST / HUMAN-INPUT / DEFER), and applies fixes batch-by-batch with verifier checks (`tsc --noEmit`, `npm test`, `python tests/...`, `node scripts/check-versions.mjs` — auto-detected per stack via `scripts/verify-stack.sh`).
+- **New skill:** `utilities/utilities/skills/audit-resolver/` — 7-phase workflow (discovery → triage → confirmation gate → pre-flight → batched execute → optional re-audit → ledger). Reads any `plan-completion-audit` report under `.anthril/audits/`, parses every finding into a structured ledger, classifies each (AUTO / SUB-SKILL / PLAN-FIRST / HUMAN-INPUT / DEFER), and applies fixes batch-by-batch with verifier checks (`tsc --noEmit`, `npm test`, `python tests/...`, `node scripts/check-versions.mjs` — auto-detected per stack via `scripts/verify-stack.sh`).
 - **New command:** `utilities/utilities/commands/audit-resolve.md` — convenient slash invocation `/utilities:audit-resolve [report-path] [flags]`. Thin wrapper that dispatches to the skill.
 - **Supporting artefacts:**
   - `templates/output-template.md` — resolution-ledger structure
@@ -177,7 +177,7 @@ Users with the old plugin names installed need to re-install under the new names
 ## [2.4.0] - 2026-05-20
 
 ### Added
-- **First fleet-wide LLM-as-judge run** — every skill in the marketplace evaluated end-to-end against its `evals/suite.yaml`. One Agent per skill (general-purpose, fresh context) performed activation classification (5 cases) plus a functional judge against the skill's example artefact. Aggregate report at `audits/2026-05-20/judge/fleet-judge.md` and JSON sidecar `fleet-judge.json`. Per-skill raw verdicts at `audits/2026-05-20/judge/results/<skill>.json`.
+- **First fleet-wide LLM-as-judge run** — every skill in the marketplace evaluated end-to-end against its `evals/suite.yaml`. One Agent per skill (general-purpose, fresh context) performed activation classification (5 cases) plus a functional judge against the skill's example artefact. Aggregate report at `.anthril/audits/2026-05-20/judge/fleet-judge.md` and JSON sidecar `fleet-judge.json`. Per-skill raw verdicts at `.anthril/audits/2026-05-20/judge/results/<skill>.json`.
 - `skill-eval-bootstrap/scripts/tune-criteria.mjs` — programmatic criteria tuner; derives skill-specific judge criteria from each SKILL.md's description, Output Format block, and templates/. Run across all 67 suites — 65 changed, 2 had no functional case.
 - `skill-eval-harness/templates/activation-prompt-template.md` — canonical activation classifier prompt. Used by Phase 2 in `--mode=full` (default); `check-activation.sh` keyword-overlap proxy stays as `--mode=fast` fallback.
 - `skill-eval-harness/scripts/build-judge-prompt.mjs` — renders a per-skill judge prompt bundling activation + functional judge into one Agent task.
@@ -211,7 +211,7 @@ Initial judge run produced 2 false-negative fails (`application-audit`, `plan-or
 - Refined `skill-evaluator`'s C45 detector to exempt skills launched via `agent:` / `context: fork` frontmatter, which legitimately need `Agent` in `allowed-tools` even when the body does not reference it by name.
 
 ### Added
-- `audits/2026-05-20/summary.md` — first sweep using the upgraded 10-dimension rubric. Zero anti-pattern findings remain across the marketplace.
+- `.anthril/audits/2026-05-20/summary.md` — first sweep using the upgraded 10-dimension rubric. Zero anti-pattern findings remain across the marketplace.
 
 ## [2.1.0] - 2026-05-20
 

@@ -9,6 +9,14 @@ effort: high
 # Elasticity Estimator
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/`.
+> Run `mkdir -p .anthril/scaffolds` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/elasticity-method-spec.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Decides how to estimate price elasticity given the data the business has. Outputs:
@@ -85,7 +93,9 @@ Surface the standard pitfalls for the chosen method:
 
 ### Phase 5: Output
 
-Save as `elasticity-method-spec.md`.
+Save as `.anthril/scaffolds/elasticity-method-spec.md` .
+
+Create the output folder first: `mkdir -p .anthril/scaffolds`.
 
 ---
 

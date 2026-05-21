@@ -2,7 +2,7 @@
 
 **Date started:** 21/05/2026
 **Date completed:** 21/05/2026
-**Original audit report:** `audits/2026-05-20/plan-completion-audit-shimmying-tulip.md`
+**Original audit report:** `.anthril/audits/2026-05-20/plan-completion-audit-shimmying-tulip.md`
 **Plan audited:** `C:\Users\john\.claude\plans\i-want-you-shimmying-tulip.md`
 
 ---

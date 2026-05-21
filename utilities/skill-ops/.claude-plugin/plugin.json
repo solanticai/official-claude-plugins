@@ -1,9 +1,21 @@
 {
   "name": "skill-ops",
+  "displayName": "Skill Ops",
   "version": "2.0.0",
   "description": "Operate on Claude Code skills — scaffold new skills (skill-creator), audit existing skills against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap).",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/skill-ops",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "utilities",
+    "skill",
+    "ops"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
 }

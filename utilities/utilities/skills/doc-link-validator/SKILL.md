@@ -8,6 +8,14 @@ effort: low
 
 # Doc Link Validator
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/doc-link-report.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Scans markdown files for broken links (HTTP and internal). Uses the bundled `link-check.py` helper. Outputs a CSV + a remediation report.
@@ -63,7 +71,9 @@ For each broken link:
 
 ### Phase 4: Output
 
-Save as `doc-link-report.md`.
+Save as `.anthril/reports/doc-link-report.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

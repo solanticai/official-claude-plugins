@@ -15,6 +15,14 @@ agent: serp-analyst
 # SERP Analysis
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/serp-analysis.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces a comprehensive SERP analysis for a single search query: SERP features detected, dominant search intent, top-10 organic results with metadata, content-format distribution, SERP volatility signal, and concrete ranking opportunity recommendations.

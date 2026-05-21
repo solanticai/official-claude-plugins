@@ -17,6 +17,14 @@ agent: content-strategist
 # Keyword Clustering & Mapping
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/data/keyword-clustering-and-mapping/`.
+> Run `mkdir -p .anthril/data/keyword-clustering-and-mapping` before the first `Write` call.
+> Primary artefact: `.anthril/data/keyword-clustering-and-mapping/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Takes the master keyword CSV from `keyword-list-developer` (or any CSV matching the schema), clusters it using the external `keyword-clustering` package, maps clusters to existing site pages, identifies content gaps and cannibalisation conflicts, and produces a prioritised content and SEO action plan.

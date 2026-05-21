@@ -214,5 +214,5 @@ Sitemap: https://www.acmecorp.com.au/sitemap.xml
 
 | File | Path |
 |---|---|
-| Crawl output | `/home/user/.claude/plugin-data/audits/acmecorp/crawl.json` |
-| CWV output | `/home/user/.claude/plugin-data/audits/acmecorp/cwv.json` |
+| Crawl output | `/home/user/.claude/plugin-data/.anthril/audits/acmecorp/crawl.json` |
+| CWV output | `/home/user/.claude/plugin-data/.anthril/audits/acmecorp/cwv.json` |

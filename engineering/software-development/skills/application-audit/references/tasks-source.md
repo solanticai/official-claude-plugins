@@ -2,7 +2,7 @@
 
 > Canonical brief that drives the `frontend-auditor`, `backend-auditor`, and
 > `cross-cutting-security-auditor` agents. Decomposed into per-agent prompts
-> in `agents/application-audit/<role>.md` — auditors read those, not this
+> in `agents/<role>.md` (skill-local, colocated with this skill) — auditors read those, not this
 > file. Preserved here as a load-bearing reference for skill maintenance.
 
 Below is the stack-specific audit list for a Next.js 15 + React 19 + strict TypeScript + Supabase + Tailwind app. The biggest wins usually come from making rendering and caching decisions explicit, shrinking client JavaScript, locking down Supabase authorization, and then measuring query/runtime hotspots with proper observability.

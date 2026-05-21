@@ -1,9 +1,20 @@
 {
   "name": "business-economics",
+  "displayName": "Business Economics",
   "version": "1.1.1",
   "description": "5 skills for unit economics, market sizing (TAM/SAM/SOM), pricing architecture, cost structure, and break-even scenario modelling",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/economics/business-economics",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "economics",
+    "business"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
 }

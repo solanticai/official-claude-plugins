@@ -1,16 +1,29 @@
 {
   "name": "strategic-economics",
+  "displayName": "Strategic Economics",
   "version": "1.0.1",
   "description": "3 skills for competitive-dynamics analysis, elasticity estimation, and moat-strength audit — strategic economics for product and venture decisions",
   "author": {
-    "name": "Anthril",
+    "name": "John O'Connor",
     "email": "john@anthril.com",
-    "url": "https://github.com/anthril"
+    "url": "https://github.com/johnoconnor0"
   },
   "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/economics/strategic-economics",
   "repository": "https://github.com/anthril/official-claude-plugins",
   "license": "MIT",
-  "keywords": ["economics", "strategy", "competition", "elasticity", "moats", "game-theory", "7-powers"],
+  "keywords": [
+    "economics",
+    "strategy",
+    "competition",
+    "elasticity",
+    "moats",
+    "game-theory",
+    "7-powers"
+  ],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json"
+  "agents": "./skills/moat-strength-audit/agents/",
+  "hooks": "./hooks/hooks.json",
+  "dependencies": [
+    "business-economics"
+  ]
 }

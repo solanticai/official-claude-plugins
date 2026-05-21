@@ -10,6 +10,14 @@ effort: medium
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/briefs/`.
+> Run `mkdir -p .anthril/briefs` before the first `Write` call.
+> Primary artefact: `.anthril/briefs/content-brief.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces a complete editorial brief for a single piece of content — grounded in a target keyword or an existing cluster from `keyword-clustering-and-mapping`. Outputs title proposals, URL slug, meta description, full heading structure, key questions to answer (from People Also Ask), internal/external link targets, image recommendations, schema markup type, word-count target, and an on-page SEO checklist.

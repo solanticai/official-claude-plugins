@@ -9,6 +9,14 @@ paths: "**/supabase/migrations/**, **/schema.sql"
 
 # Business Data Model Designer
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/business-data-model-designer/`.
+> Run `mkdir -p .anthril/scaffolds/business-data-model-designer` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/business-data-model-designer/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Skill Metadata
 - **Skill ID:** business-data-model-designer
 - **Category:** Cross-Cutting

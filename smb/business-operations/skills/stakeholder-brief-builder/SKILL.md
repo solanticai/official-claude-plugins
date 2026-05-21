@@ -8,6 +8,14 @@ effort: medium
 
 # Stakeholder Brief Builder
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/briefs/`.
+> Run `mkdir -p .anthril/briefs` before the first `Write` call.
+> Primary artefact: `.anthril/briefs/stakeholder-brief.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces a focused, audience-calibrated 1-page brief on any business topic. Structured with Barbara Minto's SCQA (Situation, Complication, Question, Answer) framework and tone-shifted for the specific audience: board-level executives, investors, leadership team, staff, customers, or suppliers.

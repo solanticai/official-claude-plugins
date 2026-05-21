@@ -1,9 +1,27 @@
 {
   "name": "software-development",
-  "version": "1.3.0",
-  "description": "audit/orchestration skills for software teams — dead code detection across 9 languages, end-to-end write path mapping, parallel multi-agent plan orchestration for Plan Mode, multi-agent application audit for Next.js 15 + React 19 + TypeScript Strict + Supabase + Tailwind apps, plus an executable action-plan loop (audit-compile-plan + audit-work) for stepping through validated findings",
+  "displayName": "Software Development",
+  "version": "1.4.0",
+  "description": "audit/orchestration skills for software teams — stack-agnostic codebase profiler (architecture topology, dependency graph, security surface, quality metrics), dead code detection across 9 languages, end-to-end write path mapping, parallel multi-agent plan orchestration for Plan Mode, multi-agent application audit for Next.js 15 + React 19 + TypeScript Strict + Supabase + Tailwind apps, plus an executable action-plan loop (audit-compile-plan + audit-work) for stepping through validated findings",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/software-development",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "software",
+    "development"
+  ],
+  "skills": "./skills/",
+  "commands": "./commands/",
+  "agents": [
+    "./skills/application-audit/agents/",
+    "./skills/plan-orchestrator/agents/",
+    "./skills/codebase-profiler/agents/"
+  ],
+  "hooks": "./hooks/hooks.json"
 }

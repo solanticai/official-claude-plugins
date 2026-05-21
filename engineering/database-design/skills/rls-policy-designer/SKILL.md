@@ -9,6 +9,14 @@ effort: high
 # RLS Policy Designer
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/`.
+> Run `mkdir -p .anthril/scaffolds` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/rls-policies.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Generates a complete RLS policy bundle for a Supabase project: per-table policies, helper functions, security-definer functions, admin escape patterns, and test queries to validate access.
@@ -101,7 +109,9 @@ Output as a runnable SQL test script.
 
 ### Phase 6: Output
 
-Save as `rls-policies.md`.
+Save as `.anthril/scaffolds/rls-policies.md` .
+
+Create the output folder first: `mkdir -p .anthril/scaffolds`.
 
 ---
 

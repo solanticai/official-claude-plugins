@@ -1,7 +1,7 @@
 # Source Notes — `client-connection-audit.md`
 
 > Canonical brief for the connection-related auditors. Decomposed into per-agent
-> prompts in `agents/application-audit/{client-connection,server-client,postgres,connection-limit,leak-detection}-auditor.md`.
+> prompts in `agents/{client-connection,server-client,postgres,connection-limit,leak-detection}-auditor.md` (skill-local).
 > Preserved here as the load-bearing reference for the connection-path audit.
 
 For this stack, the connection audit breaks into four distinct paths:

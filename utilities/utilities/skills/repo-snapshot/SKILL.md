@@ -8,6 +8,14 @@ effort: medium
 
 # Repo Snapshot
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/repo-snapshot.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Captures the structural state of a repository in markdown — for a new hire, an investor due diligence, or a "future-you" reference. Includes folder tree (curated), top files by LOC, framework detection, dependency surface, contributor activity, and recent commit cadence.
@@ -86,7 +94,9 @@ Top contributors + commits/month average. Useful for "is this still alive?" ques
 
 ## Phase 7: Output
 
-Save as `repo-snapshot.md`.
+Save as `.anthril/reports/repo-snapshot.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

@@ -10,6 +10,14 @@ effort: high
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/dead-code-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Before You Start
 
 1. **Locate the target.** Use `$ARGUMENTS` if provided, otherwise the current working directory. If neither resolves to a real directory, ask the user for the target path before continuing.

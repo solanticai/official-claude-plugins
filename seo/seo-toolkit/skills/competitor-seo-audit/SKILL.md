@@ -17,6 +17,14 @@ agent: seo-auditor
 # Competitor SEO Audit
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/competitor-seo-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Performs a comprehensive SEO audit of one or more competitor domains and produces a comparative matrix against a baseline (client) domain if provided. Covers six dimensions: indexed page footprint, content topics and publishing velocity, top organic keywords, backlink profile snapshot, on-page patterns, and technical signals (sitemap quality, schema usage).

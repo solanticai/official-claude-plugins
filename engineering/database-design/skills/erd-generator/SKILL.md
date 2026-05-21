@@ -8,6 +8,14 @@ effort: medium
 
 # ERD Generator
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/erd.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces an Entity-Relationship Diagram in two formats:
@@ -107,7 +115,9 @@ Ref: users.org_id > orgs.id [delete: cascade]
 
 ### Phase 6: Output
 
-Save as `erd.md`.
+Save as `.anthril/reports/erd.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

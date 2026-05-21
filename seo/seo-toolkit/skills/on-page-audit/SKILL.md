@@ -14,6 +14,14 @@ effort: medium
 # On-Page Audit
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/on-page-audit/`.
+> Run `mkdir -p .anthril/audits/on-page-audit` before the first `Write` call.
+> Primary artefact: `.anthril/audits/on-page-audit/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Prerequisites
 
 - **`crawler.py`** — Python companion script at `${CLAUDE_PLUGIN_ROOT}/scripts/crawler.py`. Requires Python 3.9+ and the `requests`, `beautifulsoup4`, and `lxml` libraries. Install with: `pip install requests beautifulsoup4 lxml`. If the script is unavailable, use `Bash(curl *)` to fetch raw HTML and parse manually — note the limitation.

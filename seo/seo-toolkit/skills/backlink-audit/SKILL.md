@@ -9,6 +9,14 @@ effort: medium
 # Backlink Audit
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/backlink-audit/`.
+> Run `mkdir -p .anthril/audits/backlink-audit` before the first `Write` call.
+> Primary artefact: `.anthril/audits/backlink-audit/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Prerequisites
 
 - **Ahrefs API key** — required for the Ahrefs tier. Set as `AHREFS_API_KEY`. Provides DR, anchor text, first/last seen dates.

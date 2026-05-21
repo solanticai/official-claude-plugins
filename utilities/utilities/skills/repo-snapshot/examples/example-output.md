@@ -29,7 +29,7 @@ official-claude-plugins/
 ├── .claude/                # Project-level Claude config + CLAUDE.md instructions
 ├── .claude-plugin/         # marketplace.json + global plugin config
 ├── .github/                # GitHub Actions, issue templates (sparse)
-├── audits/                 # Quarterly LLM-as-judge audit results
+├── .anthril/audits/                 # Quarterly LLM-as-judge audit results
 ├── data-science/           # Plugins: data-analysis, knowledge-engineering, experimentation
 ├── economics/              # Plugins: business-economics, strategic-economics
 ├── engineering/            # Plugins: database-design, devops, package-manager, software-development
@@ -57,7 +57,7 @@ Top-level files of note:
 
 | File | LOC | Worth attention? |
 |------|-----|-----------------|
-| `audits/2026-05-20/judge/fleet-judge.md` | ~3,200 | Yes — most recent fleet-wide audit; calibrated rubric |
+| `.anthril/audits/2026-05-20/judge/fleet-judge.md` | ~3,200 | Yes — most recent fleet-wide audit; calibrated rubric |
 | `data-science/experimentation/skills/causal-impact-analyser/reference.md` | ~280 | Yes — example of dense reference.md pattern |
 | `economics/strategic-economics/skills/moat-strength-audit/reference.md` | ~260 | Yes — same pattern; 7 Powers detailed criteria |
 | `seo/seo-toolkit/skills/serp-analysis/SKILL.md` | ~480 | Heavy skill near the 500-line cap |

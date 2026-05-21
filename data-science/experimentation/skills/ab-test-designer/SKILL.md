@@ -9,6 +9,14 @@ effort: high
 # A/B Test Designer
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/plans/`.
+> Run `mkdir -p .anthril/plans` before the first `Write` call.
+> Primary artefact: `.anthril/plans/ab-test-design.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces a rigorous A/B/n experiment design with hypothesis, power analysis, sample size, randomisation strategy, guardrails, and pre-registered decision criteria. Final phase invokes `stats-reviewer` agent for peer-review.
@@ -96,7 +104,9 @@ Append to output.
 
 ### Phase 6: Output
 
-Save as `ab-test-design.md`.
+Save as `.anthril/plans/ab-test-design.md` .
+
+Create the output folder first: `mkdir -p .anthril/plans`.
 
 ---
 

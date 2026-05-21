@@ -9,6 +9,14 @@ effort: high
 # Migration Plan Builder
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/plans/`.
+> Run `mkdir -p .anthril/plans` before the first `Write` call.
+> Primary artefact: `.anthril/plans/migration-plan.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces a staged migration plan for a non-trivial schema change. Covers lock impact, backfill strategy, dual-write window, cutover, and cleanup. Invokes `db-reviewer` agent for risk assessment.
@@ -91,7 +99,9 @@ Invoke `db-reviewer` agent. Append findings.
 
 ### Phase 7: Output
 
-Save as `migration-plan.md`.
+Save as `.anthril/plans/migration-plan.md` .
+
+Create the output folder first: `mkdir -p .anthril/plans`.
 
 ---
 

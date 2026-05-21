@@ -8,6 +8,14 @@ effort: low
 
 # Broken Link Scanner
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/broken-link-report.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Crawls a domain or sitemap using `${CLAUDE_PLUGIN_ROOT}/scripts/crawler.py` to identify broken internal and external links (4xx and 5xx status codes), orphan pages (in sitemap but not internally linked, or internally linked but missing from sitemap), and soft-404 candidates (200 responses serving thin or error-like content). Outputs a prioritised remediation register.

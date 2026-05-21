@@ -8,6 +8,14 @@ effort: medium
 
 # Cost Structure Builder
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/cost-structure.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Maps a business's cost structure: fixed vs variable, step-fixed thresholds, contribution-margin waterfall, and the scale curve (how costs evolve at 2× / 5× / 10× volume). Used as input to `[[break-even-scenario-modeller]]` and `[[unit-economics-calculator]]`.
@@ -80,7 +88,9 @@ Identify the **step-jumps**: at what volume does a step-fixed cost trigger? Mark
 
 ### Phase 5: Output
 
-Save as `cost-structure.md`.
+Save as `.anthril/reports/cost-structure.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

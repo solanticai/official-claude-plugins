@@ -9,6 +9,14 @@ effort: medium
 # Core Web Vitals Report
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/core-web-vitals-report.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Prerequisites
 
 - **`pagespeed_runner.py`** — Python companion script at `${CLAUDE_PLUGIN_ROOT}/scripts/pagespeed_runner.py`. Requires Python 3.9+ and the `requests` library. Install: `pip install requests`.

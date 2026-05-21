@@ -8,6 +8,14 @@ effort: medium
 
 # PR Description Writer
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/pr-description.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Reads the diff between the current branch and main (or a specified base), then drafts a clear, scannable PR description with: summary, why, risk, test plan, screenshot placeholders, and a checklist.
@@ -105,7 +113,9 @@ Print the draft. Optionally write to `.pr-description.md` for `gh pr edit --body
 
 `templates/output-template.md` covers the canonical PR description sections.
 
-Save as `.pr-description.md` in cwd.
+Save as `.anthril/reports/.pr-description.md`.
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

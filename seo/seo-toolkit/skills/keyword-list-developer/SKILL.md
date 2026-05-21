@@ -15,6 +15,14 @@ agent: content-strategist
 # Keyword List Developer
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/data/`.
+> Run `mkdir -p .anthril/data` before the first `Write` call.
+> Primary artefact: `.anthril/data/keyword-list.csv`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Builds the definitive master keyword list for a business or campaign. Ingests seed terms and business context, then expands coverage through multiple sources: SerpAPI related/PAA queries, DataForSEO Keywords-for-Site, Google Search Console top queries (if connected), competitor keyword extraction, and LLM semantic expansion.

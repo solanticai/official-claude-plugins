@@ -9,6 +9,14 @@ effort: max
 # Causal Impact Analyser
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/causal-impact-analysis.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 For situations where you can't run a randomised experiment — a policy change, a pricing shift that affected everyone, a region-wide rollout — this skill recommends a quasi-experimental design (DiD / synthetic control / ITS / RDD) and produces the analysis spec + validity-check checklist.
@@ -101,7 +109,9 @@ Invoke `stats-reviewer` agent.
 
 ### Phase 7: Output
 
-Save as `causal-impact-analysis.md`.
+Save as `.anthril/reports/causal-impact-analysis.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

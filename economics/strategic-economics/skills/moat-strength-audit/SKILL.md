@@ -12,6 +12,14 @@ effort: high
 # Moat Strength Audit
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/moat-strength-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Scores a business's competitive moats across Hamilton Helmer's *7 Powers* framework. For each moat:
@@ -110,7 +118,9 @@ Invoke `red-team-strategist`. Append findings.
 
 ### Phase 7: Output
 
-Save as `moat-strength-audit.md`.
+Save as `.anthril/audits/moat-strength-audit.md` .
+
+Create the output folder first: `mkdir -p .anthril/audits`.
 
 ---
 

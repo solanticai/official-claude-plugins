@@ -8,6 +8,14 @@ effort: low
 
 # UTM Builder
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/data/`.
+> Run `mkdir -p .anthril/data` before the first `Write` call.
+> Primary artefact: `.anthril/data/utm-parameters.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Skill Metadata
 - **Skill ID:** utm-builder
 - **Category:** PPC (utility)

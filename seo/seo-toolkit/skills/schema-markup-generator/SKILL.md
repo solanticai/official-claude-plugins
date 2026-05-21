@@ -8,6 +8,14 @@ effort: low
 
 # Schema Markup Generator
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/`.
+> Run `mkdir -p .anthril/scaffolds` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/schema-markup.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Generates ready-to-use `<script type="application/ld+json">` blocks for any page type based on user-supplied content. Covers all major schema.org types relevant to Australian businesses: Article, Product, FAQPage, HowTo, LocalBusiness, Recipe, Event, Organisation, Person, BreadcrumbList, Service, and Review. Multiple schema types can be stacked on a single page.

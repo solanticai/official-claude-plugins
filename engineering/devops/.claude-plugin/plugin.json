@@ -1,9 +1,20 @@
 {
   "name": "devops",
+  "displayName": "Devops",
   "version": "1.0.2",
-  "description": "9 DevOps and SRE skills that audit, remediate, and test \u2014 plain-language needs assessment, CI/CD pipelines, Terraform/OpenTofu IaC, Docker containers, Kubernetes manifests, observability, release readiness, DevSecOps supply chain, and SRE reliability. Supports three operating modes: static-file audit (default, no tools required), live-access audit (uses kubectl, terraform, aws, gcloud, docker when available), and apply mode (opt-in --apply flag, per-change confirmation). Runtime testing \u2014 load tests, chaos experiments, and synthetic alert firing \u2014 is supported where each skill can run it safely with blast-radius guardrails. Every finding is evidence-backed with file:line references.",
+  "description": "9 DevOps and SRE skills that audit, remediate, and test — plain-language needs assessment, CI/CD pipelines, Terraform/OpenTofu IaC, Docker containers, Kubernetes manifests, observability, release readiness, DevSecOps supply chain, and SRE reliability. Supports three operating modes: static-file audit (default, no tools required), live-access audit (uses kubectl, terraform, aws, gcloud, docker when available), and apply mode (opt-in --apply flag, per-change confirmation). Runtime testing — load tests, chaos experiments, and synthetic alert firing — is supported where each skill can run it safely with blast-radius guardrails. Every finding is evidence-backed with file:line references.",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/devops",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "devops"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
 }

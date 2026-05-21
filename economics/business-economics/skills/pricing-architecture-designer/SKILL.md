@@ -9,6 +9,14 @@ effort: high
 # Pricing Architecture Designer
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/plans/`.
+> Run `mkdir -p .anthril/plans` before the first `Write` call.
+> Primary artefact: `.anthril/plans/pricing-architecture.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Selects the right pricing model archetype + designs packaging, fences, and anchors. Based on *Monetizing Innovation* (Ramanujam & Tacke), Van Westendorp PSM, and the Gabor-Granger technique. Outputs a pricing architecture, projected revenue impact, and migration plan from current pricing.
@@ -93,7 +101,9 @@ If pricing is changing:
 
 ### Phase 6: Output
 
-Save as `pricing-architecture.md`.
+Save as `.anthril/plans/pricing-architecture.md` .
+
+Create the output folder first: `mkdir -p .anthril/plans`.
 
 ---
 

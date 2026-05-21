@@ -18,6 +18,14 @@ agent: seo-auditor
 # Technical SEO Audit
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/technical-seo-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Prerequisites
 
 - **`crawler.py`** — Python companion script at `${CLAUDE_PLUGIN_ROOT}/scripts/crawler.py`. Requires Python 3.9+, `requests`, `beautifulsoup4`, `lxml`. Install: `pip install requests beautifulsoup4 lxml`.
@@ -95,7 +103,7 @@ robots.txt summary, sitemap summary, root domain redirect chain.
 ### Objective
 Crawl the domain to discover URLs and collect page-level data.
 
-1. Run `${CLAUDE_PLUGIN_ROOT}/scripts/crawler.py --domain <domain> --max-pages <N> --output ${CLAUDE_PLUGIN_DATA}/audits/<slug>/crawl.json`
+1. Run `${CLAUDE_PLUGIN_ROOT}/scripts/crawler.py --domain <domain> --max-pages <N> --output ${CLAUDE_PLUGIN_DATA}/.anthril/audits/<slug>/crawl.json`
 2. From the crawl output, analyse:
    - **URL count:** total crawled, total in sitemap, discrepancy (sitemap:crawl ratio)
    - **HTTP status distribution:** 200, 301, 302, 404, 410, 500, other
@@ -163,7 +171,7 @@ Measure page experience signals (Rank pillar — user experience ranking factors
 Skip CWV if depth = `Crawl-only`.
 
 1. Select sample URLs: homepage + top 5 highest-traffic pages + top 5 most-linked pages (from crawl).
-2. Run `${CLAUDE_PLUGIN_ROOT}/scripts/pagespeed_runner.py --urls <url_list> --strategy mobile desktop --output ${CLAUDE_PLUGIN_DATA}/audits/<slug>/cwv.json`
+2. Run `${CLAUDE_PLUGIN_ROOT}/scripts/pagespeed_runner.py --urls <url_list> --strategy mobile desktop --output ${CLAUDE_PLUGIN_DATA}/.anthril/audits/<slug>/cwv.json`
 3. For each URL, record:
    - **LCP** (Largest Contentful Paint): Good ≤ 2.5s, NI 2.5–4.0s, Poor > 4.0s
    - **INP** (Interaction to Next Paint): Good ≤ 200ms, NI 200–500ms, Poor > 500ms

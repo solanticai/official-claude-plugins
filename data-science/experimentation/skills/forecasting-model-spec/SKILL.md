@@ -9,6 +9,14 @@ effort: high
 # Forecasting Model Spec
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/`.
+> Run `mkdir -p .anthril/scaffolds` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/forecasting-model-spec.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Designs a forecasting model spec for a univariate or multivariate time-series — model family (ARIMA/SARIMA/Prophet/ML), feature engineering, validation strategy (walk-forward), monitoring plan, and retraining triggers. Output is a spec a data team can implement, not the model itself.
@@ -92,7 +100,9 @@ Retraining triggers:
 
 ### Phase 6: Output
 
-Save as `forecasting-model-spec.md`.
+Save as `.anthril/scaffolds/forecasting-model-spec.md` .
+
+Create the output folder first: `mkdir -p .anthril/scaffolds`.
 
 ---
 

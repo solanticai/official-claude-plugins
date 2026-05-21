@@ -12,6 +12,14 @@ effort: high
 # Competitive Dynamics Analyser
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/competitive-dynamics.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Maps the competitive dynamics of a specific market using Porter's 5 Forces + repeated-game theory. Outputs:
@@ -107,7 +115,9 @@ Invoke `red-team-strategist` agent. Append findings.
 
 ### Phase 7: Output
 
-Save as `competitive-dynamics.md`.
+Save as `.anthril/reports/competitive-dynamics.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

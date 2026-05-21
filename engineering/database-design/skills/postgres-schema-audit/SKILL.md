@@ -10,6 +10,14 @@ effort: high
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/postgres-schema-audit/`.
+> Run `mkdir -p .anthril/audits/postgres-schema-audit` before the first `Write` call.
+> Primary artefact: `.anthril/audits/postgres-schema-audit/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Before You Start
 
 1. **Detect available connection modes.** Run `scripts/check-connection.sh` to discover whether the user has a Supabase MCP connector configured, a direct-postgres profile configured, both, or neither. The skill's entire Phase 1 behaviour depends on this result.

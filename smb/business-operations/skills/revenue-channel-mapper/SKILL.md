@@ -9,6 +9,14 @@ effort: medium
 # Revenue Channel Mapper
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/revenue-channel-canvas.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Maps all active and candidate revenue channels onto a single canvas so leadership can see at a glance which channels are pulling weight, which are burning budget, and which are untested opportunities. Outputs a quantified channel table, a Mermaid flowchart from customer to revenue, RICE-prioritised channel opportunities, and a concrete 90-day experiment list.

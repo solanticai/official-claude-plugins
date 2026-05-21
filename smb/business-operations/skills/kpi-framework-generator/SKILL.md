@@ -9,6 +9,14 @@ effort: medium
 # KPI Framework Generator
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/kpi-framework.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Produces a complete, layered KPI framework for a business: one North-Star metric, 3–5 input metrics, and per-function KPIs across sales, marketing, operations, product, finance, and customer experience — all tied to OKRs with defined owners, targets, cadences, and data sources.

@@ -8,6 +8,14 @@ effort: low
 
 # Display Ad Specs
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/briefs/`.
+> Run `mkdir -p .anthril/briefs` before the first `Write` call.
+> Primary artefact: `.anthril/briefs/display-ad-specs.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Skill Metadata
 - **Skill ID:** display-ad-specs
 - **Category:** Google Ads (creative)

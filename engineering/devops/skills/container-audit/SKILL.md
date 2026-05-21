@@ -9,6 +9,14 @@ paths: "**/Dockerfile*"
 
 # Container Audit
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/container-audit/`.
+> Run `mkdir -p .anthril/audits/container-audit` before the first `Write` call.
+> Primary artefact: `.anthril/audits/container-audit/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## When to use
 
 Run this skill when the user mentions:

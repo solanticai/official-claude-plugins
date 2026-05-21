@@ -8,6 +8,14 @@ effort: low
 
 # Redirect Map Builder
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/data/redirect-map-builder/`.
+> Run `mkdir -p .anthril/data/redirect-map-builder` before the first `Write` call.
+> Primary artefact: `.anthril/data/redirect-map-builder/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Generates a complete 301 redirect map for site migrations by matching old URLs to their new equivalents using three progressive strategies: URL-pattern matching, slug similarity (Jaccard and Levenshtein distance), and optional content similarity scoring. Outputs a CSV redirect map with confidence scores, server-specific config snippets (nginx, Apache, Cloudflare, Netlify), and a register of ambiguous matches requiring manual review.

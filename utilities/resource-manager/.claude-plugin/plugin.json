@@ -1,9 +1,21 @@
 {
   "name": "resource-manager",
+  "displayName": "Resource Manager",
   "version": "1.0.1",
   "description": "Monitor and reclaim machine resources used by Claude Desktop, Claude Code sessions, and their MCP servers — orphan-killer Stop hook, on-demand audit skills, and a localhost process dashboard.",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/resource-manager",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "utilities",
+    "resource",
+    "manager"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
 }

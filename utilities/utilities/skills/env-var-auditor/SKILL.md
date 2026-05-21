@@ -8,6 +8,14 @@ effort: low
 
 # Env Var Auditor
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/env-var-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Compares env var declarations in `.env.example` (or equivalent) against actual references in code. Surfaces:
@@ -80,7 +88,9 @@ Flag vars whose names suggest secrets but lack:
 
 ### Phase 5: Output
 
-Save as `env-var-audit.md`.
+Save as `.anthril/audits/env-var-audit.md` .
+
+Create the output folder first: `mkdir -p .anthril/audits`.
 
 ---
 

@@ -1,9 +1,21 @@
 {
   "name": "package-manager",
+  "displayName": "Package Manager",
   "version": "1.1.2",
   "description": "Audit npm package publishing quality and CLI terminal UX — publishing, security, types, and build checks plus help-text, error-message, and output-formatting review",
   "author": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
-  }
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
+  },
+  "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/package-manager",
+  "repository": "https://github.com/anthril/official-claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "package",
+    "manager"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
 }

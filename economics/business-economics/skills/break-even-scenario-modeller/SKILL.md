@@ -9,6 +9,14 @@ effort: high
 # Break-Even Scenario Modeller
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/break-even-analysis.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Computes break-even across multiple scenarios (best / base / worst / black-swan), sensitivity to price/volume/cost changes, and runway-impact. Uses CVP (Cost-Volume-Profit) framework. Pairs with `[[cost-structure-builder]]` (inputs) and `[[pricing-architecture-designer]]` (price levers).
@@ -90,7 +98,9 @@ The user implements the chart in their BI tool; this skill provides the structur
 
 ### Phase 6: Output
 
-Save as `break-even-analysis.md`.
+Save as `.anthril/reports/break-even-analysis.md` .
+
+Create the output folder first: `mkdir -p .anthril/reports`.
 
 ---
 

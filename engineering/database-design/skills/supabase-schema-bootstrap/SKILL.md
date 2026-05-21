@@ -9,6 +9,14 @@ effort: high
 # Supabase Schema Bootstrap
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/scaffolds/`.
+> Run `mkdir -p .anthril/scaffolds` before the first `Write` call.
+> Primary artefact: `.anthril/scaffolds/schema-bootstrap.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 For new Supabase projects: takes a domain specification document and produces a complete bootstrap migration including tables, RLS policies, triggers, indexes, seed data scaffolding, and TypeScript type generation instructions. Wraps the other database-design skills.
@@ -114,7 +122,9 @@ Provide the command (`supabase advisors list ...`) or Studio path.
 
 ### Phase 6: Output
 
-Save as `schema-bootstrap.md`.
+Save as `.anthril/scaffolds/schema-bootstrap.md` .
+
+Create the output folder first: `mkdir -p .anthril/scaffolds`.
 
 ---
 

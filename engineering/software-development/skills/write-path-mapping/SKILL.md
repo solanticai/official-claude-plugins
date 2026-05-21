@@ -10,6 +10,14 @@ effort: high
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/write-path-mapping/`.
+> Run `mkdir -p .anthril/reports/write-path-mapping` before the first `Write` call.
+> Primary artefact: `.anthril/reports/write-path-mapping/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Before You Start
 
 1. **Locate the target.** Use `$ARGUMENTS` if provided, otherwise the current working directory. If neither resolves to a real directory, ask the user for the target path before continuing.

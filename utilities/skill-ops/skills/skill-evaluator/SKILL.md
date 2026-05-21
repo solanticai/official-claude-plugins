@@ -10,6 +10,14 @@ effort: high
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/skill-evaluator/<skill>/`.
+> Run `mkdir -p .anthril/audits/skill-evaluator/<skill>` before the first `Write` call.
+> Primary artefact: `.anthril/audits/skill-evaluator/<skill>/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## User Context
 
 The user wants to evaluate a Claude Code skill:

@@ -10,6 +10,14 @@ effort: high
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/cli-ux-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Before You Start
 
 1. **Locate the CLI.** If the user gave a binary name (`gh`, `eslint`), resolve it with `command -v <name>` and note whether it is a wrapper script or a compiled binary. If a repo path was given, find the entry point (`bin` in `package.json`, `[project.scripts]` in `pyproject.toml`, `cmd/*/main.go`, `src/main.rs`, or a top-level shell script). If neither, ask the user.

@@ -8,6 +8,14 @@ effort: medium
 
 # GSC Performance Report
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/gsc-performance-report.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Fetches Google Search Console performance data via `${CLAUDE_PLUGIN_ROOT}/scripts/lib/gsc_client.py` and produces a structured period-over-period report. Surfaces top movers (winners and losers), query class shifts, page-level deltas, anomalies, and statistically significant changes with recommended actions.

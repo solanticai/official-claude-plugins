@@ -8,6 +8,14 @@ effort: medium
 
 # Changelog Generator
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/reports/`.
+> Run `mkdir -p .anthril/reports` before the first `Write` call.
+> Primary artefact: `.anthril/reports/CHANGELOG.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Reads git history between two refs, classifies commits via Conventional Commits, and produces a CHANGELOG.md section in Keep a Changelog format with Added / Changed / Fixed / Removed / Security sections.

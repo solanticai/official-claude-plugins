@@ -9,6 +9,14 @@ effort: high
 # Audit Resolver
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/audit-resolver/<date>/`.
+> Run `mkdir -p .anthril/audits/audit-resolver/<date>` before the first `Write` call.
+> Primary artefact: `.anthril/audits/audit-resolver/<date>/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Turns the structured output of `[[plan-completion-audit]]` into executed fixes. Reads the report, parses every finding, classifies each (auto-fix / sub-skill dispatch / plan-first / human-input / defer), shows the plan, gets confirmation, and applies fixes in batches with verifier checks between each batch.
@@ -39,7 +47,7 @@ The user invoked audit-resolver with: `$ARGUMENTS`
 
 Accepted argument forms:
 
-- Bare invocation → auto-discover the latest report under `audits/` (mtime descending)
+- Bare invocation → auto-discover the latest report under `.anthril/audits/` (mtime descending)
 - Path to a specific report `.md`
 - Flags (combinable):
   - `--dry-run` — produce action plan + diff preview without executing
@@ -47,7 +55,7 @@ Accepted argument forms:
   - `--phase=N[,N,...]` — restrict to specific audit phases
   - `--reaudit` — at the end, re-run plan-completion-audit and diff verdicts
   - `--no-confirm` — skip per-batch confirmation (still pauses on HUMAN-INPUT)
-  - `--ledger=<path>` — override ledger location (default `audits/<date>/audit-resolver-ledger.md`)
+  - `--ledger=<path>` — override ledger location (default `.anthril/audits/<date>/audit-resolver-ledger.md`)
 
 ---
 
@@ -58,7 +66,7 @@ Locate the audit report and extract every finding as a structured action.
 
 ### Steps
 
-1. **Resolve the report path.** If `$ARGUMENTS` contains a path, use it. Otherwise glob `audits/**/*audit*.md` ordered by mtime descending; pick the most recent. If none found, **STOP** with message: "Run `/utilities:plan-completion-audit` first, then re-invoke this skill."
+1. **Resolve the report path.** If `$ARGUMENTS` contains a path, use it. Otherwise glob `.anthril/audits/**/*audit*.md` ordered by mtime descending; pick the most recent. If none found, **STOP** with message: "Run `/utilities:plan-completion-audit` first, then re-invoke this skill."
 2. **Read the full report.**
 3. **Parse into a structured ledger.** Each finding gets a row:
 
@@ -180,7 +188,7 @@ Apply fixes in priority order, one batch at a time, verifying between batches.
    - Verify per category
 
    **PLAN-FIRST:**
-   - Write a mini-plan to `audits/<date>/audit-resolver-subplans/<id>-<slug>.md`
+   - Write a mini-plan to `.anthril/audits/<date>/audit-resolver-subplans/<id>-<slug>.md`
    - Dispatch a planner-then-coder pair via `Agent` (`engineering-team:planner` then `engineering-team:coder` if available, otherwise general-purpose)
    - Diff-preview confirmation before apply
    - Verify
@@ -215,10 +223,10 @@ Verify the fixes actually closed the findings.
    - **Closed** — in original, not in new
    - **Unchanged** — in both
    - **New** — in new only (regression risk)
-5. **Write** diff to `audits/<date>/audit-resolver-reaudit-diff.md`.
+5. **Write** diff to `.anthril/audits/<date>/audit-resolver-reaudit-diff.md`.
 
 ### Output
-A re-audit diff file at `audits/<date>/audit-resolver-reaudit-diff.md` and a Re-audit Diff section appended to the main ledger. If skipped, neither is written and the ledger notes "re-audit not run".
+A re-audit diff file at `.anthril/audits/<date>/audit-resolver-reaudit-diff.md` and a Re-audit Diff section appended to the main ledger. If skipped, neither is written and the ledger notes "re-audit not run".
 
 ---
 
@@ -229,7 +237,7 @@ Durable record of every action.
 
 ### Steps
 
-1. Write `audits/<date>/audit-resolver-ledger.md` (or `--ledger=<path>`) using `templates/output-template.md`. Sections:
+1. Write `.anthril/audits/<date>/audit-resolver-ledger.md` (or `--ledger=<path>`) using `templates/output-template.md`. Sections:
    - Baseline (ref hash, plan path, original audit path)
    - Findings inventory (Phase 1 ledger)
    - Plan (Phase 2 triage)
@@ -266,10 +274,10 @@ Durable record of every action.
 
 ## Output Format
 
-Single resolution ledger at `audits/<date>/audit-resolver-ledger.md` using `templates/output-template.md`. Optional companion artefacts:
+Single resolution ledger at `.anthril/audits/<date>/audit-resolver-ledger.md` using `templates/output-template.md`. Optional companion artefacts:
 
-- `audits/<date>/audit-resolver-subplans/<id>-<slug>.md` — per-PLAN-FIRST finding
-- `audits/<date>/audit-resolver-reaudit-diff.md` — if `--reaudit` ran
+- `.anthril/audits/<date>/audit-resolver-subplans/<id>-<slug>.md` — per-PLAN-FIRST finding
+- `.anthril/audits/<date>/audit-resolver-reaudit-diff.md` — if `--reaudit` ran
 
 The ledger is **the resume state**. Re-invoking audit-resolver picks up where it left off by reading prior ledger entries and skipping already-completed findings.
 

@@ -8,6 +8,14 @@ effort: high
 
 # Plan Completion Audit
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/plan-completion-audit/`.
+> Run `mkdir -p .anthril/audits/plan-completion-audit` before the first `Write` call.
+> Primary artefact: `.anthril/audits/plan-completion-audit/<artefact>`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 You are performing a rigorous, full-stack audit comparing a project plan against the actual codebase. Your primary job is to determine what has been built, what hasn't, and whether what was built is correct. Do NOT assume all work is complete — you are here to verify that. Treat the plan as the source of truth and the codebase as what needs to be measured against it.
 
 ## User Context

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codebase Profile",
+  "description": "Machine-readable output of the codebase-profiler skill",
+  "type": "object",
+  "required": ["schema_version", "profile", "stack", "metrics", "dependencies", "architecture", "quality", "security", "infrastructure", "health"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "profile": {
+      "type": "object",
+      "required": ["id", "generated_at", "target", "profiler_version", "profile_depth"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[0-9]{8}-[0-9]{4}(-[0-9]+)?$" },
+        "generated_at": { "type": "string" },
+        "target": { "type": "string" },
+        "profiler_version": { "type": "string" },
+        "profile_depth": { "enum": ["full", "shallow"] }
+      }
+    },
+    "stack": {
+      "type": "object",
+      "properties": {
+        "primary_language": { "type": "string" },
+        "framework": { "type": "string" },
+        "framework_version": { "type": "string" },
+        "runtime_version": { "type": "string" },
+        "package_manager": { "type": "string" },
+        "typescript_strict": { "type": ["string", "boolean"] },
+        "monorepo": {
+          "type": "object",
+          "properties": {
+            "monorepo": { "type": "boolean" },
+            "tool": { "type": "string" },
+            "package_count": { "type": "integer" }
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "total_files": { "type": "integer", "minimum": 0 },
+        "source_files": { "type": "integer", "minimum": 0 },
+        "sloc": { "type": "integer", "minimum": 0 },
+        "language_breakdown": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 100 }
+        },
+        "largest_files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "file": { "type": "string" },
+              "lines": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "direct": { "type": "integer", "minimum": 0 },
+        "dev": { "type": "integer", "minimum": 0 },
+        "transitive_estimate": { "type": "integer", "minimum": 0 },
+        "vulnerable": {
+          "type": "object",
+          "properties": {
+            "critical": { "type": "integer", "minimum": 0 },
+            "high": { "type": "integer", "minimum": 0 },
+            "moderate": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "outdated_count": { "type": "integer", "minimum": 0 },
+        "circular_imports": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "licenses": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        }
+      }
+    },
+    "architecture": {
+      "type": "object",
+      "properties": {
+        "entry_points": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "api_routes_count": { "type": "integer", "minimum": 0 },
+        "client_server_boundary": {
+          "enum": ["server-first", "client-first", "hybrid", "api-only", "full-stack-traditional", "unknown"]
+        },
+        "data_layer": { "type": "string" },
+        "mermaid_diagram": { "type": "string" }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+        "type_coverage_pct": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "any_usage_count": { "type": "integer", "minimum": 0 },
+        "ts_ignore_count": { "type": "integer", "minimum": 0 },
+        "test_framework": { "type": "string" },
+        "test_to_source_ratio": { "type": "number", "minimum": 0 },
+        "coverage_pct": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+        "large_files_count": { "type": "integer", "minimum": 0 },
+        "todo_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "secret_patterns_detected": { "type": "integer", "minimum": 0 },
+        "env_files_in_gitignore": { "type": "boolean" },
+        "auth_library": { "type": "string" },
+        "secret_patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["severity", "type", "file", "line", "value"],
+            "properties": {
+              "severity": { "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"] },
+              "type": { "type": "string" },
+              "file": { "type": "string" },
+              "line": { "type": "integer" },
+              "value": { "const": "[REDACTED]" }
+            }
+          }
+        }
+      }
+    },
+    "infrastructure": {
+      "type": "object",
+      "properties": {
+        "hosting": { "type": "string" },
+        "ci_cd": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "observability": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "health": {
+      "type": "object",
+      "required": ["tier", "dimensions", "focus_areas"],
+      "properties": {
+        "tier": { "enum": ["Healthy", "Needs Attention", "Significant Risk"] },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "dependency_health": { "enum": ["✓", "⚠", "✗"] },
+            "test_coverage": { "enum": ["✓", "⚠", "✗"] },
+            "type_safety": { "enum": ["✓", "⚠", "✗"] },
+            "code_complexity": { "enum": ["✓", "⚠", "✗"] },
+            "security_surface": { "enum": ["✓", "⚠", "✗"] },
+            "infrastructure_maturity": { "enum": ["✓", "⚠", "✗"] },
+            "observability": { "enum": ["✓", "⚠", "✗"] },
+            "developer_experience": { "enum": ["✓", "⚠", "✗"] }
+          }
+        },
+        "focus_areas": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 5
+        }
+      }
+    }
+  }
+}

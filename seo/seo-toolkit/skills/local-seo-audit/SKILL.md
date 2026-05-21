@@ -10,6 +10,14 @@ effort: medium
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/audits/`.
+> Run `mkdir -p .anthril/audits` before the first `Write` call.
+> Primary artefact: `.anthril/audits/local-seo-audit.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Evaluates a local business's complete local SEO footprint: NAP (Name, Address, Phone) consistency across the web, Google Business Profile optimisation score, citation coverage across Australian Tier-1 through Tier-3 directories, review velocity benchmarks, and Local Pack / Map Pack visibility. Outputs a prioritised remediation plan.

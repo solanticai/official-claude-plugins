@@ -10,6 +10,14 @@ effort: medium
 
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/plans/`.
+> Run `mkdir -p .anthril/plans` before the first `Write` call.
+> Primary artefact: `.anthril/plans/internal-linking-plan.md`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Prerequisites
 
 - **Sitemap or URL list** — XML sitemap URL, sitemap file, or plain-text URL list.

@@ -9,6 +9,14 @@ effort: medium
 # Keyword Research
 ultrathink
 
+<!-- anthril-output-directive -->
+> **Output path directive (canonical — overrides in-body references).**
+> All file outputs from this skill MUST be written under `.anthril/data/`.
+> Run `mkdir -p .anthril/data` before the first `Write` call.
+> Primary artefact: `.anthril/data/keyword-research.csv`.
+> Do NOT write to the project root or to bare filenames at cwd.
+> Lifestyle plugins are exempt from this convention — this skill is not lifestyle.
+
 ## Description
 
 Turns one or more seed terms into a structured, evidence-backed keyword set. Each keyword is annotated with estimated monthly volume, difficulty band, search intent (Informational / Navigational / Commercial / Transactional with sub-intent), and parent topic. Sources include SerpAPI (related searches, People Also Ask) and DataForSEO (keyword suggestions, volume data).

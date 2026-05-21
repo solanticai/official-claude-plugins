@@ -12,10 +12,10 @@ Convenience command for invoking the `audit-resolver` skill.
 
 The command is a thin pass-through. The `audit-resolver` skill owns **all** confirmation gates (Phase 3 plan approval + per-HUMAN-INPUT-finding pauses) so the user is asked exactly once, not twice.
 
-1. **Welcome.** One-liner: "Dispatching to audit-resolver. The skill will discover the latest report under `audits/`, show you the plan, and ask for confirmation before executing."
+1. **Welcome.** One-liner: "Dispatching to audit-resolver. The skill will discover the latest report under `.anthril/audits/`, show you the plan, and ask for confirmation before executing."
 2. **Dispatch immediately** to the `audit-resolver` skill with `$ARGUMENTS` forwarded verbatim. Skill phases handle discovery (1), triage (2), confirmation (3), pre-flight (4), execution (5), optional re-audit (6), ledger (7).
 3. **Report back** once the skill returns:
-   - Path to the resolution ledger (`audits/<date>/audit-resolver-ledger.md`)
+   - Path to the resolution ledger (`.anthril/audits/<date>/audit-resolver-ledger.md`)
    - Final diff hint (`git diff <baseline-ref>..HEAD --stat`)
    - Suggested next step (review the diff and commit when satisfied)
 
@@ -44,7 +44,7 @@ The command is a thin pass-through. The `audit-resolver` skill owns **all** conf
 /utilities:audit-resolve --phase=1,8
 
 # Point at a specific report (when multiple exist)
-/utilities:audit-resolve audits/2026-05-20/plan-completion-audit-shimmying-tulip.md
+/utilities:audit-resolve .anthril/audits/2026-05-20/plan-completion-audit-shimmying-tulip.md
 ```
 
 ## Behavioural Rules
@@ -64,6 +64,6 @@ The command is a thin pass-through. The `audit-resolver` skill owns **all** conf
 After the skill completes, print:
 
 > *Resolution complete. {{n_addressed}} of {{n_total}} findings addressed.*
-> *Ledger: `audits/<date>/audit-resolver-ledger.md`*
+> *Ledger: `.anthril/audits/<date>/audit-resolver-ledger.md`*
 > *Diff: `git diff <baseline>..HEAD --stat`*
 > *Next step: review the diff and commit when satisfied.*

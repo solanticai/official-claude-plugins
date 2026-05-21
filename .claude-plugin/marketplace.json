@@ -1,10 +1,11 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
   "name": "anthril-claude-plugins",
-  "description": "Official Anthril plugin marketplace \u2014 organised into Lifestyle, SMB, Marketing, Engineering, Data Science, Economics, and Utilities",
+  "description": "Official Anthril plugin marketplace — organised into Lifestyle, SMB, Marketing, Engineering, Data Science, Economics, and Utilities",
   "owner": {
-    "name": "Anthril",
-    "email": "john@anthril.com"
+    "name": "John O'Connor",
+    "email": "john@anthril.com",
+    "url": "https://github.com/johnoconnor0"
   },
   "plugins": [
     {
@@ -34,7 +35,7 @@
     {
       "name": "package-manager",
       "version": "1.1.2",
-      "description": "Audit npm package publishing quality and CLI terminal UX \u2014 publishing/security/build checks plus help-text, error-message, and output-formatting review",
+      "description": "Audit npm package publishing quality and CLI terminal UX — publishing/security/build checks plus help-text, error-message, and output-formatting review",
       "source": "./engineering/package-manager",
       "category": "engineering",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/package-manager"
@@ -42,7 +43,7 @@
     {
       "name": "utilities",
       "version": "2.2.0",
-      "description": "General-purpose utility skills \u2014 plan-completion-audit + audit-resolver (closes the audit\u2192fix loop) + 5 repo-ops helpers: changelog-generator, pr-description-writer, env-var-auditor, doc-link-validator, repo-snapshot. Includes /utilities:audit-resolve command.",
+      "description": "General-purpose utility skills — plan-completion-audit + audit-resolver (closes the audit→fix loop) + 5 repo-ops helpers: changelog-generator, pr-description-writer, env-var-auditor, doc-link-validator, repo-snapshot. Includes /utilities:audit-resolve command.",
       "source": "./utilities/utilities",
       "category": "utilities",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/utilities"
@@ -50,7 +51,7 @@
     {
       "name": "skill-ops",
       "version": "2.0.0",
-      "description": "Operate on Claude Code skills \u2014 scaffold (skill-creator), audit against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap). Renamed from `skillops` to match the kebab-case convention used by every other plugin.",
+      "description": "Operate on Claude Code skills — scaffold (skill-creator), audit against a 10-dimension rubric (skill-evaluator), and run regression-tracked evaluations (skill-eval-harness + skill-eval-bootstrap). Renamed from `skillops` to match the kebab-case convention used by every other plugin.",
       "source": "./utilities/skill-ops",
       "category": "utilities",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/skill-ops"
@@ -58,15 +59,15 @@
     {
       "name": "brand-manager",
       "version": "1.0.2",
-      "description": "9 skills for end-to-end brand creation \u2014 identity, guidelines, audience, competitors, logo briefs, colour, design tokens, legal disclaimers, and website copy",
+      "description": "9 skills for end-to-end brand creation — identity, guidelines, audience, competitors, logo briefs, colour, design tokens, legal disclaimers, and website copy",
       "source": "./smb/brand-manager",
       "category": "smb",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/smb/brand-manager"
     },
     {
       "name": "software-development",
-      "version": "1.3.0",
-      "description": "audit/orchestration skills for software teams \u2014 dead code detection across 9 languages, end-to-end write path mapping, parallel multi-agent plan orchestration for Plan Mode, multi-agent application audit for Next.js 15 + React 19 + TypeScript Strict + Supabase + Tailwind apps, plus an executable action-plan loop (audit-compile-plan + audit-work) for stepping through validated findings",
+      "version": "1.4.0",
+      "description": "audit/orchestration skills for software teams — stack-agnostic codebase profiler (architecture topology, dependency graph, security surface, quality metrics), dead code detection across 9 languages, end-to-end write path mapping, parallel multi-agent plan orchestration for Plan Mode, multi-agent application audit for Next.js 15 + React 19 + TypeScript Strict + Supabase + Tailwind apps, plus an executable action-plan loop (audit-compile-plan + audit-work) for stepping through validated findings",
       "source": "./engineering/software-development",
       "category": "engineering",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/software-development"
@@ -74,7 +75,7 @@
     {
       "name": "ppc-manager",
       "version": "1.0.2",
-      "description": "23 skills for end-to-end PPC \u2014 Google Ads, Meta Ads, GA4, and GTM \u2014 with OAuth-authenticated read/write across all four platforms via bundled Python MCP servers",
+      "description": "23 skills for end-to-end PPC — Google Ads, Meta Ads, GA4, and GTM — with OAuth-authenticated read/write across all four platforms via bundled Python MCP servers",
       "source": "./marketing/ppc-manager",
       "category": "marketing",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/marketing/ppc-manager"
@@ -90,7 +91,7 @@
     {
       "name": "devops",
       "version": "1.0.2",
-      "description": "9 DevOps and SRE skills for audit, remediation, and runtime testing \u2014 plain-language needs assessment, CI/CD, Terraform IaC, Docker, Kubernetes, observability, release readiness, DevSecOps supply chain, and SRE reliability. Static-file audit by default; opt-in --live, --apply, --runtime modes",
+      "description": "9 DevOps and SRE skills for audit, remediation, and runtime testing — plain-language needs assessment, CI/CD, Terraform IaC, Docker, Kubernetes, observability, release readiness, DevSecOps supply chain, and SRE reliability. Static-file audit by default; opt-in --live, --apply, --runtime modes",
       "source": "./engineering/devops",
       "category": "engineering",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/engineering/devops"
@@ -98,7 +99,7 @@
     {
       "name": "resource-manager",
       "version": "1.0.1",
-      "description": "Monitor and reclaim machine resources used by Claude Desktop, Claude Code, and their MCP servers \u2014 orphan-killer Stop hook, on-demand audit skills, and a localhost process dashboard",
+      "description": "Monitor and reclaim machine resources used by Claude Desktop, Claude Code, and their MCP servers — orphan-killer Stop hook, on-demand audit skills, and a localhost process dashboard",
       "source": "./utilities/resource-manager",
       "category": "utilities",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/utilities/resource-manager"
@@ -106,7 +107,7 @@
     {
       "name": "seo-toolkit",
       "version": "1.1.0",
-      "description": "20 skills for end-to-end SEO \u2014 research/clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, GSC reporting, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder).",
+      "description": "20 skills for end-to-end SEO — research/clustering/mapping, SERP & competitor analysis, on-page + technical audits, CWV, backlinks, content briefs, schema, GSC reporting, local SEO, plus structured-data entity modelling (entity-disambiguation, entity-relationship-mapper, knowledge-graph-builder).",
       "source": "./seo/seo-toolkit",
       "category": "seo",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/seo/seo-toolkit"
@@ -114,7 +115,7 @@
     {
       "name": "business-operations",
       "version": "1.0.0",
-      "description": "5 skills for SMB operations \u2014 channels, KPIs, briefs, bottlenecks, pricing",
+      "description": "5 skills for SMB operations — channels, KPIs, briefs, bottlenecks, pricing",
       "source": "./smb/business-operations",
       "category": "smb",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/smb/business-operations"
@@ -130,7 +131,7 @@
     {
       "name": "personal-productivity",
       "version": "1.0.1",
-      "description": "4 lifestyle skills for daily and weekly systems \u2014 habit-stacker, sunday-reset, deep-focus-day, energy-detective. Includes lifestyle-onboard interactive wizard.",
+      "description": "4 lifestyle skills for daily and weekly systems — habit-stacker, sunday-reset, deep-focus-day, energy-detective. Includes lifestyle-onboard interactive wizard.",
       "source": "./lifestyle/personal-productivity",
       "category": "lifestyle",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/lifestyle/personal-productivity"
@@ -138,7 +139,7 @@
     {
       "name": "health-wellness",
       "version": "1.0.1",
-      "description": "5 lifestyle skills for meal planning, training, sleep, supplements, and wellness habits \u2014 evidence-rated, AU context, with disclaimer pattern.",
+      "description": "5 lifestyle skills for meal planning, training, sleep, supplements, and wellness habits — evidence-rated, AU context, with disclaimer pattern.",
       "source": "./lifestyle/health-wellness",
       "category": "lifestyle",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/lifestyle/health-wellness"
@@ -146,7 +147,7 @@
     {
       "name": "personal-finance",
       "version": "1.0.1",
-      "description": "5 lifestyle skills for AU personal finance \u2014 budgeting, debt payoff, savings, retirement projection, emergency runbook. AU super/Centrelink/ASIC context; projection-analyst agent.",
+      "description": "5 lifestyle skills for AU personal finance — budgeting, debt payoff, savings, retirement projection, emergency runbook. AU super/Centrelink/ASIC context; projection-analyst agent.",
       "source": "./lifestyle/personal-finance",
       "category": "lifestyle",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/lifestyle/personal-finance"
@@ -154,7 +155,7 @@
     {
       "name": "home-life-logistics",
       "version": "1.0.1",
-      "description": "4 lifestyle skills for travel, household maintenance, life-admin, and gift planning \u2014 AU state-by-state compliance, AU FY-aligned quarterly admin sweep.",
+      "description": "4 lifestyle skills for travel, household maintenance, life-admin, and gift planning — AU state-by-state compliance, AU FY-aligned quarterly admin sweep.",
       "source": "./lifestyle/home-life-logistics",
       "category": "lifestyle",
       "homepage": "https://github.com/anthril/official-claude-plugins/tree/main/lifestyle/home-life-logistics"
